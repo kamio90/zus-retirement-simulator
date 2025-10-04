@@ -121,9 +121,14 @@ export function Step5RefineCompare(): JSX.Element {
       setComputeError(null);
     } catch (error) {
       console.error('Compute failed:', error);
-      setComputeError(
-        error instanceof Error ? error.message : 'Wystąpił błąd podczas obliczeń. Spróbuj ponownie.'
-      );
+      const errorMessage =
+        error instanceof Error ? error.message : 'Wystąpił błąd podczas obliczeń. Spróbuj ponownie.';
+      setComputeError(errorMessage);
+      
+      // Log correlation ID for debugging
+      if (corrId) {
+        console.error('Correlation ID:', corrId);
+      }
     } finally {
       setIsComputing(false);
     }
@@ -341,6 +346,9 @@ export function Step5RefineCompare(): JSX.Element {
               {correlationId && (
                 <p className="text-red-600 text-xs mt-2">ID korelacji: {correlationId}</p>
               )}
+              <p className="text-red-700 text-sm mt-2">
+                💡 Obliczenia wymagają połączenia z serwerem. Upewnij się, że serwer API jest dostępny.
+              </p>
             </motion.div>
           )}
 
