@@ -1,5 +1,5 @@
 {
-  "name": "@data",
+  "name": "@zus/data",
   "version": "1.0.0",
   "description": "Data layer - JSON snapshots from ZUS XLSX sources",
   "main": "src/index.ts",

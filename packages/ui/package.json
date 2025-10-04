@@ -1,5 +1,5 @@
 {
-  "name": "@ui",
+  "name": "@zus/ui",
   "version": "1.0.0",
   "description": "Shared UI components",
   "main": "src/index.ts",
