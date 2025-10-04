@@ -1,5 +1,8 @@
 # ZUS Retirement Simulator
 
+[![CI](https://github.com/kamio90/zus-retirement-simulator/actions/workflows/ci.yml/badge.svg)](https://github.com/kamio90/zus-retirement-simulator/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/kamio90/zus-retirement-simulator/actions/workflows/codeql.yml/badge.svg)](https://github.com/kamio90/zus-retirement-simulator/actions/workflows/codeql.yml)
+
 Professional pension calculation simulator for the Polish Social Insurance Institution (ZUS), developed for HackYeah 2025 hackathon.
 
 ## 🎯 Project Overview
@@ -131,6 +134,14 @@ pnpm test
 # Run tests for specific package
 pnpm --filter @zus/core test
 ```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for:
+- Development workflow
+- Code standards
+- Pull request guidelines
+- CI/CD requirements
 
 ## 📝 License
 
