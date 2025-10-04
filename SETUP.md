@@ -164,6 +164,47 @@ Or use the root build command which handles dependency order:
 pnpm build
 ```
 
+## CI/CD Pipeline
+
+The project uses GitHub Actions for continuous integration and deployment:
+
+### Workflows
+
+#### CI Workflow (`ci.yml`)
+Runs on every push and pull request to `main` and `develop` branches:
+- **Lint**: Checks code quality with ESLint
+- **Build**: Compiles all TypeScript packages
+- **Test**: Runs Jest tests across packages
+
+#### PR Checks Workflow (`pr-checks.yml`)
+Additional validation for pull requests:
+- **Formatting Check**: Verifies code formatting with Prettier
+- **Dependency Review**: Scans for vulnerable dependencies
+
+#### CodeQL Workflow (`codeql.yml`)
+Security analysis:
+- Runs on push, PR, and weekly schedule
+- Scans JavaScript/TypeScript code for security vulnerabilities
+
+### Branch Protection
+
+For production-ready setup, configure branch protection rules on GitHub:
+
+1. Navigate to **Settings → Branches → Branch protection rules**
+2. Add rule for `main` branch:
+   - ✅ Require status checks to pass before merging
+   - ✅ Require branches to be up to date before merging
+   - Select required checks: `Lint`, `Build`, `Test`
+   - ✅ Require pull request reviews before merging (1 approval)
+   - ✅ Dismiss stale pull request approvals when new commits are pushed
+
+### CI Cache Strategy
+
+The workflows use pnpm store caching to speed up builds:
+- Cache key based on `pnpm-lock.yaml` hash
+- Typical CI run time: 2-3 minutes with cache
+- First run (no cache): 5-7 minutes
+
 ## Next Steps
 
 1. Review the [architecture documentation](./docs/architecture.md)
