@@ -92,7 +92,10 @@ export function Step3aJdgDetails(): JSX.Element {
                 aria-describedby="ryczalt-description"
               />
               <div className="flex-1">
-                <label htmlFor="ryczalt-checkbox" className="flex items-center gap-2 cursor-pointer">
+                <label
+                  htmlFor="ryczalt-checkbox"
+                  className="flex items-center gap-2 cursor-pointer"
+                >
                   <span className="font-medium text-zus-text">Opodatkowanie ryczałtem</span>
                   <span
                     className="cursor-help text-gray-400 hover:text-gray-600"

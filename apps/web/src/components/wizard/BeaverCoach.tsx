@@ -5,17 +5,17 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 
-export type BeaverPose = 
-  | 'idle' 
-  | 'wave' 
-  | 'point-left' 
-  | 'point-right' 
-  | 'think' 
-  | 'read' 
-  | 'typing' 
-  | 'idea' 
-  | 'warning' 
-  | 'info-card' 
+export type BeaverPose =
+  | 'idle'
+  | 'wave'
+  | 'point-left'
+  | 'point-right'
+  | 'think'
+  | 'read'
+  | 'typing'
+  | 'idea'
+  | 'warning'
+  | 'info-card'
   | 'celebrate';
 
 export interface BeaverCoachProps {
@@ -40,17 +40,17 @@ const toneIcons = {
 
 // Map poses to emoji representations (until we have actual assets)
 const poseEmojis: Record<BeaverPose, string> = {
-  'idle': '🦫',
-  'wave': '👋🦫',
+  idle: '🦫',
+  wave: '👋🦫',
   'point-left': '👈🦫',
   'point-right': '🦫👉',
-  'think': '🤔🦫',
-  'read': '📖🦫',
-  'typing': '⌨️🦫',
-  'idea': '💡🦫',
-  'warning': '⚠️🦫',
+  think: '🤔🦫',
+  read: '📖🦫',
+  typing: '⌨️🦫',
+  idea: '💡🦫',
+  warning: '⚠️🦫',
   'info-card': '🧠🦫',
-  'celebrate': '🎉🦫',
+  celebrate: '🎉🦫',
 };
 
 export function BeaverCoach({
@@ -106,10 +106,10 @@ export function BeaverCoach({
     utterance.lang = 'pl-PL';
     utterance.rate = 0.9;
     utterance.pitch = 1.0;
-    
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
+
+    utterance.onstart = (): void => setIsSpeaking(true);
+    utterance.onend = (): void => setIsSpeaking(false);
+    utterance.onerror = (): void => setIsSpeaking(false);
 
     utteranceRef.current = utterance;
     window.speechSynthesis.speak(utterance);
@@ -189,7 +189,7 @@ export function BeaverCoach({
                   {toneIcons[tone]}
                 </span>
                 <span className="text-sm font-bold">Beaver Coach</span>
-                
+
                 {/* TTS Controls */}
                 {speechSupported && (
                   <button
@@ -203,9 +203,7 @@ export function BeaverCoach({
               </div>
 
               {/* Message - Show/hide based on transcript toggle */}
-              {showTranscript && (
-                <p className="text-base leading-relaxed mb-3">{message}</p>
-              )}
+              {showTranscript && <p className="text-base leading-relaxed mb-3">{message}</p>}
 
               {/* Transcript Toggle */}
               <button
@@ -227,7 +225,8 @@ export function BeaverCoach({
 
               {/* Keyboard hint */}
               <p className="text-xs opacity-60 mt-3">
-                Naciśnij <kbd className="px-1 py-0.5 bg-white bg-opacity-50 rounded">?</kbd> aby ponownie wyświetlić
+                Naciśnij <kbd className="px-1 py-0.5 bg-white bg-opacity-50 rounded">?</kbd> aby
+                ponownie wyświetlić
               </p>
             </div>
           </motion.div>

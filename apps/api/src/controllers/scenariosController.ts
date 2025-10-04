@@ -12,11 +12,7 @@ import {
   ApiError,
   ERROR_HTTP_MAPPING,
 } from '@zus/types';
-import {
-  calculateJdgQuick,
-  composeCareer,
-  compareScenarios,
-} from '../services/scenariosService';
+import { calculateJdgQuick, composeCareer, compareScenarios } from '../services/scenariosService';
 
 export const scenariosController = {
   /**

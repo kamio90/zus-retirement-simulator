@@ -57,8 +57,7 @@ export function InfoCard({
   const [isExpanded, setIsExpanded] = useState(false);
   const styles = variantStyles[variant];
   const shouldReduceMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const animations = shouldReduceMotion
     ? {}
@@ -87,10 +86,8 @@ export function InfoCard({
         {/* Content */}
         <div className="flex-1 min-w-0">
           <h3 className={`text-lg font-bold ${styles.text} mb-2`}>{title}</h3>
-          
-          <p className={`text-sm ${styles.text} leading-relaxed`}>
-            {description}
-          </p>
+
+          <p className={`text-sm ${styles.text} leading-relaxed`}>{description}</p>
 
           {/* Source link */}
           {sourceTitle && sourceUrl && (
@@ -102,7 +99,7 @@ export function InfoCard({
               >
                 {isExpanded ? '▼' : '▶'} Źródło: {sourceTitle}
               </button>
-              
+
               {isExpanded && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}

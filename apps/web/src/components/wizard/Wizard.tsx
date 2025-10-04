@@ -61,11 +61,8 @@ export function Wizard(): JSX.Element {
       if (gender && age && jdgIncome > 0 && contractType) {
         try {
           // Map contract type to v2 format (uppercase)
-          const contractV2: ContractTypeV2 = contractType === 'uop' 
-            ? 'UOP' 
-            : contractType === 'jdg_ryczalt' 
-            ? 'JDG_RYCZALT' 
-            : 'JDG';
+          const contractV2: ContractTypeV2 =
+            contractType === 'uop' ? 'UOP' : contractType === 'jdg_ryczalt' ? 'JDG_RYCZALT' : 'JDG';
 
           const request: WizardJdgRequest = {
             gender: gender === 'male' ? 'M' : 'F',
@@ -75,7 +72,7 @@ export function Wizard(): JSX.Element {
             isRyczalt,
             claimMonth: 6, // Default to June (Q2)
           };
-          
+
           const result = await wizardJdg(request);
           setQuickCalcResult(result);
           nextStep();

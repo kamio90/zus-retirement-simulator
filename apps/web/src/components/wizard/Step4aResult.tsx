@@ -22,7 +22,7 @@ export function Step4aResult(): JSX.Element {
 
   // Cast to v2 ScenarioResult
   const apiResult = quickCalcResult as ScenarioResult | null;
-  
+
   const mockResult = {
     nominalPension: 3500,
     realPension: 2800,
@@ -41,57 +41,59 @@ export function Step4aResult(): JSX.Element {
   };
 
   // Extract KPIs from v2 result or use mock
-  const kpis = apiResult ? [
-    {
-      label: 'Emerytura nominalna',
-      value: `${Math.round(apiResult.kpi.monthlyNominal).toLocaleString('pl-PL')} PLN`,
-      description: 'Przewidywana kwota emerytury w przyszłości',
-      icon: '💰',
-    },
-    {
-      label: 'Emerytura realna (dzisiaj)',
-      value: `${Math.round(apiResult.kpi.monthlyRealToday).toLocaleString('pl-PL')} PLN`,
-      description: 'Wartość w dzisiejszych pieniądzach',
-      icon: '📊',
-    },
-    {
-      label: 'Stopa zastąpienia',
-      value: `${Math.round(apiResult.kpi.replacementRate * 100)}%`,
-      description: 'Stosunek emerytury do ostatniego wynagrodzenia',
-      icon: '📈',
-    },
-    {
-      label: 'Przejście na emeryturę',
-      value: `${apiResult.kpi.retirementYear} ${apiResult.kpi.claimQuarter}`,
-      description: 'Rok i kwartał przejścia na emeryturę',
-      icon: '🗓️',
-    },
-  ] : [
-    {
-      label: 'Emerytura nominalna',
-      value: `${Math.round(mockResult.nominalPension).toLocaleString('pl-PL')} PLN`,
-      description: 'Przewidywana kwota emerytury w przyszłości',
-      icon: '💰',
-    },
-    {
-      label: 'Emerytura realna (dzisiaj)',
-      value: `${Math.round(mockResult.realPension).toLocaleString('pl-PL')} PLN`,
-      description: 'Wartość w dzisiejszych pieniądzach',
-      icon: '📊',
-    },
-    {
-      label: 'Stopa zastąpienia',
-      value: `${mockResult.replacementRate}%`,
-      description: 'Stosunek emerytury do ostatniego wynagrodzenia',
-      icon: '📈',
-    },
-    {
-      label: 'Przejście na emeryturę',
-      value: `${mockResult.retirementYear} Q${mockResult.retirementQuarter}`,
-      description: 'Rok i kwartał przejścia na emeryturę',
-      icon: '🗓️',
-    },
-  ];
+  const kpis = apiResult
+    ? [
+        {
+          label: 'Emerytura nominalna',
+          value: `${Math.round(apiResult.kpi.monthlyNominal).toLocaleString('pl-PL')} PLN`,
+          description: 'Przewidywana kwota emerytury w przyszłości',
+          icon: '💰',
+        },
+        {
+          label: 'Emerytura realna (dzisiaj)',
+          value: `${Math.round(apiResult.kpi.monthlyRealToday).toLocaleString('pl-PL')} PLN`,
+          description: 'Wartość w dzisiejszych pieniądzach',
+          icon: '📊',
+        },
+        {
+          label: 'Stopa zastąpienia',
+          value: `${Math.round(apiResult.kpi.replacementRate * 100)}%`,
+          description: 'Stosunek emerytury do ostatniego wynagrodzenia',
+          icon: '📈',
+        },
+        {
+          label: 'Przejście na emeryturę',
+          value: `${apiResult.kpi.retirementYear} ${apiResult.kpi.claimQuarter}`,
+          description: 'Rok i kwartał przejścia na emeryturę',
+          icon: '🗓️',
+        },
+      ]
+    : [
+        {
+          label: 'Emerytura nominalna',
+          value: `${Math.round(mockResult.nominalPension).toLocaleString('pl-PL')} PLN`,
+          description: 'Przewidywana kwota emerytury w przyszłości',
+          icon: '💰',
+        },
+        {
+          label: 'Emerytura realna (dzisiaj)',
+          value: `${Math.round(mockResult.realPension).toLocaleString('pl-PL')} PLN`,
+          description: 'Wartość w dzisiejszych pieniądzach',
+          icon: '📊',
+        },
+        {
+          label: 'Stopa zastąpienia',
+          value: `${mockResult.replacementRate}%`,
+          description: 'Stosunek emerytury do ostatniego wynagrodzenia',
+          icon: '📈',
+        },
+        {
+          label: 'Przejście na emeryturę',
+          value: `${mockResult.retirementYear} Q${mockResult.retirementQuarter}`,
+          description: 'Rok i kwartał przejścia na emeryturę',
+          icon: '🗓️',
+        },
+      ];
 
   const ctaCards = [
     {

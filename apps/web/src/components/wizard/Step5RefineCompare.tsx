@@ -8,12 +8,17 @@ import { useWizardStore, ContractType, CareerPeriod } from '../../store/wizardSt
 import { BeaverCoach } from './BeaverCoach';
 import { InfoCard } from './InfoCard';
 import { simulateV2 } from '../../services/v2-api';
-import type { SimulateV2Request, SimulateV2Response, WizardJdgRequest, ContractTypeV2 } from '@zus/types';
+import type {
+  SimulateV2Request,
+  SimulateV2Response,
+  WizardJdgRequest,
+  ContractTypeV2,
+} from '@zus/types';
 
 export function Step5RefineCompare(): JSX.Element {
-  const { 
-    careerPeriods, 
-    addCareerPeriod, 
+  const {
+    careerPeriods,
+    addCareerPeriod,
     removeCareerPeriod,
     gender,
     age,
@@ -70,10 +75,14 @@ export function Step5RefineCompare(): JSX.Element {
   // Map local contract type to API ContractTypeV2
   const mapToContractV2 = (type: ContractType): ContractTypeV2 => {
     switch (type) {
-      case 'uop': return 'UOP';
-      case 'jdg': return 'JDG';
-      case 'jdg_ryczalt': return 'JDG_RYCZALT';
-      default: return 'UOP';
+      case 'uop':
+        return 'UOP';
+      case 'jdg':
+        return 'JDG';
+      case 'jdg_ryczalt':
+        return 'JDG_RYCZALT';
+      default:
+        return 'UOP';
     }
   };
 
@@ -113,9 +122,7 @@ export function Step5RefineCompare(): JSX.Element {
     } catch (error) {
       console.error('Compute failed:', error);
       setComputeError(
-        error instanceof Error 
-          ? error.message 
-          : 'Wystąpił błąd podczas obliczeń. Spróbuj ponownie.'
+        error instanceof Error ? error.message : 'Wystąpił błąd podczas obliczeń. Spróbuj ponownie.'
       );
     } finally {
       setIsComputing(false);
@@ -271,7 +278,7 @@ export function Step5RefineCompare(): JSX.Element {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <button 
+          <button
             onClick={handleComputePrecisePension}
             disabled={isComputing}
             className="w-full py-4 bg-zus-accent text-white text-lg font-bold rounded-lg hover:bg-zus-primary focus:outline-none focus:ring-4 focus:ring-zus-primary focus:ring-opacity-50 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
@@ -280,7 +287,7 @@ export function Step5RefineCompare(): JSX.Element {
           </button>
 
           {computeError && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="mt-4 p-4 bg-red-50 border-2 border-red-300 rounded-lg"
@@ -289,15 +296,13 @@ export function Step5RefineCompare(): JSX.Element {
               <p className="text-red-900 font-semibold">❌ Błąd obliczeń</p>
               <p className="text-red-800 text-sm mt-1">{computeError}</p>
               {correlationId && (
-                <p className="text-red-600 text-xs mt-2">
-                  ID korelacji: {correlationId}
-                </p>
+                <p className="text-red-600 text-xs mt-2">ID korelacji: {correlationId}</p>
               )}
             </motion.div>
           )}
 
           {computeResult && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="mt-6 p-6 bg-green-50 border-2 border-green-300 rounded-lg"
@@ -307,13 +312,19 @@ export function Step5RefineCompare(): JSX.Element {
                 <div>
                   <p className="text-sm text-green-700">Emerytura nominalna</p>
                   <p className="text-2xl font-bold text-green-900">
-                    {Math.round(computeResult.baselineResult.kpi.monthlyNominal).toLocaleString('pl-PL')} PLN
+                    {Math.round(computeResult.baselineResult.kpi.monthlyNominal).toLocaleString(
+                      'pl-PL'
+                    )}{' '}
+                    PLN
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-green-700">Emerytura (dzisiaj)</p>
                   <p className="text-2xl font-bold text-green-900">
-                    {Math.round(computeResult.baselineResult.kpi.monthlyRealToday).toLocaleString('pl-PL')} PLN
+                    {Math.round(computeResult.baselineResult.kpi.monthlyRealToday).toLocaleString(
+                      'pl-PL'
+                    )}{' '}
+                    PLN
                   </p>
                 </div>
                 <div>
@@ -325,7 +336,8 @@ export function Step5RefineCompare(): JSX.Element {
                 <div>
                   <p className="text-sm text-green-700">Przejście na emeryturę</p>
                   <p className="text-2xl font-bold text-green-900">
-                    {computeResult.baselineResult.kpi.retirementYear} {computeResult.baselineResult.kpi.claimQuarter}
+                    {computeResult.baselineResult.kpi.retirementYear}{' '}
+                    {computeResult.baselineResult.kpi.claimQuarter}
                   </p>
                 </div>
               </div>
