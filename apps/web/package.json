@@ -12,17 +12,21 @@
   },
   "dependencies": {
     "@zus/types": "workspace:*",
+    "exceljs": "^4.4.0",
+    "framer-motion": "^12.23.22",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^7.9.3",
     "recharts": "^2.10.3",
-    "jspdf": "^2.5.1",
-    "html2canvas": "^1.4.1",
-    "exceljs": "^4.4.0",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
+    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.2.0",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.32",
