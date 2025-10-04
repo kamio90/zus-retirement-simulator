@@ -16,7 +16,7 @@ import {
 } from 'recharts';
 import { fetchBenchmarks, type BenchmarksResponse } from '../services/api';
 import { exportToPdfServer } from '../utils/exportPdfServer';
-import { exportToXls } from '../utils/exportXls';
+import { exportToXlsServer } from '../utils/exportXlsServer';
 
 interface ResultsDisplayProps {
   result: SimulationResult;
@@ -78,7 +78,7 @@ export function ResultsDisplay({ result, input }: ResultsDisplayProps): JSX.Elem
   const handleExportXls = async (): Promise<void> => {
     setExportingXls(true);
     try {
-      await exportToXls(result, benchmarks || undefined);
+      await exportToXlsServer(result, input);
     } catch (error) {
       console.error('XLS export failed:', error);
       alert('Nie udało się wyeksportować do XLS. Spróbuj ponownie.');

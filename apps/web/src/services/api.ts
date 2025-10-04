@@ -132,3 +132,38 @@ export async function generatePdfReport(payload: ReportPayload): Promise<Blob> {
     throw new ApiClientError(error instanceof Error ? error.message : 'Unknown error occurred');
   }
 }
+
+/**
+ * Generate XLS report from simulation results
+ * @param payload Report payload with input, result, and optional benchmarks
+ * @returns XLS blob for download
+ * @throws ApiClientError on validation or server errors
+ */
+export async function generateXlsReport(payload: ReportPayload): Promise<Blob> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/reports/xls`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorData: ApiError = await response.json();
+      throw new ApiClientError(
+        errorData.message || 'XLS generation failed',
+        errorData,
+        response.status
+      );
+    }
+
+    const blob = await response.blob();
+    return blob;
+  } catch (error) {
+    if (error instanceof ApiClientError) {
+      throw error;
+    }
+    throw new ApiClientError(error instanceof Error ? error.message : 'Unknown error occurred');
+  }
+}

@@ -3,6 +3,7 @@
  * Handles PDF and XLS report generation
  */
 import PDFDocument from 'pdfkit';
+import ExcelJS from 'exceljs';
 import type { ReportPayload } from '@zus/types';
 import { logger } from '../utils/logger';
 
@@ -158,6 +159,159 @@ function formatPercentage(value: number): string {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
   }).format(value);
+}
+
+/**
+ * Generate XLS report from simulation results
+ * @param payload Report payload with input, result, and optional benchmarks
+ * @returns XLS buffer
+ */
+export async function generateXlsReport(payload: ReportPayload): Promise<Buffer> {
+  try {
+    const { result } = payload;
+    const workbook = new ExcelJS.Workbook();
+
+    // Metadata
+    workbook.creator = 'ZUS Retirement Simulator';
+    workbook.created = new Date();
+
+    // Summary Sheet
+    const summarySheet = workbook.addWorksheet('Podsumowanie');
+
+    // Title
+    summarySheet.mergeCells('A1:D1');
+    summarySheet.getCell('A1').value = 'Symulator Emerytalny ZUS - Wyniki';
+    summarySheet.getCell('A1').font = { bold: true, size: 16, color: { argb: 'FF007A33' } };
+    summarySheet.getCell('A1').alignment = { horizontal: 'center' };
+
+    // Key Results
+    let row = 3;
+    summarySheet.getCell(`A${row}`).value = 'Wyniki główne';
+    summarySheet.getCell(`A${row}`).font = { bold: true, size: 14 };
+    row += 2;
+
+    summarySheet.getCell(`A${row}`).value = 'Miesięczna emerytura (nominalna)';
+    summarySheet.getCell(`B${row}`).value = result.monthlyPensionNominal;
+    summarySheet.getCell(`B${row}`).numFmt = '#,##0.00 "PLN"';
+    row++;
+
+    summarySheet.getCell(`A${row}`).value = 'Miesięczna emerytura (wartość dzisiejsza)';
+    summarySheet.getCell(`B${row}`).value = result.monthlyPensionRealToday;
+    summarySheet.getCell(`B${row}`).numFmt = '#,##0.00 "PLN"';
+    row++;
+
+    summarySheet.getCell(`A${row}`).value = 'Stopa zastąpienia';
+    summarySheet.getCell(`B${row}`).value = result.replacementRate;
+    summarySheet.getCell(`B${row}`).numFmt = '0.0%';
+    row += 2;
+
+    // Scenario Details
+    summarySheet.getCell(`A${row}`).value = 'Szczegóły scenariusza';
+    summarySheet.getCell(`A${row}`).font = { bold: true, size: 14 };
+    row += 2;
+
+    summarySheet.getCell(`A${row}`).value = 'Wiek emerytalny';
+    summarySheet.getCell(`B${row}`).value = `${result.scenario.retirementAge} lat`;
+    row++;
+
+    summarySheet.getCell(`A${row}`).value = 'Rok emerytury';
+    summarySheet.getCell(`B${row}`).value = result.scenario.retirementYear;
+    row++;
+
+    summarySheet.getCell(`A${row}`).value = 'Miesiąc zgłoszenia';
+    summarySheet.getCell(`B${row}`).value = result.scenario.claimMonth;
+    row++;
+
+    summarySheet.getCell(`A${row}`).value = 'Płeć';
+    summarySheet.getCell(`B${row}`).value =
+      result.scenario.gender === 'M' ? 'Mężczyzna' : 'Kobieta';
+    row += 2;
+
+    // Assumptions
+    summarySheet.getCell(`A${row}`).value = 'Założenia';
+    summarySheet.getCell(`A${row}`).font = { bold: true, size: 14 };
+    row += 2;
+
+    summarySheet.getCell(`A${row}`).value = 'Rodzaj dostawcy';
+    summarySheet.getCell(`B${row}`).value = result.assumptions.providerKind;
+    row++;
+
+    summarySheet.getCell(`A${row}`).value = 'Waloryzacja roczna';
+    summarySheet.getCell(`B${row}`).value = result.assumptions.annualValorizationSetId;
+    row++;
+
+    summarySheet.getCell(`A${row}`).value = 'Waloryzacja kwartalna';
+    summarySheet.getCell(`B${row}`).value = result.assumptions.quarterlySetId;
+    row++;
+
+    summarySheet.getCell(`A${row}`).value = 'Tabela SDŻ';
+    summarySheet.getCell(`B${row}`).value = result.assumptions.sdżTableId;
+    row++;
+
+    summarySheet.getCell(`A${row}`).value = 'Wersja CPI';
+    summarySheet.getCell(`B${row}`).value = result.assumptions.cpiVintage;
+    row++;
+
+    summarySheet.getCell(`A${row}`).value = 'Wersja płac';
+    summarySheet.getCell(`B${row}`).value = result.assumptions.wageVintage;
+
+    // Auto-size columns
+    summarySheet.getColumn('A').width = 40;
+    summarySheet.getColumn('B').width = 25;
+
+    // Capital Trajectory Sheet
+    const trajectorySheet = workbook.addWorksheet('Trajektoria kapitału');
+
+    // Headers
+    trajectorySheet.getCell('A1').value = 'Rok';
+    trajectorySheet.getCell('B1').value = 'Roczne wynagrodzenie (PLN)';
+    trajectorySheet.getCell('C1').value = 'Składka roczna (PLN)';
+    trajectorySheet.getCell('D1').value = 'Kapitał skumulowany (PLN)';
+
+    trajectorySheet.getRow(1).font = { bold: true };
+    trajectorySheet.getRow(1).fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'FFE5F3E8' }, // ZUS light green
+    };
+
+    // Data
+    result.capitalTrajectory.forEach(
+      (
+        item: {
+          year: number;
+          annualWage: number;
+          annualContribution: number;
+          cumulativeCapitalAfterAnnual: number;
+        },
+        index: number
+      ) => {
+        const rowNum = index + 2;
+        trajectorySheet.getCell(`A${rowNum}`).value = item.year;
+        trajectorySheet.getCell(`B${rowNum}`).value = item.annualWage;
+        trajectorySheet.getCell(`B${rowNum}`).numFmt = '#,##0.00';
+        trajectorySheet.getCell(`C${rowNum}`).value = item.annualContribution;
+        trajectorySheet.getCell(`C${rowNum}`).numFmt = '#,##0.00';
+        trajectorySheet.getCell(`D${rowNum}`).value = item.cumulativeCapitalAfterAnnual;
+        trajectorySheet.getCell(`D${rowNum}`).numFmt = '#,##0.00';
+      }
+    );
+
+    // Auto-size columns
+    trajectorySheet.getColumn('A').width = 12;
+    trajectorySheet.getColumn('B').width = 28;
+    trajectorySheet.getColumn('C').width = 28;
+    trajectorySheet.getColumn('D').width = 30;
+
+    // Generate buffer
+    const buffer = await workbook.xlsx.writeBuffer();
+    return Buffer.from(buffer);
+  } catch (error) {
+    logger.error(
+      `XLS generation failed: ${error instanceof Error ? error.message : String(error)}`
+    );
+    throw error;
+  }
 }
 
 // Placeholder for reports service
