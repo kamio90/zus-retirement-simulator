@@ -11,12 +11,14 @@
     "format": "prettier --write src"
   },
   "dependencies": {
+    "@zus/types": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "recharts": "^2.10.3",
     "jspdf": "^2.5.1",
     "html2canvas": "^1.4.1",
-    "exceljs": "^4.4.0"
+    "exceljs": "^4.4.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
