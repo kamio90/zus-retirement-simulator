@@ -2,6 +2,7 @@
  * Step 4a - Quick Calculation Result
  * KPI grid, capital trajectory chart, and CTA cards for refinement
  * Now with instant what-if updates without navigation
+ * Added Explain This overlay for contextual micro-lessons
  */
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
@@ -16,8 +17,11 @@ import {
 } from 'recharts';
 import { useWizardStore } from '../../store/wizardStore';
 import { useResultStore } from '../../stores/resultStore';
+import { useExplainOverlayStore } from '../../stores/explainOverlayStore';
+import { useExplainer } from '../../hooks/useExplainer';
 import { BeaverCoach } from './BeaverCoach';
 import { KnowledgeCard } from './KnowledgeCard';
+import { ExplainOverlay } from './ExplainOverlay';
 import { compareWhatIf } from '../../services/v2-api';
 import type { ScenarioResult, WizardJdgRequest, RefinementItem } from '@zus/types';
 
@@ -39,6 +43,8 @@ export function Step4aResult(): JSX.Element {
     setLoadingWhatIf,
     setWhatIfError,
   } = useResultStore();
+  const { openExplainer, getCachedExplainer, cacheExplainer } = useExplainOverlayStore();
+  const { fetchExplainer } = useExplainer();
 
   // Initialize baseline result from wizard store
   useEffect(() => {
@@ -108,6 +114,29 @@ export function Step4aResult(): JSX.Element {
       setWhatIfError(error instanceof Error ? error.message : 'Wystąpił błąd podczas obliczeń');
     } finally {
       setLoadingWhatIf(false);
+    }
+  };
+
+  // Handle explain click on KPI tiles
+  const handleExplainClick = async (
+    targetId: string,
+    event: React.MouseEvent<HTMLButtonElement>
+  ): Promise<void> => {
+    const targetElement = event.currentTarget.closest('[data-kpi-tile]') as HTMLElement;
+    if (!targetElement) return;
+
+    // Check cache first
+    const cached = getCachedExplainer(targetId);
+    if (cached) {
+      openExplainer(targetId, targetElement, cached);
+      return;
+    }
+
+    // Fetch explainer content
+    const explainer = await fetchExplainer(targetId, 'pl-PL');
+    if (explainer) {
+      cacheExplainer(targetId, explainer);
+      openExplainer(targetId, targetElement, explainer);
     }
   };
 
@@ -295,11 +324,31 @@ export function Step4aResult(): JSX.Element {
               ? calculateDelta(kpi.currentValue, kpi.baselineValue)
               : null;
 
+          // Map KPI to targetId for explainer
+          const targetIdMap: { [key: string]: string } = {
+            'Emerytura nominalna': 'kpi_nominal',
+            'Emerytura realna (dzisiaj)': 'kpi_real',
+            'Stopa zastąpienia': 'kpi_replacement',
+            'Przejście na emeryturę': 'kpi_retirement_year',
+          };
+          const targetId = targetIdMap[kpi.label] || '';
+
           return (
             <motion.div key={index} variants={itemVariants}>
               <div
-                className={`bg-white rounded-lg shadow-md p-6 text-center h-full hover:shadow-lg transition-shadow ${isLoadingWhatIf ? 'animate-pulse' : ''}`}
+                data-kpi-tile
+                className={`bg-white rounded-lg shadow-md p-6 text-center h-full hover:shadow-lg transition-shadow relative ${isLoadingWhatIf ? 'animate-pulse' : ''}`}
               >
+                {/* Explain button */}
+                {targetId && (
+                  <button
+                    onClick={(e) => handleExplainClick(targetId, e)}
+                    className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-zus-primary hover:bg-gray-100 rounded-full transition-colors"
+                    aria-label={`Wyjaśnij: ${kpi.label}`}
+                  >
+                    ℹ️
+                  </button>
+                )}
                 <div className="text-4xl mb-3" role="img" aria-label={kpi.label}>
                   {kpi.icon}
                 </div>
@@ -550,6 +599,9 @@ export function Step4aResult(): JSX.Element {
         onCta={() => setCurrentStep(5)}
         stepId="step4a_result"
       />
+
+      {/* Explain This Overlay */}
+      <ExplainOverlay />
     </div>
   );
 }
