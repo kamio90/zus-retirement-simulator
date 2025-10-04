@@ -17,6 +17,16 @@ export class ApiClientError extends Error {
   }
 }
 
+export interface BenchmarksResponse {
+  nationalAvgPension: number;
+  powiatAvgPension?: number;
+  powiatResolved?: {
+    name: string;
+    teryt: string;
+  };
+  generatedAt: string;
+}
+
 /**
  * Simulate pension calculation
  * @param request Simulation input data
@@ -43,6 +53,42 @@ export async function simulatePension(request: SimulateRequest): Promise<Simulat
     }
 
     const result: SimulationResult = await response.json();
+    return result;
+  } catch (error) {
+    if (error instanceof ApiClientError) {
+      throw error;
+    }
+    throw new ApiClientError(error instanceof Error ? error.message : 'Unknown error occurred');
+  }
+}
+
+/**
+ * Fetch benchmarks for comparison
+ * @param powiatTeryt Optional TERYT code for regional benchmarks
+ * @param gender Optional gender filter
+ * @returns Benchmarks data
+ */
+export async function fetchBenchmarks(
+  powiatTeryt?: string,
+  gender?: 'M' | 'F'
+): Promise<BenchmarksResponse> {
+  try {
+    const params = new URLSearchParams();
+    if (powiatTeryt) params.append('powiatTeryt', powiatTeryt);
+    if (gender) params.append('gender', gender);
+
+    const response = await fetch(`${API_BASE_URL}/benchmarks?${params.toString()}`);
+
+    if (!response.ok) {
+      const errorData: ApiError = await response.json();
+      throw new ApiClientError(
+        errorData.message || 'Failed to fetch benchmarks',
+        errorData,
+        response.status
+      );
+    }
+
+    const result: BenchmarksResponse = await response.json();
     return result;
   } catch (error) {
     if (error instanceof ApiClientError) {
