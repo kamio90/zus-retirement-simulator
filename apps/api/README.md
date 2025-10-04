@@ -85,6 +85,86 @@ GET /benchmarks?powiatTeryt=0401000&gender=M
 ### `/telemetry` — Usage telemetry
 Collect usage statistics and analytics.
 
+**Event Types:**
+- `simulate_success` — Successful pension simulation
+- `download_pdf` — PDF report downloaded
+- `download_xls` — Excel report downloaded
+- `dashboard_open` — Dashboard/results page opened
+- `form_validation_failed` — Form validation errors
+
+**Request Body (all events):**
+```json
+{
+  "eventType": "simulate_success",
+  "timestampISO": "2025-01-15T14:30:00.000Z",
+  "correlationId": "unique-session-id",
+  "userAgentHash": "hashed-user-agent",
+  "payloadLite": {
+    "retirementAge": 67,
+    "workYears": 40
+  }
+}
+```
+
+**Privacy & Storage:**
+- Events stored in memory (mock implementation)
+- No PII collected
+- Limited to last 10,000 events
+- Hash user agent for privacy
+
+### `/admin` — Admin telemetry exports
+
+#### `GET /admin/telemetry/stats`
+Get telemetry statistics summary.
+
+**Response:**
+```json
+{
+  "totalEvents": 150,
+  "eventTypeCounts": {
+    "simulate_success": 80,
+    "download_pdf": 30,
+    "download_xls": 20,
+    "dashboard_open": 15,
+    "form_validation_failed": 5
+  },
+  "oldestEvent": "2025-01-15T10:00:00.000Z",
+  "newestEvent": "2025-01-15T16:00:00.000Z"
+}
+```
+
+#### `GET /admin/telemetry/export?format={jsonl|csv}`
+Export all telemetry events in JSONL or CSV format.
+
+**Query Parameters:**
+- `format` — Export format: `jsonl` (default) or `csv`
+
+**JSONL Format** (Content-Type: `application/x-ndjson`):
+```jsonl
+{"eventType":"simulate_success","timestampISO":"2025-01-15T14:30:00.000Z",...}
+{"eventType":"download_pdf","timestampISO":"2025-01-15T14:35:00.000Z",...}
+```
+
+**CSV Format** (Content-Type: `text/csv`):
+```csv
+eventType,timestampISO,correlationId,userAgentHash,payloadLite
+simulate_success,2025-01-15T14:30:00.000Z,session-123,hash-abc,"{""retirementAge"":67}"
+download_pdf,2025-01-15T14:35:00.000Z,session-124,hash-def,{}
+```
+
+**Examples:**
+```bash
+# Get telemetry statistics
+GET /admin/telemetry/stats
+
+# Export as JSONL (default)
+GET /admin/telemetry/export
+GET /admin/telemetry/export?format=jsonl
+
+# Export as CSV
+GET /admin/telemetry/export?format=csv
+```
+
 ## Logging
 Logs are written to `apps/api/logs/access.log`.
 
