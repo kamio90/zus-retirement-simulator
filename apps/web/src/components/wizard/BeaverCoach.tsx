@@ -5,6 +5,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useSpeech } from '../../hooks/useSpeech';
+import { useBeaverStore } from '../../stores/beaverStore';
 
 export type BeaverPose =
   | 'idle'
@@ -70,6 +71,7 @@ export function BeaverCoach({
   const [showVoiceSelector, setShowVoiceSelector] = useState(false);
 
   const { voices, settings, isSpeaking, speak, stop, updateSettings, speechSupported } = useSpeech();
+  const { tone: contentTone, setTone } = useBeaverStore();
 
   useEffect(() => {
     // Check for reduced motion preference
@@ -185,6 +187,32 @@ export function BeaverCoach({
                 <span id="beaver-coach-title" className="text-sm font-bold">
                   {title || 'Beaver Coach'}
                 </span>
+
+                {/* Tone Toggle */}
+                <div className="flex bg-white/50 rounded-md border border-gray-300 text-xs overflow-hidden">
+                  <button
+                    onClick={() => setTone('fun')}
+                    className={`px-2 py-1 transition-colors ${
+                      contentTone === 'fun'
+                        ? 'bg-zus-primary text-white'
+                        : 'hover:bg-gray-100'
+                    }`}
+                    aria-label="Tryb zabawny"
+                  >
+                    FUN
+                  </button>
+                  <button
+                    onClick={() => setTone('formal')}
+                    className={`px-2 py-1 transition-colors ${
+                      contentTone === 'formal'
+                        ? 'bg-zus-primary text-white'
+                        : 'hover:bg-gray-100'
+                    }`}
+                    aria-label="Tryb formalny"
+                  >
+                    FORMAL
+                  </button>
+                </div>
 
                 {/* Minimize button */}
                 {canMinimize && (

@@ -2,32 +2,47 @@
   "version": "2025.10.0",
   "items": [
     {
-      "id": "waloryzacja-roczna",
-      "step": "step4a_result",
-      "title": "Waloryzacja roczna",
-      "body": "Każdego 1 czerwca ZUS waloryzuje saldo zapisane na dzień 31 stycznia wskaźnikiem za poprzedni rok.",
-      "source": {
-        "title": "ZUS – waloryzacja roczna",
-        "url": "https://www.zus.pl/baza-wiedzy/waloryzacja"
-      },
-      "lang": "pl-PL"
-    },
-    {
-      "id": "waloryzacja-kwartalna",
-      "step": "step4a_result",
-      "title": "Waloryzacja kwartalna",
-      "body": "Jeśli przejście na emeryturę następuje po 31 stycznia danego roku, stosuje się dodatkową waloryzację kwartalną uwzględniającą wzrost gospodarczy od ostatniej waloryzacji.",
-      "source": {
-        "title": "ZUS - Zasady obliczania emerytury",
-        "url": "https://www.zus.pl/emerytura/kalkulator-emerytalny"
-      },
-      "lang": "pl-PL"
-    },
-    {
-      "id": "kapital-poczatkowy",
+      "id": "defined-contribution",
       "step": "step1_gender_age",
-      "title": "Kapitał początkowy",
-      "body": "Kapitał początkowy to zwaloryzowana wartość składek i stażu pracy sprzed 1999 roku. Pierwszy wskaźnik waloryzacji wynosił 115,60% (1999 r.).",
+      "title": "System zdefiniowanej składki",
+      "tone": "fun",
+      "short": "ZUS jak skarbonka — co wrzucisz, to kiedyś wyjmiesz.",
+      "body": "ZUS działa jak skarbonka — co wrzucisz, to później wyjmiesz (no… prawie). Twoje składki nie znikają; cicho sobie rosną.",
+      "pose": "idea",
+      "icon": "account_balance",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – system",
+        "url": "https://www.zus.pl/baza-wiedzy/system-emerytalny"
+      },
+      "lang": "pl-PL"
+    },
+    {
+      "id": "defined-contribution",
+      "step": "step1_gender_age",
+      "title": "System zdefiniowanej składki",
+      "tone": "formal",
+      "short": "Od 1999 r. emerytura = suma zwaloryzowanych składek.",
+      "body": "Od 1999 roku ZUS oblicza emerytury na podstawie sumy składek zapisanych na Twoim koncie. Im wyższe składki, tym wyższe świadczenie.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – system",
+        "url": "https://www.zus.pl/baza-wiedzy/system-emerytalny"
+      },
+      "lang": "pl-PL"
+    },
+    {
+      "id": "initial-capital",
+      "step": "step3a_jdg",
+      "title": "Kapitał początkowy (sprzed 1999)",
+      "tone": "fun",
+      "short": "Kapitał początkowy to przeliczenie 'oszczędności' sprzed 1999.",
+      "body": "Jeśli pracowałeś przed 1999, ZUS przeliczy, ile byś 'zaoszczędził' w starym świecie — trochę jak wymiana starych PLN na nowe, ale dla emerytur.",
+      "pose": "read",
+      "icon": "history",
+      "tokens": [],
       "source": {
         "title": "ZUS - Kapitał początkowy",
         "url": "https://www.zus.pl/baza-wiedzy/kapital-poczatkowy"
@@ -35,10 +50,31 @@
       "lang": "pl-PL"
     },
     {
-      "id": "sdz-tabela",
-      "step": "step4a_result",
-      "title": "Tabela średniego dalszego życia (SDŻ)",
-      "body": "Wysokość emerytury oblicza się dzieląc kapitał przez przewidywany dalszy okres życia (w miesiącach). Tabele SDŻ publikowane są corocznie przez GUS.",
+      "id": "initial-capital",
+      "step": "step3a_jdg",
+      "title": "Kapitał początkowy (sprzed 1999)",
+      "tone": "formal",
+      "short": "Okresy przed 1999 r. przeliczane na kapitał początkowy.",
+      "body": "Dla okresów sprzed 1999 roku ZUS ustala 'kapitał początkowy', czyli teoretyczną wartość składek zgromadzonych w starym systemie, przeliczoną na nową formułę.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
+      "source": {
+        "title": "ZUS - Kapitał początkowy",
+        "url": "https://www.zus.pl/baza-wiedzy/kapital-poczatkowy"
+      },
+      "lang": "pl-PL"
+    },
+    {
+      "id": "life-expectancy",
+      "step": "step1_gender_age",
+      "title": "Średnie dalsze życie (SDŻ)",
+      "tone": "fun",
+      "short": "ZUS dzieli Twoje oszczędności przez ile miesięcy statystycznie Ci zostało.",
+      "body": "ZUS dzieli Twoje oszczędności przez to, ile statystycznie jeszcze pożyjesz. Im później przejdziesz na emeryturę, tym mniejszy dzielnik — a więc wyższa kwota miesięczna.",
+      "pose": "idea",
+      "icon": "calendar_month",
+      "tokens": [],
       "source": {
         "title": "GUS - Tablice trwania życia",
         "url": "https://stat.gov.pl/tablice-trwania-zycia/"
@@ -46,68 +82,242 @@
       "lang": "pl-PL"
     },
     {
-      "id": "skladka-emerytalna",
-      "step": "step2_contract",
-      "title": "Składka emerytalna",
-      "body": "Składka na ubezpieczenie emerytalne wynosi 19,52% podstawy wymiaru. W przypadku UoP podstawą jest pełne wynagrodzenie brutto.",
+      "id": "life-expectancy",
+      "step": "step1_gender_age",
+      "title": "Średnie dalsze życie (SDŻ)",
+      "tone": "formal",
+      "short": "Kapitał dzielony przez przewidywany okres życia (tabela GUS).",
+      "body": "Podstawę emerytury dzieli się przez średnie dalsze życie (tabela GUS, okno 1 IV – 31 III). Późniejsze przejście → mniejszy dzielnik → wyższa miesięczna kwota.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
       "source": {
-        "title": "ZUS - Składki na ubezpieczenia",
-        "url": "https://www.zus.pl/baza-wiedzy/skladki"
+        "title": "GUS - Tablice trwania życia",
+        "url": "https://stat.gov.pl/tablice-trwania-zycia/"
       },
       "lang": "pl-PL"
     },
     {
-      "id": "uop-vs-jdg",
-      "step": "step2_contract",
-      "title": "UoP a JDG - różnice w składkach",
-      "body": "Umowa o pracę (UoP): składki liczone od pełnego wynagrodzenia brutto. Działalność gospodarcza (JDG): możliwość opłacania składek od niższej podstawy.",
+      "id": "valorization",
+      "step": "step4a_result",
+      "title": "Waloryzacja składek",
+      "tone": "fun",
+      "short": "Każdego roku ZUS dolewa trochę procenta, żeby Twoje oszczędności nie straciły na wartości.",
+      "body": "Każdego roku ZUS dodaje jakieś 'procenty', żeby Twoje oszczędności nie straciły na wartości. Tarcza antyinflacyjna dla Twojego garnuszka emerytalnego.",
+      "pose": "idea",
+      "icon": "trending_up",
+      "tokens": [],
       "source": {
-        "title": "ZUS - Przedsiębiorcy i składki",
-        "url": "https://www.zus.pl/przedsiebiorcy"
+        "title": "ZUS – waloryzacja",
+        "url": "https://www.zus.pl/baza-wiedzy/waloryzacja"
       },
       "lang": "pl-PL"
     },
     {
-      "id": "ryczalt-jdg",
+      "id": "valorization",
+      "step": "step4a_result",
+      "title": "Waloryzacja składek",
+      "tone": "formal",
+      "short": "Rocznie (1 czerwca) ZUS waloryzuje stan konta wskaźnikiem za poprzedni rok.",
+      "body": "Corocznie (1 czerwca) ZUS waloryzuje saldo zapisane na dzień 31 stycznia wskaźnikiem za poprzedni rok; waloryzacja kwartalna dotyczy kwot po 31 stycznia.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – waloryzacja",
+        "url": "https://www.zus.pl/baza-wiedzy/waloryzacja"
+      },
+      "lang": "pl-PL"
+    },
+    {
+      "id": "minimum-pension",
+      "step": "step4a_result",
+      "title": "Emerytura minimalna",
+      "tone": "fun",
+      "short": "Nawet jeśli mało nazbierałeś, jest dolna granica — pod warunkiem stażu.",
+      "body": "Nawet jeśli naoszczędzałeś niewiele, jest granica dolna — pod warunkiem że spełniłeś wymogi stażowe. Coś jak 'wersja demo' emerytury, ale pomaga.",
+      "pose": "info",
+      "icon": "verified",
+      "tokens": ["{{MIN_PENSION}}"],
+      "source": {
+        "title": "ZUS – minimalna emerytura",
+        "url": "https://www.zus.pl/baza-wiedzy/emerytura-minimalna"
+      },
+      "lang": "pl-PL"
+    },
+    {
+      "id": "minimum-pension",
+      "step": "step4a_result",
+      "title": "Emerytura minimalna",
+      "tone": "formal",
+      "short": "Przy spełnieniu wymogów stażowych przysługuje minimalna emerytura.",
+      "body": "Jeżeli spełnione są ustawowe okresy składkowe, przyznawana jest emerytura minimalna niezależnie od niskiego naliczenia (dokładne kwoty/progi zgodnie z bieżącym prawem).",
+      "pose": "read",
+      "icon": "info",
+      "tokens": ["{{MIN_PENSION}}"],
+      "source": {
+        "title": "ZUS – minimalna emerytura",
+        "url": "https://www.zus.pl/baza-wiedzy/emerytura-minimalna"
+      },
+      "lang": "pl-PL"
+    },
+    {
+      "id": "women-men",
+      "step": "step2_contract",
+      "title": "Kobiety i mężczyźni",
+      "tone": "fun",
+      "short": "Kobiety wcześniej przechodzą na emeryturę, więc ZUS dzieli przez więcej miesięcy.",
+      "body": "Kobiety przechodzą na emeryturę wcześniej, więc ZUS dzieli ich garnek przez więcej miesięcy — często mniejsza kwota miesięczna (ale dłużej się nią cieszy).",
+      "pose": "idea",
+      "icon": "groups",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – wiek emerytalny",
+        "url": "https://www.zus.pl/baza-wiedzy/wiek-emerytalny"
+      },
+      "lang": "pl-PL"
+    },
+    {
+      "id": "women-men",
+      "step": "step2_contract",
+      "title": "Kobiety i mężczyźni",
+      "tone": "formal",
+      "short": "Różne wiek emerytalny = różne dzielniki; może dać niższe świadczenia dla kobiet.",
+      "body": "Różnice w wieku emerytalnym przekładają się na różne dzielniki; ceteris paribus może to skutkować niższymi świadczeniami miesięcznymi dla kobiet.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – wiek emerytalny",
+        "url": "https://www.zus.pl/baza-wiedzy/wiek-emerytalny"
+      },
+      "lang": "pl-PL"
+    },
+    {
+      "id": "very-low-pensions",
       "step": "step3a_jdg",
-      "title": "Ryczałt w JDG",
-      "body": "Przedsiębiorcy opodatkowani ryczałtem od przychodów ewidencjonowanych mogą opłacać składki ZUS od obniżonej podstawy (30% przychodu lub maksymalnie 4500 PLN). To oznacza niższe składki, ale również niższą przyszłą emeryturę.",
+      "title": "Emerytury groszowe",
+      "tone": "fun",
+      "short": "Tak, są emerytury po 5 PLN miesięcznie — nie żart.",
+      "body": "Tak, są osoby które dostają 5 PLN miesięcznie — to nie żart. ZUS agreguje takie kwoty w rzadsze, większe wypłaty, żeby w ogóle coś poczuć.",
+      "pose": "warning",
+      "icon": "warning",
+      "tokens": [],
       "source": {
-        "title": "ZUS - JDG na ryczałcie",
-        "url": "https://www.zus.pl/baza-wiedzy/ryczalt"
+        "title": "ZUS – niskie świadczenia",
+        "url": "https://www.zus.pl/baza-wiedzy/emerytury"
       },
       "lang": "pl-PL"
     },
     {
-      "id": "okresy-kariery",
-      "step": "refine_compare",
-      "title": "Okresy kariery zawodowej",
-      "body": "Dla dokładniejszego wyniku warto uwzględnić różne okresy kariery: zmiany umów, przerwy, awanse. Każdy okres z innym typem umowy lub wynagrodzeniem wpływa na ostateczny kapitał emerytalny.",
+      "id": "very-low-pensions",
+      "step": "step3a_jdg",
+      "title": "Emerytury groszowe",
+      "tone": "formal",
+      "short": "Przy marginalnych naliczeniach ZUS może stosować inną częstotliwość wypłat.",
+      "body": "Dla marginalnych naliczeń ZUS może wypłacać w innej kadencji lub agregować wypłaty zgodnie z przepisami.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
       "source": {
-        "title": "ZUS - Kalkulator emerytalny",
+        "title": "ZUS – niskie świadczenia",
+        "url": "https://www.zus.pl/baza-wiedzy/emerytury"
+      },
+      "lang": "pl-PL"
+    },
+    {
+      "id": "bridging-pensions",
+      "step": "refine_compare",
+      "title": "Emerytury pomostowe",
+      "tone": "fun",
+      "short": "Niektóre zawody zużywają szybciej — mogą przejść wcześniej.",
+      "body": "Niektóre zawody zużywają szybciej — górnicy, piloci, hutnicy. Mogą przejść na emeryturę wcześniej, a ZUS to uznaje.",
+      "pose": "info",
+      "icon": "engineering",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – emerytury pomostowe",
+        "url": "https://www.zus.pl/baza-wiedzy/emerytury-pomostowe"
+      },
+      "lang": "pl-PL"
+    },
+    {
+      "id": "bridging-pensions",
+      "step": "refine_compare",
+      "title": "Emerytury pomostowe",
+      "tone": "formal",
+      "short": "Emerytury pomostowe dla określonych zawodów, finansowane z dedykowanych składek pracodawców.",
+      "body": "Emerytury pomostowe przysługują określonym zawodom i są finansowane przez dedykowane składki pracodawców.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – emerytury pomostowe",
+        "url": "https://www.zus.pl/baza-wiedzy/emerytury-pomostowe"
+      },
+      "lang": "pl-PL"
+    },
+    {
+      "id": "multi-country",
+      "step": "refine_compare",
+      "title": "Emerytury międzynarodowe (UE)",
+      "tone": "fun",
+      "short": "Pracowałeś w EU? ZUS łączy siły z innymi krajami.",
+      "body": "Pracowałeś po EU? ZUS dogaduje się z innymi krajami — międzynarodowa koalicja emerytalna.",
+      "pose": "idea",
+      "icon": "public",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – ubezpieczenia międzynarodowe",
+        "url": "https://www.zus.pl/baza-wiedzy/ubezpieczenia-miedzynarodowe"
+      },
+      "lang": "pl-PL"
+    },
+    {
+      "id": "multi-country",
+      "step": "refine_compare",
+      "title": "Emerytury międzynarodowe (UE)",
+      "tone": "formal",
+      "short": "Okresy ubezpieczenia z różnych państw UE są agregowane.",
+      "body": "Okresy ubezpieczenia z różnych państw UE agregowane są na mocy przepisów koordynacyjnych; ZUS współpracuje z zagranicznymi instytucjami w celu ustalenia uprawnień.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – ubezpieczenia międzynarodowe",
+        "url": "https://www.zus.pl/baza-wiedzy/ubezpieczenia-miedzynarodowe"
+      },
+      "lang": "pl-PL"
+    },
+    {
+      "id": "pue-calculator",
+      "step": "refine_compare",
+      "title": "Kalkulator PUE ZUS",
+      "tone": "fun",
+      "short": "W PUE ZUS możesz podejrzeć przyszłą emeryturę. Zrób herbatę najpierw — wyniki mogą być… emocjonujące.",
+      "body": "W PUE ZUS możesz podejrzeć przyszłą emeryturę. Zrób herbatę najpierw — wyniki mogą być… emocjonujące.",
+      "pose": "typing",
+      "icon": "calculate",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – kalkulator emerytalny",
         "url": "https://www.zus.pl/emerytura/kalkulator-emerytalny"
       },
       "lang": "pl-PL"
     },
     {
-      "id": "stopa-zastapienia",
-      "step": "step4a_result",
-      "title": "Stopa zastąpienia",
-      "body": "Stopa zastąpienia to stosunek wysokości emerytury do ostatniego wynagrodzenia (w %). W Polsce wynosi średnio 50-60%, ale zależy od długości kariery, wysokości zarobków i typu umów.",
+      "id": "pue-calculator",
+      "step": "refine_compare",
+      "title": "Kalkulator PUE ZUS",
+      "tone": "formal",
+      "short": "PUE ZUS dostarcza scenariuszy dla różnych dat przejścia i poziomu składek.",
+      "body": "PUE ZUS dostarcza scenariuszy dla różnych dat przejścia na emeryturę i poziomu składek; wyniki mają charakter orientacyjny.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
       "source": {
-        "title": "GUS - Emerytury i renty",
-        "url": "https://stat.gov.pl/obszary-tematyczne/rynek-pracy/emerytury-i-renty/"
-      },
-      "lang": "pl-PL"
-    },
-    {
-      "id": "kwartal-przejscia",
-      "step": "step4a_result",
-      "title": "Kwartał przejścia na emeryturę",
-      "body": "Moment przejścia na emeryturę (kwartał) wpływa na waloryzację kwartalną. Im później w roku, tym wyższa waloryzacja dodatkowa.",
-      "source": {
-        "title": "ZUS - Kiedy przejść na emeryturę",
-        "url": "https://www.zus.pl/emerytura"
+        "title": "ZUS – kalkulator emerytalny",
+        "url": "https://www.zus.pl/emerytura/kalkulator-emerytalny"
       },
       "lang": "pl-PL"
     }
