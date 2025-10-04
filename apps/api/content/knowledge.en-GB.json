@@ -1,0 +1,115 @@
+{
+  "version": "2025.10.0",
+  "items": [
+    {
+      "id": "annual-valorization",
+      "step": "step4a_result",
+      "title": "Annual valorization",
+      "body": "Every 1 June ZUS valorizes the balance recorded as of 31 January with the index for the previous year.",
+      "source": {
+        "title": "ZUS – annual valorization",
+        "url": "https://www.zus.pl/baza-wiedzy/waloryzacja"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "quarterly-valorization",
+      "step": "step4a_result",
+      "title": "Quarterly valorization",
+      "body": "If retirement begins after 31 January, an additional quarterly valorization is applied, accounting for economic growth since the last valorization.",
+      "source": {
+        "title": "ZUS - Pension calculation rules",
+        "url": "https://www.zus.pl/emerytura/kalkulator-emerytalny"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "initial-capital",
+      "step": "step1_gender_age",
+      "title": "Initial capital",
+      "body": "Initial capital is the valorized value of contributions and work history before 1999. The first valorization index was 115.60% (1999).",
+      "source": {
+        "title": "ZUS - Initial capital",
+        "url": "https://www.zus.pl/baza-wiedzy/kapital-poczatkowy"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "life-expectancy-table",
+      "step": "step4a_result",
+      "title": "Life expectancy table (SDŻ)",
+      "body": "Pension amount is calculated by dividing the capital by the expected remaining life (in months). Life expectancy tables are published annually by GUS.",
+      "source": {
+        "title": "GUS - Life expectancy tables",
+        "url": "https://stat.gov.pl/tablice-trwania-zycia/"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "pension-contribution",
+      "step": "step2_contract",
+      "title": "Pension contribution",
+      "body": "The pension insurance contribution is 19.52% of the assessment base. For employment contracts (UoP), the base is the full gross salary.",
+      "source": {
+        "title": "ZUS - Insurance contributions",
+        "url": "https://www.zus.pl/baza-wiedzy/skladki"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "uop-vs-jdg-differences",
+      "step": "step2_contract",
+      "title": "UoP vs JDG - contribution differences",
+      "body": "Employment contract (UoP): contributions calculated from full gross salary. Self-employment (JDG): option to pay contributions from a lower base.",
+      "source": {
+        "title": "ZUS - Entrepreneurs and contributions",
+        "url": "https://www.zus.pl/przedsiebiorcy"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "flat-rate-jdg",
+      "step": "step3a_jdg",
+      "title": "Flat rate in JDG",
+      "body": "Entrepreneurs taxed with a flat rate can pay ZUS contributions from a reduced base (30% of income or max 4500 PLN). This means lower contributions but also lower future pension.",
+      "source": {
+        "title": "ZUS - JDG on flat rate",
+        "url": "https://www.zus.pl/baza-wiedzy/ryczalt"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "career-periods",
+      "step": "refine_compare",
+      "title": "Career periods",
+      "body": "For more accurate results, consider different career periods: contract changes, breaks, promotions. Each period with a different contract type or salary affects the final pension capital.",
+      "source": {
+        "title": "ZUS - Pension calculator",
+        "url": "https://www.zus.pl/emerytura/kalkulator-emerytalny"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "replacement-rate",
+      "step": "step4a_result",
+      "title": "Replacement rate",
+      "body": "The replacement rate is the ratio of pension amount to last salary (in %). In Poland it averages 50-60%, but depends on career length, salary level and contract types.",
+      "source": {
+        "title": "GUS - Pensions and annuities",
+        "url": "https://stat.gov.pl/obszary-tematyczne/rynek-pracy/emerytury-i-renty/"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "retirement-quarter",
+      "step": "step4a_result",
+      "title": "Retirement quarter",
+      "body": "The timing of retirement (quarter) affects quarterly valorization. The later in the year, the higher the additional valorization.",
+      "source": {
+        "title": "ZUS - When to retire",
+        "url": "https://www.zus.pl/emerytura"
+      },
+      "lang": "en-GB"
+    }
+  ]
+}
