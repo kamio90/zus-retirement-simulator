@@ -1,11 +1,11 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { SimulateRequestSchema, ApiError, ERROR_HTTP_MAPPING } from '@zus/types';
 import { simulateService } from '../services/simulateService';
 import { ZodError } from 'zod';
 import { v4 as uuidv4 } from 'uuid';
 
 export const simulateController = {
-  simulate: (req: Request, res: Response, _next: NextFunction) => {
+  simulate: (req: Request, res: Response): void => {
     const correlationId = uuidv4();
 
     try {
@@ -32,7 +32,8 @@ export const simulateController = {
           correlationId,
           hint: 'Check the request body and ensure all required fields are provided with valid values',
         };
-        return res.status(ERROR_HTTP_MAPPING['VALIDATION_ERROR']).json(apiError);
+        res.status(ERROR_HTTP_MAPPING['VALIDATION_ERROR']).json(apiError);
+        return;
       }
 
       // Handle other errors
@@ -41,7 +42,7 @@ export const simulateController = {
         message: error instanceof Error ? error.message : 'An unexpected error occurred',
         correlationId,
       };
-      return res.status(ERROR_HTTP_MAPPING['INTERNAL_ERROR']).json(apiError);
+      res.status(ERROR_HTTP_MAPPING['INTERNAL_ERROR']).json(apiError);
     }
   },
 };
