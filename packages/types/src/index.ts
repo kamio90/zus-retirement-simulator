@@ -9,6 +9,7 @@ export * from './simulate.dto';
 export * from './report.dto';
 export * from './benchmarks.dto';
 export * from './telemetry.dto';
+export * from './scenarios.dto';
 
 // Legacy error export for backward compatibility
 export * from './error.dto';

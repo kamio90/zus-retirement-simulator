@@ -2,7 +2,18 @@
  * API Client for ZUS Retirement Simulator
  * Handles communication with the backend API
  */
-import type { SimulateRequest, SimulationResult, ApiError, ReportPayload } from '@zus/types';
+import type {
+  SimulateRequest,
+  SimulationResult,
+  ApiError,
+  ReportPayload,
+  JdgQuickRequest,
+  JdgQuickResult,
+  ComposeCareerRequest,
+  ComposeCareerResult,
+  ComparisonRequest,
+  ComparisonResult,
+} from '@zus/types';
 
 const API_BASE_URL = '/api';
 
@@ -160,6 +171,111 @@ export async function generateXlsReport(payload: ReportPayload): Promise<Blob> {
 
     const blob = await response.blob();
     return blob;
+  } catch (error) {
+    if (error instanceof ApiClientError) {
+      throw error;
+    }
+    throw new ApiClientError(error instanceof Error ? error.message : 'Unknown error occurred');
+  }
+}
+
+/**
+ * JDG Quick Calculation - Step 3→4 wizard preview
+ * @param request JDG quick calculation request
+ * @returns JDG quick result with pension preview
+ * @throws ApiClientError on validation or server errors
+ */
+export async function calculateJdgQuick(request: JdgQuickRequest): Promise<JdgQuickResult> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/scenarios/jdg-quick`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+      const errorData: ApiError = await response.json();
+      throw new ApiClientError(
+        errorData.message || 'JDG quick calculation failed',
+        errorData,
+        response.status
+      );
+    }
+
+    const result: JdgQuickResult = await response.json();
+    return result;
+  } catch (error) {
+    if (error instanceof ApiClientError) {
+      throw error;
+    }
+    throw new ApiClientError(error instanceof Error ? error.message : 'Unknown error occurred');
+  }
+}
+
+/**
+ * Compose Career - Multi-period career simulation
+ * @param request Career composition request
+ * @returns Detailed simulation with period breakdown
+ * @throws ApiClientError on validation or server errors
+ */
+export async function composeCareer(request: ComposeCareerRequest): Promise<ComposeCareerResult> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/scenarios/compose`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+      const errorData: ApiError = await response.json();
+      throw new ApiClientError(
+        errorData.message || 'Career composition failed',
+        errorData,
+        response.status
+      );
+    }
+
+    const result: ComposeCareerResult = await response.json();
+    return result;
+  } catch (error) {
+    if (error instanceof ApiClientError) {
+      throw error;
+    }
+    throw new ApiClientError(error instanceof Error ? error.message : 'Unknown error occurred');
+  }
+}
+
+/**
+ * Compare Scenarios - Compare different pension scenarios
+ * @param request Comparison request with base scenario and comparison type
+ * @returns Comparison result with recommendations
+ * @throws ApiClientError on validation or server errors
+ */
+export async function compareScenarios(request: ComparisonRequest): Promise<ComparisonResult> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/scenarios/compare`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+      const errorData: ApiError = await response.json();
+      throw new ApiClientError(
+        errorData.message || 'Scenario comparison failed',
+        errorData,
+        response.status
+      );
+    }
+
+    const result: ComparisonResult = await response.json();
+    return result;
   } catch (error) {
     if (error instanceof ApiClientError) {
       throw error;
