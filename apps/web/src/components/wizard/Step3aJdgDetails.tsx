@@ -5,7 +5,7 @@
 import { useState } from 'react';
 import { useWizardStore } from '../../store/wizardStore';
 import { BeaverCoach } from './BeaverCoach';
-import { InfoCard } from './InfoCard';
+import { KnowledgeCard } from './KnowledgeCard';
 
 export function Step3aJdgDetails(): JSX.Element {
   const { jdgIncome, isRyczalt, contractType, setJdgIncome, setIsRyczalt } = useWizardStore();
@@ -137,23 +137,14 @@ export function Step3aJdgDetails(): JSX.Element {
         </div>
       )}
 
-      {/* Worth Knowing InfoCard - only for JDG */}
-      {isJdgContract && isRyczalt && (
-        <InfoCard
-          variant="knowledge"
-          icon="brain"
-          title="Warto wiedzieć: Ryczałt w JDG"
-          description="Przedsiębiorcy opodatkowani ryczałtem od przychodów ewidencjonowanych mogą opłacać składki ZUS od obniżonej podstawy (30% przychodu lub maksymalnie 4500 PLN). To oznacza niższe składki, ale również niższą przyszłą emeryturę."
-          sourceTitle="ZUS - JDG na ryczałcie"
-          sourceUrl="https://www.zus.pl/baza-wiedzy/ryczalt"
-          className="mb-6"
-        />
-      )}
+      {/* Worth Knowing InfoCard - only for JDG with ryczałt */}
+      {isJdgContract && isRyczalt && <KnowledgeCard stepId="step3a_jdg" className="mb-6" />}
 
       <BeaverCoach
         message="Wprowadź swój miesięczny dochód z działalności. Jeśli płacisz ryczałt, zaznacz odpowiednią opcję — to wpłynie na podstawę składek ZUS."
         tone="info"
         pose="read"
+        stepId="step3a_jdg"
       />
     </div>
   );
