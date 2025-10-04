@@ -1,7 +1,18 @@
 import { Request, Response, NextFunction } from 'express';
 import { logger } from '../utils/logger';
+import { ApiError, ERROR_HTTP_MAPPING } from '@zus/types';
+import { v4 as uuidv4 } from 'uuid';
 
-export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
-  logger.error(err.message);
-  res.status(500).json({ error: err.message });
+export function errorHandler(err: Error, _req: Request, res: Response, _next: NextFunction): void {
+  const correlationId = uuidv4();
+
+  logger.error(`[${correlationId}] ${err.message}`);
+
+  const apiError: ApiError = {
+    code: 'INTERNAL_ERROR',
+    message: err.message || 'An unexpected error occurred',
+    correlationId,
+  };
+
+  res.status(ERROR_HTTP_MAPPING['INTERNAL_ERROR']).json(apiError);
 }

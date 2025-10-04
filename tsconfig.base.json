@@ -12,9 +12,13 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@zus/core": ["packages/core/src"],
       "@zus/core/*": ["packages/core/src/*"],
+      "@zus/data": ["packages/data/src"],
       "@zus/data/*": ["packages/data/src/*"],
+      "@zus/types": ["packages/types/src"],
       "@zus/types/*": ["packages/types/src/*"],
+      "@zus/ui": ["packages/ui/src"],
       "@zus/ui/*": ["packages/ui/src/*"]
     },
     "typeRoots": ["./node_modules/@types"]
