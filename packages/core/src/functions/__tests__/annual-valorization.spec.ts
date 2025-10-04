@@ -38,7 +38,7 @@ describe('applyAnnualValorization', () => {
 
       // First year: (0 + 1000) * index
       expect(result[0].cumulativeCapitalAfterAnnual).toBeGreaterThan(0);
-      
+
       // Second year: (previous_capital + 0) * index
       expect(result[1].cumulativeCapitalAfterAnnual).toBeGreaterThan(0);
     });
@@ -67,9 +67,7 @@ describe('applyAnnualValorization', () => {
     });
 
     it('should handle single year contribution', () => {
-      const contributions: YearlyContribution[] = [
-        { year: 2010, annualContribution: 5000 },
-      ];
+      const contributions: YearlyContribution[] = [{ year: 2010, annualContribution: 5000 }];
 
       const result = applyAnnualValorization(contributions, providers.annual);
 

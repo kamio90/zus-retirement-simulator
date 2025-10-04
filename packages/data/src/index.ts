@@ -9,3 +9,6 @@
 
 // Placeholder - data will be populated from XLSX conversion scripts
 export const DATA_VERSION = '1.0.0';
+
+// Powiat benchmarks
+export * from './powiaty';

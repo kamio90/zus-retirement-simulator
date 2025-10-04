@@ -9,7 +9,7 @@ describe('DemoProviderBundle - Edge Cases', () => {
     it('handles boundary years correctly', () => {
       const year1980 = providers.annual.getAnnualIndex(1980);
       const year2100 = providers.annual.getAnnualIndex(2100);
-      
+
       expect(year1980.rate).toBe(1); // Base year should have rate 1
       expect(year2100.rate).toBeGreaterThan(1);
       expect(year2100.id).toBe('ANNUAL.Y2100');
@@ -18,7 +18,7 @@ describe('DemoProviderBundle - Edge Cases', () => {
     it('maintains consistent growth rate between years', () => {
       const y2024 = providers.annual.getAnnualIndex(2024);
       const y2025 = providers.annual.getAnnualIndex(2025);
-      
+
       const growthRate = y2025.rate / y2024.rate;
       expect(growthRate).toBeCloseTo(1.03, 5); // 3% growth
     });
@@ -57,7 +57,7 @@ describe('DemoProviderBundle - Edge Cases', () => {
     it('special 1999 index is fixed', () => {
       const idx1 = providers.initial.getInitial1999Index();
       const idx2 = providers.initial.getInitial1999Index();
-      
+
       expect(idx1).toEqual(idx2);
       expect(idx1.rate).toBe(1.15);
     });
@@ -65,7 +65,7 @@ describe('DemoProviderBundle - Edge Cases', () => {
     it('annual indices start from year 2000', () => {
       const y2000 = providers.initial.getAnnualIndexLikeContributions(2000);
       expect(y2000.rate).toBe(1); // Base year
-      
+
       const y2001 = providers.initial.getAnnualIndexLikeContributions(2001);
       expect(y2001.rate).toBeCloseTo(1.03, 5);
     });
@@ -75,7 +75,7 @@ describe('DemoProviderBundle - Edge Cases', () => {
     it('April uses current year table, March uses previous year', () => {
       const march2030 = providers.life.getLifeExpectancyYears('M', { year: 2030, month: 3 });
       const april2030 = providers.life.getLifeExpectancyYears('M', { year: 2030, month: 4 });
-      
+
       expect(march2030.id).toBe('SDZ.2029.M');
       expect(april2030.id).toBe('SDZ.2030.M');
     });
@@ -83,7 +83,7 @@ describe('DemoProviderBundle - Edge Cases', () => {
     it('female life expectancy is higher than male', () => {
       const male = providers.life.getLifeExpectancyYears('M', { year: 2030, month: 6 });
       const female = providers.life.getLifeExpectancyYears('F', { year: 2030, month: 6 });
-      
+
       expect(female.years).toBeGreaterThan(male.years);
     });
 
@@ -129,7 +129,7 @@ describe('DemoProviderBundle - Edge Cases', () => {
       const balance = 10000;
       const now = providers.subAccount?.valorize(balance, { y: 2025, m: 6 });
       const future = providers.subAccount?.valorize(balance, { y: 2035, m: 6 });
-      
+
       expect(future?.balance).toBeGreaterThan(now?.balance || 0);
     });
 
@@ -137,7 +137,7 @@ describe('DemoProviderBundle - Edge Cases', () => {
       const balance = 5000;
       const v1 = providers.subAccount?.valorize(balance, { y: 2030, m: 3 });
       const v2 = providers.subAccount?.valorize(balance, { y: 2030, m: 3 });
-      
+
       expect(v1).toEqual(v2);
     });
   });
