@@ -70,7 +70,8 @@ export function BeaverCoach({
   const [isMinimized, setIsMinimized] = useState(startMinimized);
   const [showVoiceSelector, setShowVoiceSelector] = useState(false);
 
-  const { voices, settings, isSpeaking, speak, stop, updateSettings, speechSupported } = useSpeech();
+  const { voices, settings, isSpeaking, speak, stop, updateSettings, speechSupported } =
+    useSpeech();
   const { tone: contentTone, setTone } = useBeaverStore();
 
   useEffect(() => {
@@ -193,9 +194,7 @@ export function BeaverCoach({
                   <button
                     onClick={() => setTone('fun')}
                     className={`px-2 py-1 transition-colors ${
-                      contentTone === 'fun'
-                        ? 'bg-zus-primary text-white'
-                        : 'hover:bg-gray-100'
+                      contentTone === 'fun' ? 'bg-zus-primary text-white' : 'hover:bg-gray-100'
                     }`}
                     aria-label="Tryb zabawny"
                   >
@@ -204,9 +203,7 @@ export function BeaverCoach({
                   <button
                     onClick={() => setTone('formal')}
                     className={`px-2 py-1 transition-colors ${
-                      contentTone === 'formal'
-                        ? 'bg-zus-primary text-white'
-                        : 'hover:bg-gray-100'
+                      contentTone === 'formal' ? 'bg-zus-primary text-white' : 'hover:bg-gray-100'
                     }`}
                     aria-label="Tryb formalny"
                   >
@@ -236,7 +233,7 @@ export function BeaverCoach({
                     >
                       {isSpeaking ? '🔊 Zatrzymaj' : '🔇 Odczytaj'}
                     </button>
-                    
+
                     {/* Voice selector toggle */}
                     <button
                       onClick={() => setShowVoiceSelector(!showVoiceSelector)}
@@ -259,7 +256,9 @@ export function BeaverCoach({
                     <select
                       id="voice-select"
                       value={settings.voiceName || ''}
-                      onChange={(e) => updateSettings({ ...settings, voiceName: e.target.value || null })}
+                      onChange={(e) =>
+                        updateSettings({ ...settings, voiceName: e.target.value || null })
+                      }
                       className="w-full text-xs p-1 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-zus-primary"
                     >
                       <option value="">Domyślny</option>
@@ -283,7 +282,9 @@ export function BeaverCoach({
                         max="1.1"
                         step="0.1"
                         value={settings.rate}
-                        onChange={(e) => updateSettings({ ...settings, rate: parseFloat(e.target.value) })}
+                        onChange={(e) =>
+                          updateSettings({ ...settings, rate: parseFloat(e.target.value) })
+                        }
                         className="w-full"
                       />
                     </div>
@@ -299,7 +300,9 @@ export function BeaverCoach({
                         max="2"
                         step="0.5"
                         value={settings.pitch}
-                        onChange={(e) => updateSettings({ ...settings, pitch: parseFloat(e.target.value) })}
+                        onChange={(e) =>
+                          updateSettings({ ...settings, pitch: parseFloat(e.target.value) })
+                        }
                         className="w-full"
                       />
                     </div>

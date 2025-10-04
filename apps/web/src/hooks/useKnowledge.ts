@@ -22,15 +22,21 @@ export interface KnowledgeResponse {
   items: KnowledgeItem[];
 }
 
-const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:4000';
+const API_BASE_URL =
+  (import.meta as { env?: { VITE_API_URL?: string } }).env?.VITE_API_URL || 'http://localhost:4000';
 
-export function useKnowledge(stepId?: string, lang: string = 'pl-PL', limit: number = 3, tone?: 'fun' | 'formal') {
+export function useKnowledge(
+  stepId?: string,
+  lang: string = 'pl-PL',
+  limit: number = 3,
+  tone?: 'fun' | 'formal'
+): { data: KnowledgeResponse | null; loading: boolean; error: Error | null } {
   const [data, setData] = useState<KnowledgeResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const fetchKnowledge = async () => {
+    const fetchKnowledge = async (): Promise<void> => {
       setLoading(true);
       setError(null);
 

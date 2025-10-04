@@ -19,9 +19,15 @@ export const useBeaverStore = create<BeaverState>()(
       tone: 'fun',
       isMinimized: false,
       lastStepId: null,
-      setTone: (tone) => set({ tone }),
-      setMinimized: (minimized) => set({ isMinimized: minimized }),
-      setLastStepId: (stepId) => set({ lastStepId: stepId }),
+      setTone: (tone: 'fun' | 'formal'): void => {
+        set({ tone });
+      },
+      setMinimized: (minimized: boolean): void => {
+        set({ isMinimized: minimized });
+      },
+      setLastStepId: (stepId: string | null): void => {
+        set({ lastStepId: stepId });
+      },
     }),
     {
       name: 'beaver-preferences',
