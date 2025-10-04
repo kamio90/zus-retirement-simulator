@@ -12,6 +12,7 @@ import reportsRouter from './routes/reports';
 import benchmarksRouter from './routes/benchmarks';
 import telemetryRouter from './routes/telemetry';
 import adminRouter from './routes/admin';
+import scenariosRouter from './routes/scenarios';
 
 loadEnv();
 
@@ -27,6 +28,7 @@ app.use('/reports', reportsRouter);
 app.use('/benchmarks', benchmarksRouter);
 app.use('/telemetry', telemetryRouter);
 app.use('/admin', adminRouter);
+app.use('/scenarios', scenariosRouter);
 
 app.use(errorHandler);
 
