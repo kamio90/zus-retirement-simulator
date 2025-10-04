@@ -1,0 +1,161 @@
+{
+  "version": "2025.10.1",
+  "explainers": [
+    {
+      "id": "kpi_nominal",
+      "targetId": "kpi_nominal",
+      "title": "Nominal Pension",
+      "body": "Nominal pension is the amount you will receive in the future when you retire. It includes capital valorization over your working years. However, it doesn't account for changes in purchasing power (inflation), so it's worth looking at the real value.",
+      "source": {
+        "title": "ZUS – Pension Calculation",
+        "url": "https://www.zus.pl/emerytura/kalkulator-emerytalny"
+      },
+      "relatedTips": ["kpi_real", "waloryzacja-roczna"],
+      "lang": "en-GB"
+    },
+    {
+      "id": "kpi_real",
+      "targetId": "kpi_real",
+      "title": "Real Pension (Today's Value)",
+      "body": "Real pension shows how much your future pension will be worth in today's money. It accounts for expected inflation and changes in purchasing power. This is the best way to understand the actual value of your future pension.",
+      "source": {
+        "title": "GUS – Consumer Price Index (CPI)",
+        "url": "https://stat.gov.pl/obszary-tematyczne/ceny-handel/wskazniki-cen/"
+      },
+      "relatedTips": ["kpi_nominal", "stopa-zastapienia"],
+      "lang": "en-GB"
+    },
+    {
+      "id": "kpi_replacement",
+      "targetId": "kpi_replacement",
+      "title": "Replacement Rate",
+      "body": "Replacement rate is the ratio of your pension to your last salary (in %). The higher the rate, the better your financial situation in retirement. In Poland, the average rate is 50-60%, but it depends on career length, earnings, and contract types.",
+      "source": {
+        "title": "GUS – Pensions and Annuities",
+        "url": "https://stat.gov.pl/obszary-tematyczne/rynek-pracy/emerytury-i-renty/"
+      },
+      "relatedTips": ["kpi_real", "uop-vs-jdg"],
+      "lang": "en-GB"
+    },
+    {
+      "id": "kpi_retirement_year",
+      "targetId": "kpi_retirement_year",
+      "title": "Retirement Year and Quarter",
+      "body": "The retirement date matters! If you retire after January 31st, your capital receives an additional quarterly valorization. Each quarter has different economic growth indicators that can slightly increase your pension.",
+      "source": {
+        "title": "ZUS – Quarterly Valorization",
+        "url": "https://www.zus.pl/baza-wiedzy/waloryzacja"
+      },
+      "relatedTips": ["waloryzacja-kwartalna", "sdz-tabela"],
+      "lang": "en-GB"
+    },
+    {
+      "id": "chart_capital_trajectory",
+      "targetId": "chart_capital_trajectory",
+      "title": "Pension Capital Trajectory",
+      "body": "The chart shows how your pension capital grows over your working years. Each year you add contributions (19.52% of base), and ZUS valorizes the entire capital according to wage growth and economic indicators. The longer you work and the higher the contribution base, the larger the capital – thus higher pension.",
+      "source": {
+        "title": "ZUS – Defined Contribution System",
+        "url": "https://www.zus.pl/baza-wiedzy/system-emerytalny"
+      },
+      "relatedTips": ["waloryzacja-roczna", "skladka-emerytalna"],
+      "lang": "en-GB"
+    },
+    {
+      "id": "whatif_delay",
+      "targetId": "whatif_delay",
+      "title": "Delayed Retirement",
+      "body": "Working longer than statutory retirement age increases capital in two ways: you add more contributions AND divide capital by a shorter expected life span (SDŻ). Even 1-2 years of delay can significantly increase monthly pension.",
+      "source": {
+        "title": "ZUS – Benefits of Later Retirement",
+        "url": "https://www.zus.pl/emerytura/pozniejsze-przejscie"
+      },
+      "relatedTips": ["sdz-tabela", "kpi_replacement"],
+      "lang": "en-GB"
+    },
+    {
+      "id": "whatif_early",
+      "targetId": "whatif_early",
+      "title": "Early Retirement (Bridging Pension)",
+      "body": "Bridging pension is only available for people working in special conditions or special character jobs (e.g., miners, teachers). This is NOT an option for everyone! Check ZUS regulations to see if you qualify for early retirement.",
+      "source": {
+        "title": "ZUS – Bridging Pension",
+        "url": "https://www.zus.pl/emerytura/pomostowa"
+      },
+      "relatedTips": ["kpi_nominal", "kpi_replacement"],
+      "lang": "en-GB"
+    },
+    {
+      "id": "whatif_base_increase",
+      "targetId": "whatif_base",
+      "title": "Contribution Base Increase",
+      "body": "Higher contribution base = higher contributions = larger capital = higher pension. For JDG/flat-rate you can voluntarily increase the contribution base. It's a trade-off: pay more now, but get a higher pension in the future.",
+      "source": {
+        "title": "ZUS – Entrepreneurs and Contributions",
+        "url": "https://www.zus.pl/przedsiebiorcy/skladki"
+      },
+      "relatedTips": ["skladka-emerytalna", "ryczalt-jdg"],
+      "lang": "en-GB"
+    },
+    {
+      "id": "chart_point",
+      "targetId": "chart_point",
+      "title": "Chart Point",
+      "body": "Each point on the chart represents your pension capital at the end of a given year. You see growth from two sources: contributions (19.52% of your base) + valorization (wage and economic growth). Capital accumulates throughout your entire career.",
+      "source": {
+        "title": "ZUS – How Pension Capital Works",
+        "url": "https://www.zus.pl/baza-wiedzy/kapital-emerytalny"
+      },
+      "relatedTips": ["waloryzacja-roczna", "skladka-emerytalna"],
+      "lang": "en-GB"
+    },
+    {
+      "id": "uop_jdg_switch",
+      "targetId": "whatif_contract_switch",
+      "title": "Contract Type Switch (UoP ↔ JDG)",
+      "body": "UoP: contributions from full gross, certain amount, simpler. JDG: lower contribution base (possible), more flexibility, but lower pension. Consider a compromise: part of career on UoP (higher contributions), part on JDG (flexibility).",
+      "source": {
+        "title": "ZUS – UoP vs JDG",
+        "url": "https://www.zus.pl/baza-wiedzy/rodzaje-umow"
+      },
+      "relatedTips": ["uop-vs-jdg", "ryczalt-jdg"],
+      "lang": "en-GB"
+    },
+    {
+      "id": "sdz_explanation",
+      "targetId": "sdz_info",
+      "title": "Average Further Life Expectancy (SDŻ)",
+      "body": "SDŻ is the expected further life span in years, calculated by GUS based on life tables. Your pension capital is divided by SDŻ (in months) to determine monthly pension. The longer the SDŻ, the lower the monthly pension (capital spread over more years).",
+      "source": {
+        "title": "GUS – Life Tables",
+        "url": "https://stat.gov.pl/tablice-trwania-zycia/"
+      },
+      "relatedTips": ["sdz-tabela", "kpi_nominal"],
+      "lang": "en-GB"
+    },
+    {
+      "id": "valorization_explanation",
+      "targetId": "valorization_info",
+      "title": "Capital Valorization",
+      "body": "Valorization is the annual increase of your pension capital according to economic indicators. Annual valorization (June 1st) is based on wage growth and CPI from the previous year. Quarterly valorization (Q2-Q4) accounts for current economic growth. This way capital grows faster than contributions alone.",
+      "source": {
+        "title": "ZUS – Valorization",
+        "url": "https://www.zus.pl/baza-wiedzy/waloryzacja"
+      },
+      "relatedTips": ["waloryzacja-roczna", "waloryzacja-kwartalna"],
+      "lang": "en-GB"
+    },
+    {
+      "id": "contribution_rate",
+      "targetId": "contribution_info",
+      "title": "Pension Contribution 19.52%",
+      "body": "Pension contribution is {{CONTRIBUTION_RATE}} of the assessment base. For UoP it's the full gross salary. For JDG you can choose a lower base. This contribution goes to your ZUS account and forms the foundation of your future pension – growing through valorization over the years.",
+      "source": {
+        "title": "ZUS – Insurance Contributions",
+        "url": "https://www.zus.pl/baza-wiedzy/skladki"
+      },
+      "relatedTips": ["skladka-emerytalna", "uop-vs-jdg"],
+      "lang": "en-GB"
+    }
+  ]
+}

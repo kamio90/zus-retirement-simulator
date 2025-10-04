@@ -1,0 +1,161 @@
+{
+  "version": "2025.10.1",
+  "explainers": [
+    {
+      "id": "kpi_nominal",
+      "targetId": "kpi_nominal",
+      "title": "Emerytura nominalna",
+      "body": "Emerytura nominalna to kwota, którą otrzymasz w przyszłości, w momencie przejścia na emeryturę. Uwzględnia ona waloryzację kapitału przez lata pracy. Nie uwzględnia jednak zmiany siły nabywczej pieniądza (inflacji), dlatego warto spojrzeć na wartość realną.",
+      "source": {
+        "title": "ZUS – Obliczanie emerytury",
+        "url": "https://www.zus.pl/emerytura/kalkulator-emerytalny"
+      },
+      "relatedTips": ["kpi_real", "waloryzacja-roczna"],
+      "lang": "pl-PL"
+    },
+    {
+      "id": "kpi_real",
+      "targetId": "kpi_real",
+      "title": "Emerytura realna (dzisiaj)",
+      "body": "Emerytura realna pokazuje, ile Twoja przyszła emerytura będzie warta w dzisiejszych pieniądzach. Uwzględnia przewidywaną inflację i zmianę siły nabywczej złotówki. To najlepszy sposób, aby zrozumieć faktyczną wartość swojej przyszłej emerytury.",
+      "source": {
+        "title": "GUS – Wskaźnik cen konsumpcyjnych (CPI)",
+        "url": "https://stat.gov.pl/obszary-tematyczne/ceny-handel/wskazniki-cen/"
+      },
+      "relatedTips": ["kpi_nominal", "stopa-zastapienia"],
+      "lang": "pl-PL"
+    },
+    {
+      "id": "kpi_replacement",
+      "targetId": "kpi_replacement",
+      "title": "Stopa zastąpienia",
+      "body": "Stopa zastąpienia to stosunek Twojej emerytury do ostatniego wynagrodzenia (w %). Im wyższa stopa, tym lepsza sytuacja finansowa na emeryturze. W Polsce średnia stopa wynosi 50-60%, ale zależy od długości kariery, wysokości zarobków i typu umów.",
+      "source": {
+        "title": "GUS – Emerytury i renty",
+        "url": "https://stat.gov.pl/obszary-tematyczne/rynek-pracy/emerytury-i-renty/"
+      },
+      "relatedTips": ["kpi_real", "uop-vs-jdg"],
+      "lang": "pl-PL"
+    },
+    {
+      "id": "kpi_retirement_year",
+      "targetId": "kpi_retirement_year",
+      "title": "Rok i kwartał emerytury",
+      "body": "Data przejścia na emeryturę ma znaczenie! Jeśli przejdziesz po 31 stycznia, Twój kapitał otrzyma dodatkową waloryzację kwartalną. Każdy kwartał to różne wskaźniki wzrostu gospodarczego, które mogą nieznacznie zwiększyć Twoją emeryturę.",
+      "source": {
+        "title": "ZUS – Waloryzacja kwartalna",
+        "url": "https://www.zus.pl/baza-wiedzy/waloryzacja"
+      },
+      "relatedTips": ["waloryzacja-kwartalna", "sdz-tabela"],
+      "lang": "pl-PL"
+    },
+    {
+      "id": "chart_capital_trajectory",
+      "targetId": "chart_capital_trajectory",
+      "title": "Trajektoria kapitału emerytalnego",
+      "body": "Wykres pokazuje, jak Twój kapitał emerytalny rośnie przez lata pracy. Każdego roku dodajesz składki (19,52% podstawy), a ZUS waloryzuje cały kapitał według wskaźników wzrostu płac i gospodarczego. Im dłużej pracujesz i im wyższa podstawa składek, tym większy kapitał – a więc wyższa emerytura.",
+      "source": {
+        "title": "ZUS – System zdefiniowanej składki",
+        "url": "https://www.zus.pl/baza-wiedzy/system-emerytalny"
+      },
+      "relatedTips": ["waloryzacja-roczna", "skladka-emerytalna"],
+      "lang": "pl-PL"
+    },
+    {
+      "id": "whatif_delay",
+      "targetId": "whatif_delay",
+      "title": "Opóźnienie emerytury",
+      "body": "Pracując dłużej niż do ustawowego wieku emerytalnego, zwiększasz kapitał na dwa sposoby: dodajesz kolejne składki ORAZ dzielisz kapitał przez krótszy przewidywany okres życia (SDŻ). Nawet 1-2 lata opóźnienia mogą znacząco podnieść miesięczną emeryturę.",
+      "source": {
+        "title": "ZUS – Korzyści z późniejszego przejścia",
+        "url": "https://www.zus.pl/emerytura/pozniejsze-przejscie"
+      },
+      "relatedTips": ["sdz-tabela", "kpi_replacement"],
+      "lang": "pl-PL"
+    },
+    {
+      "id": "whatif_early",
+      "targetId": "whatif_early",
+      "title": "Wcześniejsza emerytura (pomostowa)",
+      "body": "Emerytura pomostowa jest dostępna tylko dla osób pracujących w szczególnych warunkach lub w szczególnym charakterze (np. górnicy, nauczyciele). To NIE jest opcja dla wszystkich! Sprawdź regulacje ZUS, czy kwalifikujesz się do wcześniejszego przejścia.",
+      "source": {
+        "title": "ZUS – Emerytura pomostowa",
+        "url": "https://www.zus.pl/emerytura/pomostowa"
+      },
+      "relatedTips": ["kpi_nominal", "kpi_replacement"],
+      "lang": "pl-PL"
+    },
+    {
+      "id": "whatif_base_increase",
+      "targetId": "whatif_base",
+      "title": "Zwiększenie podstawy składkowej",
+      "body": "Wyższa podstawa składkowa = wyższe składki = większy kapitał = wyższa emerytura. Dla JDG/ryczałtu możesz dobrowolnie zwiększyć podstawę składek. To kompromis: płacisz więcej teraz, ale zyskujesz wyższą emeryturę w przyszłości.",
+      "source": {
+        "title": "ZUS – Przedsiębiorcy i składki",
+        "url": "https://www.zus.pl/przedsiebiorcy/skladki"
+      },
+      "relatedTips": ["skladka-emerytalna", "ryczalt-jdg"],
+      "lang": "pl-PL"
+    },
+    {
+      "id": "chart_point",
+      "targetId": "chart_point",
+      "title": "Punkt na wykresie kapitału",
+      "body": "Każdy punkt na wykresie to stan Twojego kapitału emerytalnego na koniec danego roku. Widzisz wzrost z dwóch źródeł: składki (19,52% Twojej podstawy) + waloryzacja (wzrost płac i gospodarczy). Kapitał kumuluje się przez całą karierę zawodową.",
+      "source": {
+        "title": "ZUS – Jak działa kapitał emerytalny",
+        "url": "https://www.zus.pl/baza-wiedzy/kapital-emerytalny"
+      },
+      "relatedTips": ["waloryzacja-roczna", "skladka-emerytalna"],
+      "lang": "pl-PL"
+    },
+    {
+      "id": "uop_jdg_switch",
+      "targetId": "whatif_contract_switch",
+      "title": "Zmiana typu umowy (UoP ↔ JDG)",
+      "body": "UoP: składki od pełnego brutto, pewna wysokość, prościej. JDG: niższa podstawa składek (możliwa), więcej elastyczności, ale niższa emerytura. Warto rozważyć kompromis: część kariery na UoP (wyższe składki), część na JDG (elastyczność).",
+      "source": {
+        "title": "ZUS – UoP a JDG",
+        "url": "https://www.zus.pl/baza-wiedzy/rodzaje-umow"
+      },
+      "relatedTips": ["uop-vs-jdg", "ryczalt-jdg"],
+      "lang": "pl-PL"
+    },
+    {
+      "id": "sdz_explanation",
+      "targetId": "sdz_info",
+      "title": "Średnie dalsze życie (SDŻ)",
+      "body": "SDŻ to przewidywany dalszy okres życia w latach, obliczany przez GUS na podstawie tablic trwania życia. Twój kapitał emerytalny jest dzielony przez SDŻ (w miesiącach), aby określić miesięczną emeryturę. Im dłuższe SDŻ, tym niższa miesięczna emerytura (kapitał rozłożony na więcej lat).",
+      "source": {
+        "title": "GUS – Tablice trwania życia",
+        "url": "https://stat.gov.pl/tablice-trwania-zycia/"
+      },
+      "relatedTips": ["sdz-tabela", "kpi_nominal"],
+      "lang": "pl-PL"
+    },
+    {
+      "id": "valorization_explanation",
+      "targetId": "valorization_info",
+      "title": "Waloryzacja kapitału",
+      "body": "Waloryzacja to coroczne zwiększenie Twojego kapitału emerytalnego według wskaźników ekonomicznych. Waloryzacja roczna (1 czerwca) oparta jest na wzroście płac i CPI za poprzedni rok. Waloryzacja kwartalna (Q2-Q4) uwzględnia bieżący wzrost gospodarczy. Dzięki temu kapitał rośnie szybciej niż same składki.",
+      "source": {
+        "title": "ZUS – Waloryzacja",
+        "url": "https://www.zus.pl/baza-wiedzy/waloryzacja"
+      },
+      "relatedTips": ["waloryzacja-roczna", "waloryzacja-kwartalna"],
+      "lang": "pl-PL"
+    },
+    {
+      "id": "contribution_rate",
+      "targetId": "contribution_info",
+      "title": "Składka emerytalna 19,52%",
+      "body": "Składka emerytalna to {{CONTRIBUTION_RATE}} podstawy wymiaru. W przypadku UoP to pełne wynagrodzenie brutto. W JDG możesz wybrać niższą podstawę. Ta składka trafia na Twoje konto w ZUS i stanowi fundament Twojej przyszłej emerytury – rośnie przez waloryzację przez lata.",
+      "source": {
+        "title": "ZUS – Składki na ubezpieczenia",
+        "url": "https://www.zus.pl/baza-wiedzy/skladki"
+      },
+      "relatedTips": ["skladka-emerytalna", "uop-vs-jdg"],
+      "lang": "pl-PL"
+    }
+  ]
+}
