@@ -18,5 +18,14 @@ coverage/
 !vite.config.js
 !*.config.js
 
+# pnpm hoisting artifacts
+packages/types/babel__*
+packages/types/d3-*
+packages/types/express*
+packages/types/http-*
+packages/types/istanbul-*
+packages/types/**/
+!packages/types/src/
+
 # OS
 Thumbs.db

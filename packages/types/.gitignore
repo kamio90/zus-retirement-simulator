@@ -1,0 +1,32 @@
+# Ignore pnpm hoisted @types symlinks (to avoid conflicts)
+# But allow other hoisted packages like typescript
+babel__*
+d3-*
+express*
+http-*
+istanbul-*
+connect
+cors
+estree
+graceful-fs
+json-schema
+json5
+mime
+morgan
+node
+prop-types
+qs
+raf
+range-parser
+react
+react-dom
+semver
+send
+serve-static
+stack-utils
+strip-bom
+strip-json-comments
+yargs
+yargs-parser
+body-parser
+jest
