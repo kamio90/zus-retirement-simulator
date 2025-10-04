@@ -18,7 +18,7 @@ import { KnowledgeCard } from './KnowledgeCard';
 import type { ScenarioResult } from '@zus/types';
 
 export function Step4aResult(): JSX.Element {
-  const { quickCalcResult, setCurrentStep, contractType } = useWizardStore();
+  const { quickCalcResult, setCurrentStep, contractType, gender, age } = useWizardStore();
 
   // Cast to v2 ScenarioResult
   const apiResult = quickCalcResult as ScenarioResult | null;
@@ -205,6 +205,88 @@ export function Step4aResult(): JSX.Element {
 
       {/* Worth Knowing InfoCard - Load from API */}
       <KnowledgeCard stepId="step4a_result" className="mb-8" />
+
+      {/* What-If Scenarios */}
+      <div className="mb-8">
+        <h3 className="text-xl font-bold text-zus-text mb-4">Scenariusze "co jeśli"</h3>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"
+        >
+          {/* Early Retirement Card */}
+          <motion.div variants={itemVariants}>
+            <div
+              onClick={() => setCurrentStep(5)}
+              className="bg-blue-50 border-2 border-blue-300 rounded-lg shadow-md p-6 text-center h-full cursor-pointer hover:shadow-xl hover:ring-2 hover:ring-blue-500 transition-all"
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  setCurrentStep(5);
+                }
+              }}
+            >
+              <div className="text-5xl mb-3" role="img" aria-label="Wcześniejsza emerytura">
+                ⏪
+              </div>
+              <h4 className="text-lg font-bold text-blue-900 mb-2">
+                Emerytura 5 lat wcześniej
+              </h4>
+              <p className="text-sm text-blue-700">
+                Zobacz jak zmieni się wysokość emerytury przy wcześniejszym przejściu na emeryturę
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Delay +12 months Card */}
+          <motion.div variants={itemVariants}>
+            <div
+              onClick={() => setCurrentStep(5)}
+              className="bg-green-50 border-2 border-green-300 rounded-lg shadow-md p-6 text-center h-full cursor-pointer hover:shadow-xl hover:ring-2 hover:ring-green-500 transition-all"
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  setCurrentStep(5);
+                }
+              }}
+            >
+              <div className="text-5xl mb-3" role="img" aria-label="Opóźnienie +12 miesięcy">
+                ⏩
+              </div>
+              <h4 className="text-lg font-bold text-green-900 mb-2">Opóźnij +12 miesięcy</h4>
+              <p className="text-sm text-green-700">
+                Sprawdź jak opóźnienie o rok wpłynie na wysokość emerytury
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Delay +24 months Card */}
+          <motion.div variants={itemVariants}>
+            <div
+              onClick={() => setCurrentStep(5)}
+              className="bg-green-50 border-2 border-green-300 rounded-lg shadow-md p-6 text-center h-full cursor-pointer hover:shadow-xl hover:ring-2 hover:ring-green-500 transition-all"
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  setCurrentStep(5);
+                }
+              }}
+            >
+              <div className="text-5xl mb-3" role="img" aria-label="Opóźnienie +24 miesiące">
+                ⏩⏩
+              </div>
+              <h4 className="text-lg font-bold text-green-900 mb-2">Opóźnij +24 miesiące</h4>
+              <p className="text-sm text-green-700">
+                Sprawdź jak opóźnienie o 2 lata wpłynie na wysokość emerytury
+              </p>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
 
       <div className="mb-8">
         <h3 className="text-xl font-bold text-zus-text mb-4">Chcesz dokładniejszy wynik?</h3>

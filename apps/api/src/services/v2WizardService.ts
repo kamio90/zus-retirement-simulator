@@ -103,12 +103,36 @@ function buildEngineInput(
   monthlyIncome: number,
   contract: ContractTypeV2,
   isRyczalt: boolean,
-  claimMonth?: number
+  claimMonth?: number,
+  retirementAgeOverride?: number,
+  delayMonths?: number
 ): EngineInput {
   const currentYear = CURRENT_YEAR;
   const birthYear = currentYear - age;
   const startWorkYear = estimateStartWorkYear(birthYear, age);
   const contributionBase = getContributionBase(monthlyIncome, contract, isRyczalt);
+
+  // Calculate retirement age based on override or delay
+  let retirementAge: number | undefined;
+  
+  if (retirementAgeOverride !== undefined) {
+    // Early retirement override - validate minimum age
+    const minAge = gender === 'F' ? 50 : 50;
+    if (retirementAgeOverride < minAge) {
+      throw new Error(`Retirement age cannot be below ${minAge} for gender ${gender}`);
+    }
+    retirementAge = retirementAgeOverride;
+  } else if (delayMonths !== undefined && delayMonths > 0) {
+    // Delayed retirement - add months to statutory age
+    const statutoryAge = gender === 'F' ? 60 : 65;
+    retirementAge = statutoryAge + Math.floor(delayMonths / 12);
+    
+    // Adjust claim month for partial year delays
+    const delayYearRemainder = delayMonths % 12;
+    if (delayYearRemainder > 0 && claimMonth !== undefined) {
+      claimMonth = ((claimMonth + delayYearRemainder - 1) % 12) + 1;
+    }
+  }
 
   return {
     birthYear,
@@ -116,6 +140,7 @@ function buildEngineInput(
     startWorkYear,
     currentGrossMonthly: contributionBase,
     claimMonth: claimMonth ?? 6,
+    retirementAge,
     anchorYear: currentYear,
   };
 }
@@ -141,14 +166,32 @@ export function wizardContract(_request: WizardContractRequest): WizardContractR
  * Returns full ScenarioResult for immediate preview
  */
 export function wizardJdg(request: WizardJdgRequest): ScenarioResult {
-  const { gender, age, monthlyIncome, contract, isRyczalt, claimMonth } = request;
+  const {
+    gender,
+    age,
+    monthlyIncome,
+    contract,
+    isRyczalt,
+    claimMonth,
+    retirementAgeOverride,
+    delayMonths,
+  } = request;
 
   // Validate: UOP cannot have ryczałt
   if (contract === 'UOP' && isRyczalt) {
     throw new Error('Invalid combination: UOP contract cannot use ryczałt taxation');
   }
 
-  const engineInput = buildEngineInput(gender, age, monthlyIncome, contract, isRyczalt, claimMonth);
+  const engineInput = buildEngineInput(
+    gender,
+    age,
+    monthlyIncome,
+    contract,
+    isRyczalt,
+    claimMonth,
+    retirementAgeOverride,
+    delayMonths
+  );
 
   const providers = makeDemoProviderBundle({ anchorYear: CURRENT_YEAR });
   const output = Engine.calculate(engineInput, providers);
@@ -236,10 +279,57 @@ export function compareWhatIf(request: CompareWhatIfRequest): CompareWhatIfRespo
         // Increase contribution base by percentage
         variantInput.currentGrossMonthly *= 1 + (item.monthly ?? 20) / 100;
         break;
+      case 'early_retirement':
+        // Reduce retirement age by specified years (default 5)
+        const currentRetirementAge = variantInput.retirementAge ?? (baselineContext.gender === 'F' ? 60 : 65);
+        const earlyYears = item.years ?? 5;
+        const minAge = baselineContext.gender === 'F' ? 50 : 50;
+        variantInput.retirementAge = Math.max(currentRetirementAge - earlyYears, minAge);
+        break;
+      case 'delay_months':
+        // Delay retirement by specified months
+        const statutoryAge = baselineContext.gender === 'F' ? 60 : 65;
+        const delayMonths = item.months ?? 12;
+        variantInput.retirementAge = statutoryAge + Math.floor(delayMonths / 12);
+        // Adjust claim month for partial year delays
+        const delayYearRemainder = delayMonths % 12;
+        if (delayYearRemainder > 0) {
+          const originalClaimMonth = baselineContext.claimMonth ?? 6;
+          variantInput.claimMonth = ((originalClaimMonth + delayYearRemainder - 1) % 12) + 1;
+        }
+        break;
+      case 'non_contributory_unemployment':
+        // Non-contributory period - no impact on calculation but tracked
+        // Engine will handle this as zero contributions for specified months
+        // For now, this is a placeholder - actual implementation would require
+        // extending the engine to track non-contributory periods
+        break;
     }
 
     const variantOutput = Engine.calculate(variantInput, providers);
-    return toScenarioResult(variantOutput);
+    const result = toScenarioResult(variantOutput);
+    
+    // Add explainer for the variant
+    const explainers = [...result.explainers];
+    switch (item.kind) {
+      case 'early_retirement':
+        explainers.push(
+          `Wcześniejsza emerytura (${item.years ?? 5} lat) zwiększa dzielnik (SDŻ), co zazwyczaj obniża miesięczne świadczenie.`
+        );
+        break;
+      case 'delay_months':
+        explainers.push(
+          `Opóźnienie emerytury o ${item.months ?? 12} miesięcy zmniejsza dzielnik (SDŻ) i może dodać dodatkową waloryzację, co zazwyczaj zwiększa miesięczne świadczenie.`
+        );
+        break;
+      case 'non_contributory_unemployment':
+        explainers.push(
+          `Okres bezrobocia (${item.months ?? 0} miesięcy) nie generuje składek emerytalnych, ale jest uwzględniony w historii zawodowej.`
+        );
+        break;
+    }
+    
+    return { ...result, explainers };
   });
 
   return { baseline, variants };
@@ -286,6 +376,25 @@ export function simulateV2(request: SimulateV2Request): SimulateV2Response {
           break;
         case 'higher_base':
           variantInput.currentGrossMonthly *= 1 + (item.monthly ?? 20) / 100;
+          break;
+        case 'early_retirement':
+          const currentRetirementAge = variantInput.retirementAge ?? (baselineContext.gender === 'F' ? 60 : 65);
+          const earlyYears = item.years ?? 5;
+          const minAge = baselineContext.gender === 'F' ? 50 : 50;
+          variantInput.retirementAge = Math.max(currentRetirementAge - earlyYears, minAge);
+          break;
+        case 'delay_months':
+          const statutoryAge = baselineContext.gender === 'F' ? 60 : 65;
+          const delayMonths = item.months ?? 12;
+          variantInput.retirementAge = statutoryAge + Math.floor(delayMonths / 12);
+          const delayYearRemainder = delayMonths % 12;
+          if (delayYearRemainder > 0) {
+            const originalClaimMonth = baselineContext.claimMonth ?? 6;
+            variantInput.claimMonth = ((originalClaimMonth + delayYearRemainder - 1) % 12) + 1;
+          }
+          break;
+        case 'non_contributory_unemployment':
+          // Non-contributory period - tracked but no impact on calculation
           break;
       }
 
