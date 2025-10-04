@@ -12,7 +12,7 @@ Retrieve educational knowledge items with source attribution for the pension sim
 |-----------|------|---------|-------------|
 | `step` | string | - | Filter by step ID (e.g., `step2_contract`) |
 | `lang` | string | `pl-PL` | Language code (`pl-PL` or `en-GB`) |
-| `tone` | string | - | Filter by tone (`fun` or `formal`) |
+| `tone` | string | - | **DEPRECATED** - Ignored, always returns friendly content |
 | `limit` | number | 3 | Maximum items to return (1-10) |
 
 #### Response
@@ -58,19 +58,20 @@ Retrieve educational knowledge items with source attribution for the pension sim
 - `Cache-Control: public, max-age=3600` - Content is cacheable for 1 hour
 - `ETag: <hash>` - Entity tag for caching
 - `Content-Type: application/json`
+- `X-Content-Tone: friendly` - Indicates content tone used (always friendly)
 
 #### Examples
 
 **Get Polish knowledge for step 2**
 
 ```bash
-curl "http://localhost:4000/content/knowledge?step=step2_contract&lang=pl-PL&tone=fun"
+curl "http://localhost:4000/content/knowledge?step=step2_contract&lang=pl-PL"
 ```
 
-**Get English knowledge (all steps, max 5 items, formal tone)**
+**Get English knowledge (all steps, max 5 items)**
 
 ```bash
-curl "http://localhost:4000/content/knowledge?lang=en-GB&limit=5&tone=formal"
+curl "http://localhost:4000/content/knowledge?lang=en-GB&limit=5"
 ```
 
 **Get with ETag caching**
@@ -124,7 +125,7 @@ interface KnowledgeItem {
   id: string;              // Unique identifier
   step?: string;           // Optional step filter
   title: string;           // Display title
-  tone?: 'fun' | 'formal'; // Content tone
+  tone?: 'fun' | 'formal'; // DEPRECATED - Content tone (legacy field, ignored)
   short?: string;          // Short description (≤140 chars)
   body: string;            // Educational content (≤600 chars)
   pose?: string;           // Beaver pose (maps to asset)
@@ -138,12 +139,11 @@ interface KnowledgeItem {
 }
 ```
 
-#### Supported Tones
+#### Content Tone
 
-- `fun` - Playful, friendly, "Cukiereczek" style
-- `formal` - Neutral, official wording
+**Note:** As of v0.3, the API no longer supports tone filtering. All content is returned in a friendly, educational tone by default. The `tone` query parameter and `tone` field in responses are deprecated and should not be relied upon.
 
-If no tone is specified, both tones may be returned. Tokens in content (e.g., `{{MIN_PENSION}}`) are automatically resolved to current values.
+Tokens in content (e.g., `{{MIN_PENSION}}`) are automatically resolved to current values.
 
 ## v1 API Deprecation
 

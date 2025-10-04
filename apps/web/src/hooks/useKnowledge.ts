@@ -28,8 +28,7 @@ const API_BASE_URL =
 export function useKnowledge(
   stepId?: string,
   lang: string = 'pl-PL',
-  limit: number = 3,
-  tone?: 'fun' | 'formal'
+  limit: number = 3
 ): { data: KnowledgeResponse | null; loading: boolean; error: Error | null } {
   const [data, setData] = useState<KnowledgeResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -45,7 +44,7 @@ export function useKnowledge(
         if (stepId) params.append('step', stepId);
         if (lang) params.append('lang', lang);
         if (limit) params.append('limit', limit.toString());
-        if (tone) params.append('tone', tone);
+        // Note: tone parameter removed - backend defaults to friendly content
 
         const url = `${API_BASE_URL}/content/knowledge?${params.toString()}`;
         const response = await fetch(url);
@@ -64,7 +63,7 @@ export function useKnowledge(
     };
 
     fetchKnowledge();
-  }, [stepId, lang, limit, tone]);
+  }, [stepId, lang, limit]);
 
   return { data, loading, error };
 }
