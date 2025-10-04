@@ -1,0 +1,9 @@
+{
+  "name": "zus-retirement-simulator",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tools/*"
+  ]
+}
