@@ -1,20 +1,22 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "CommonJS",
-    "lib": ["ES2020", "DOM"],
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
       "@core/*": ["packages/core/src/*"],
-      "@data/*": ["packages/data/json/*"],
+      "@data/*": ["packages/data/src/*"],
       "@types/*": ["packages/types/src/*"],
       "@ui/*": ["packages/ui/src/*"]
     }
-  }
+  },
+  "include": ["apps", "packages", "tools/scripts"],
+  "exclude": ["node_modules", "dist", "build"]
 }

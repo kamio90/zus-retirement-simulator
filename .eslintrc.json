@@ -1,0 +1,16 @@
+{
+  "root": true,
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
+  "plugins": ["@typescript-eslint", "unused-imports", "prettier"],
+  "env": {
+    "node": true,
+    "es2022": true
+  },
+  "rules": {
+  "@typescript-eslint/no-unused-vars": ["error", { "args": "all", "vars": "all" }],
+  "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": false }],
+    "unused-imports/no-unused-imports": "error",
+    "prettier/prettier": "error"
+  },
+  "ignorePatterns": ["node_modules/", "dist/", "build/", "*.js"]
+}

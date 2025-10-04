@@ -1,8 +1,15 @@
+# Node
 node_modules/
 dist/
 build/
-.env
+.env*
 *.log
-*.tsbuildinfo
+.DS_Store
+coverage/
 .idea/
 .vscode/
+*.tsbuildinfo
+*.tgz
+
+# OS
+Thumbs.db
