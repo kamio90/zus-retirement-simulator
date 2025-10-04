@@ -19,6 +19,7 @@ export function Step4aResult(): JSX.Element {
   const { quickCalcResult, setCurrentStep } = useWizardStore();
 
   // Use API result if available, otherwise fall back to mock
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const apiResult = quickCalcResult as any;
   const mockResult = {
     nominalPension: 3500,

@@ -13,7 +13,16 @@ import { calculateJdgQuick } from '../../services/api';
 import type { JdgQuickRequest } from '@zus/types';
 
 export function Wizard(): JSX.Element {
-  const { currentStep, gender, contractType, jdgIncome, isRyczalt, age, nextStep, setQuickCalcResult } = useWizardStore();
+  const {
+    currentStep,
+    gender,
+    contractType,
+    jdgIncome,
+    isRyczalt,
+    age,
+    nextStep,
+    setQuickCalcResult,
+  } = useWizardStore();
 
   // Validation logic for each step
   const canProceed = (): boolean => {
