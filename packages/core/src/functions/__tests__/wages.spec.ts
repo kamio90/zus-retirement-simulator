@@ -24,7 +24,7 @@ describe('projectAnnualWageSeries', () => {
 
       // Should have entries for each year from startWorkYear to retirementYear-1
       expect(result.length).toBe(retirementYear - input.startWorkYear);
-      
+
       // All wages should be non-negative
       result.forEach((wage) => {
         expect(wage.annualWage).toBeGreaterThanOrEqual(0);
@@ -108,8 +108,18 @@ describe('projectAnnualWageSeries', () => {
       const anchorYear = 2025;
       const retirementYear = 2030;
 
-      const baseResult = projectAnnualWageSeries(baseInput, providers.macro, anchorYear, retirementYear);
-      const doubleResult = projectAnnualWageSeries(doubleInput, providers.macro, anchorYear, retirementYear);
+      const baseResult = projectAnnualWageSeries(
+        baseInput,
+        providers.macro,
+        anchorYear,
+        retirementYear
+      );
+      const doubleResult = projectAnnualWageSeries(
+        doubleInput,
+        providers.macro,
+        anchorYear,
+        retirementYear
+      );
 
       for (let i = 0; i < baseResult.length; i++) {
         expect(doubleResult[i].annualWage).toBeCloseTo(baseResult[i].annualWage * 2, 2);

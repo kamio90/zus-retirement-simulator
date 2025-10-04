@@ -1,0 +1,2293 @@
+{
+  "version": "1.0.0",
+  "source": "pkt 6_emerytury_powiaty.xlsx",
+  "dataDate": "2024-12",
+  "description": "Average pension amounts by powiat (district) in Poland",
+  "nationalAverage": {
+    "overall": 3713.32,
+    "male": 4381.0,
+    "female": 3045.65
+  },
+  "powiaty": [
+    {
+      "name": "powiat aleksandrowski",
+      "teryt": "0401000",
+      "avgPensionMale": 3864.93,
+      "avgPensionFemale": 3014.8
+    },
+    {
+      "name": "powiat augustowski",
+      "teryt": "2001000",
+      "avgPensionMale": 3707.27,
+      "avgPensionFemale": 2988.71
+    },
+    {
+      "name": "powiat bartoszycki",
+      "teryt": "2801000",
+      "avgPensionMale": 3913.16,
+      "avgPensionFemale": 2870.07
+    },
+    {
+      "name": "powiat bełchatowski",
+      "teryt": "1001000",
+      "avgPensionMale": 6347.71,
+      "avgPensionFemale": 3308.99
+    },
+    {
+      "name": "powiat będziński",
+      "teryt": "2401000",
+      "avgPensionMale": 5671.22,
+      "avgPensionFemale": 3248.52
+    },
+    {
+      "name": "powiat bialski",
+      "teryt": "0601000",
+      "avgPensionMale": 3584.53,
+      "avgPensionFemale": 2830.48
+    },
+    {
+      "name": "Biała Podlaska",
+      "teryt": "0661000",
+      "avgPensionMale": 4282.14,
+      "avgPensionFemale": 3326.38
+    },
+    {
+      "name": "powiat białobrzeski",
+      "teryt": "1401000",
+      "avgPensionMale": 3269.07,
+      "avgPensionFemale": 2754.02
+    },
+    {
+      "name": "powiat białogardzki",
+      "teryt": "3201000",
+      "avgPensionMale": 4066.75,
+      "avgPensionFemale": 3000.99
+    },
+    {
+      "name": "powiat białostocki",
+      "teryt": "2002000",
+      "avgPensionMale": 3971.81,
+      "avgPensionFemale": 3040.5
+    },
+    {
+      "name": "Białystok",
+      "teryt": "2061000",
+      "avgPensionMale": 4536.82,
+      "avgPensionFemale": 3424.13
+    },
+    {
+      "name": "powiat bielski",
+      "teryt": "2003000",
+      "avgPensionMale": 3796.68,
+      "avgPensionFemale": 3038.19
+    },
+    {
+      "name": "powiat bielski",
+      "teryt": "2402000",
+      "avgPensionMale": 5391.39,
+      "avgPensionFemale": 3251.05
+    },
+    {
+      "name": "Bielsko-Biała",
+      "teryt": "2461000",
+      "avgPensionMale": 4999.59,
+      "avgPensionFemale": 3394.05
+    },
+    {
+      "name": "powiat bieruńsko-lędziński",
+      "teryt": "2414000",
+      "avgPensionMale": 6762.67,
+      "avgPensionFemale": 3150.74
+    },
+    {
+      "name": "powiat bieszczadzki",
+      "teryt": "1801000",
+      "avgPensionMale": 4008.31,
+      "avgPensionFemale": 2966.77
+    },
+    {
+      "name": "powiat biłgorajski",
+      "teryt": "0602000",
+      "avgPensionMale": 3414.87,
+      "avgPensionFemale": 2759.21
+    },
+    {
+      "name": "powiat bocheński",
+      "teryt": "1201000",
+      "avgPensionMale": 4293.47,
+      "avgPensionFemale": 2943.54
+    },
+    {
+      "name": "powiat bolesławiecki",
+      "teryt": "0201000",
+      "avgPensionMale": 4495.91,
+      "avgPensionFemale": 3021.36
+    },
+    {
+      "name": "powiat braniewski",
+      "teryt": "2802000",
+      "avgPensionMale": 3959.91,
+      "avgPensionFemale": 2947.17
+    },
+    {
+      "name": "powiat brodnicki",
+      "teryt": "0402000",
+      "avgPensionMale": 4024.88,
+      "avgPensionFemale": 2874.92
+    },
+    {
+      "name": "powiat brzeski",
+      "teryt": "1202000",
+      "avgPensionMale": 3933.19,
+      "avgPensionFemale": 2932.78
+    },
+    {
+      "name": "powiat brzeski",
+      "teryt": "1601000",
+      "avgPensionMale": 4458.38,
+      "avgPensionFemale": 3157.0
+    },
+    {
+      "name": "powiat brzeziński",
+      "teryt": "1021000",
+      "avgPensionMale": 3637.48,
+      "avgPensionFemale": 2925.34
+    },
+    {
+      "name": "powiat brzozowski",
+      "teryt": "1802000",
+      "avgPensionMale": 3741.52,
+      "avgPensionFemale": 2830.27
+    },
+    {
+      "name": "powiat buski",
+      "teryt": "2601000",
+      "avgPensionMale": 3699.41,
+      "avgPensionFemale": 2975.22
+    },
+    {
+      "name": "powiat bydgoski",
+      "teryt": "0403000",
+      "avgPensionMale": 4665.67,
+      "avgPensionFemale": 3219.18
+    },
+    {
+      "name": "Bydgoszcz",
+      "teryt": "0461000",
+      "avgPensionMale": 4931.0,
+      "avgPensionFemale": 3452.22
+    },
+    {
+      "name": "Bytom",
+      "teryt": "2462000",
+      "avgPensionMale": 6034.58,
+      "avgPensionFemale": 3085.86
+    },
+    {
+      "name": "powiat bytowski",
+      "teryt": "2201000",
+      "avgPensionMale": 4151.88,
+      "avgPensionFemale": 2972.68
+    },
+    {
+      "name": "Chełm",
+      "teryt": "0662000",
+      "avgPensionMale": 4380.27,
+      "avgPensionFemale": 3180.13
+    },
+    {
+      "name": "powiat chełmiński",
+      "teryt": "0404000",
+      "avgPensionMale": 4033.38,
+      "avgPensionFemale": 2848.27
+    },
+    {
+      "name": "powiat chełmski",
+      "teryt": "0603000",
+      "avgPensionMale": 3545.95,
+      "avgPensionFemale": 2554.66
+    },
+    {
+      "name": "powiat chodzieski",
+      "teryt": "3001000",
+      "avgPensionMale": 4365.34,
+      "avgPensionFemale": 3057.42
+    },
+    {
+      "name": "powiat chojnicki",
+      "teryt": "2202000",
+      "avgPensionMale": 4265.95,
+      "avgPensionFemale": 2904.9
+    },
+    {
+      "name": "Chorzów",
+      "teryt": "2463000",
+      "avgPensionMale": 5677.11,
+      "avgPensionFemale": 3288.76
+    },
+    {
+      "name": "powiat choszczeński",
+      "teryt": "3202000",
+      "avgPensionMale": 4167.91,
+      "avgPensionFemale": 2906.53
+    },
+    {
+      "name": "powiat chrzanowski",
+      "teryt": "1203000",
+      "avgPensionMale": 5817.65,
+      "avgPensionFemale": 3060.3
+    },
+    {
+      "name": "powiat ciechanowski",
+      "teryt": "1402000",
+      "avgPensionMale": 4122.96,
+      "avgPensionFemale": 3296.57
+    },
+    {
+      "name": "powiat cieszyński",
+      "teryt": "2403000",
+      "avgPensionMale": 5602.04,
+      "avgPensionFemale": 3207.61
+    },
+    {
+      "name": "powiat czarnkowsko-trzcianecki",
+      "teryt": "3002000",
+      "avgPensionMale": 4282.58,
+      "avgPensionFemale": 2990.51
+    },
+    {
+      "name": "Częstochowa",
+      "teryt": "2464000",
+      "avgPensionMale": 4606.13,
+      "avgPensionFemale": 3208.68
+    },
+    {
+      "name": "powiat częstochowski",
+      "teryt": "2404000",
+      "avgPensionMale": 4305.91,
+      "avgPensionFemale": 2864.04
+    },
+    {
+      "name": "powiat człuchowski",
+      "teryt": "2203000",
+      "avgPensionMale": 4135.94,
+      "avgPensionFemale": 2914.93
+    },
+    {
+      "name": "Dąbrowa Górnicza",
+      "teryt": "2465000",
+      "avgPensionMale": 5727.51,
+      "avgPensionFemale": 3285.28
+    },
+    {
+      "name": "powiat dąbrowski",
+      "teryt": "1204000",
+      "avgPensionMale": 3466.43,
+      "avgPensionFemale": 2709.86
+    },
+    {
+      "name": "powiat dębicki",
+      "teryt": "1803000",
+      "avgPensionMale": 4218.55,
+      "avgPensionFemale": 3036.18
+    },
+    {
+      "name": "powiat drawski",
+      "teryt": "3203000",
+      "avgPensionMale": 4088.25,
+      "avgPensionFemale": 2940.57
+    },
+    {
+      "name": "powiat działdowski",
+      "teryt": "2803000",
+      "avgPensionMale": 4104.34,
+      "avgPensionFemale": 2860.95
+    },
+    {
+      "name": "powiat dzierżoniowski",
+      "teryt": "0202000",
+      "avgPensionMale": 4127.53,
+      "avgPensionFemale": 2960.94
+    },
+    {
+      "name": "Elbląg",
+      "teryt": "2861000",
+      "avgPensionMale": 4906.9,
+      "avgPensionFemale": 3347.83
+    },
+    {
+      "name": "powiat elbląski",
+      "teryt": "2804000",
+      "avgPensionMale": 3918.93,
+      "avgPensionFemale": 2840.97
+    },
+    {
+      "name": "powiat ełcki",
+      "teryt": "2805000",
+      "avgPensionMale": 4055.64,
+      "avgPensionFemale": 2984.32
+    },
+    {
+      "name": "powiat garwoliński",
+      "teryt": "1403000",
+      "avgPensionMale": 3816.54,
+      "avgPensionFemale": 3112.11
+    },
+    {
+      "name": "Gdańsk",
+      "teryt": "2261000",
+      "avgPensionMale": 5245.02,
+      "avgPensionFemale": 3593.59
+    },
+    {
+      "name": "powiat gdański",
+      "teryt": "2204000",
+      "avgPensionMale": 4767.59,
+      "avgPensionFemale": 3299.45
+    },
+    {
+      "name": "Gdynia",
+      "teryt": "2262000",
+      "avgPensionMale": 5028.22,
+      "avgPensionFemale": 3380.17
+    },
+    {
+      "name": "powiat giżycki",
+      "teryt": "2806000",
+      "avgPensionMale": 3993.19,
+      "avgPensionFemale": 2983.01
+    },
+    {
+      "name": "Gliwice",
+      "teryt": "2466000",
+      "avgPensionMale": 5916.82,
+      "avgPensionFemale": 3461.54
+    },
+    {
+      "name": "powiat gliwicki",
+      "teryt": "2405000",
+      "avgPensionMale": 6433.1,
+      "avgPensionFemale": 3061.68
+    },
+    {
+      "name": "powiat głogowski",
+      "teryt": "0203000",
+      "avgPensionMale": 6250.71,
+      "avgPensionFemale": 3043.69
+    },
+    {
+      "name": "powiat głubczycki",
+      "teryt": "1602000",
+      "avgPensionMale": 4556.88,
+      "avgPensionFemale": 3052.83
+    },
+    {
+      "name": "powiat gnieźnieński",
+      "teryt": "3003000",
+      "avgPensionMale": 4288.44,
+      "avgPensionFemale": 2928.77
+    },
+    {
+      "name": "powiat goleniowski",
+      "teryt": "3204000",
+      "avgPensionMale": 4274.46,
+      "avgPensionFemale": 3060.01
+    },
+    {
+      "name": "powiat golubsko-dobrzyński",
+      "teryt": "0405000",
+      "avgPensionMale": 3691.45,
+      "avgPensionFemale": 2701.57
+    },
+    {
+      "name": "powiat gołdapski",
+      "teryt": "2818000",
+      "avgPensionMale": 3732.49,
+      "avgPensionFemale": 2829.59
+    },
+    {
+      "name": "powiat gorlicki",
+      "teryt": "1205000",
+      "avgPensionMale": 3969.36,
+      "avgPensionFemale": 2870.99
+    },
+    {
+      "name": "powiat gorzowski",
+      "teryt": "0801000",
+      "avgPensionMale": 4381.24,
+      "avgPensionFemale": 3135.03
+    },
+    {
+      "name": "Gorzów Wielkopolski",
+      "teryt": "0861000",
+      "avgPensionMale": 4638.32,
+      "avgPensionFemale": 3349.73
+    },
+    {
+      "name": "powiat gostyniński",
+      "teryt": "1404000",
+      "avgPensionMale": 3839.71,
+      "avgPensionFemale": 3008.88
+    },
+    {
+      "name": "powiat gostyński",
+      "teryt": "3004000",
+      "avgPensionMale": 4388.57,
+      "avgPensionFemale": 2957.19
+    },
+    {
+      "name": "powiat górowski",
+      "teryt": "0204000",
+      "avgPensionMale": 4271.57,
+      "avgPensionFemale": 2765.56
+    },
+    {
+      "name": "powiat grajewski",
+      "teryt": "2004000",
+      "avgPensionMale": 3838.05,
+      "avgPensionFemale": 2974.85
+    },
+    {
+      "name": "powiat grodziski",
+      "teryt": "1405000",
+      "avgPensionMale": 4686.85,
+      "avgPensionFemale": 3576.85
+    },
+    {
+      "name": "powiat grodziski",
+      "teryt": "3005000",
+      "avgPensionMale": 4438.83,
+      "avgPensionFemale": 2946.81
+    },
+    {
+      "name": "powiat grójecki",
+      "teryt": "1406000",
+      "avgPensionMale": 3909.65,
+      "avgPensionFemale": 3082.06
+    },
+    {
+      "name": "Grudziądz",
+      "teryt": "0462000",
+      "avgPensionMale": 4362.18,
+      "avgPensionFemale": 3006.72
+    },
+    {
+      "name": "powiat grudziądzki",
+      "teryt": "0406000",
+      "avgPensionMale": 3802.61,
+      "avgPensionFemale": 2507.45
+    },
+    {
+      "name": "powiat gryficki",
+      "teryt": "3205000",
+      "avgPensionMale": 4050.99,
+      "avgPensionFemale": 2912.06
+    },
+    {
+      "name": "powiat gryfiński",
+      "teryt": "3206000",
+      "avgPensionMale": 4650.14,
+      "avgPensionFemale": 3058.39
+    },
+    {
+      "name": "powiat hajnowski",
+      "teryt": "2005000",
+      "avgPensionMale": 4037.68,
+      "avgPensionFemale": 3020.43
+    },
+    {
+      "name": "powiat hrubieszowski",
+      "teryt": "0604000",
+      "avgPensionMale": 3412.44,
+      "avgPensionFemale": 2709.77
+    },
+    {
+      "name": "powiat iławski",
+      "teryt": "2807000",
+      "avgPensionMale": 4196.48,
+      "avgPensionFemale": 2942.79
+    },
+    {
+      "name": "powiat inowrocławski",
+      "teryt": "0407000",
+      "avgPensionMale": 4523.6,
+      "avgPensionFemale": 2989.96
+    },
+    {
+      "name": "powiat janowski",
+      "teryt": "0605000",
+      "avgPensionMale": 3453.42,
+      "avgPensionFemale": 2839.97
+    },
+    {
+      "name": "powiat jarociński",
+      "teryt": "3006000",
+      "avgPensionMale": 4316.84,
+      "avgPensionFemale": 2864.98
+    },
+    {
+      "name": "powiat jarosławski",
+      "teryt": "1804000",
+      "avgPensionMale": 3766.14,
+      "avgPensionFemale": 2843.27
+    },
+    {
+      "name": "powiat jasielski",
+      "teryt": "1805000",
+      "avgPensionMale": 4150.22,
+      "avgPensionFemale": 2916.18
+    },
+    {
+      "name": "Jastrzębie-Zdrój",
+      "teryt": "2467000",
+      "avgPensionMale": 7047.74,
+      "avgPensionFemale": 2844.76
+    },
+    {
+      "name": "powiat jaworski",
+      "teryt": "0205000",
+      "avgPensionMale": 4181.01,
+      "avgPensionFemale": 3009.0
+    },
+    {
+      "name": "Jaworzno",
+      "teryt": "2468000",
+      "avgPensionMale": 6312.33,
+      "avgPensionFemale": 3246.23
+    },
+    {
+      "name": "Jelenia Góra",
+      "teryt": "0261000",
+      "avgPensionMale": 4493.19,
+      "avgPensionFemale": 3476.14
+    },
+    {
+      "name": "powiat jędrzejowski",
+      "teryt": "2602000",
+      "avgPensionMale": 3936.05,
+      "avgPensionFemale": 2826.46
+    },
+    {
+      "name": "powiat kaliski",
+      "teryt": "3007000",
+      "avgPensionMale": 3534.66,
+      "avgPensionFemale": 2732.1
+    },
+    {
+      "name": "Kalisz",
+      "teryt": "3061000",
+      "avgPensionMale": 4484.48,
+      "avgPensionFemale": 3323.76
+    },
+    {
+      "name": "powiat kamiennogórski",
+      "teryt": "0207000",
+      "avgPensionMale": 4214.86,
+      "avgPensionFemale": 3081.43
+    },
+    {
+      "name": "powiat kamieński",
+      "teryt": "3207000",
+      "avgPensionMale": 4098.78,
+      "avgPensionFemale": 2916.08
+    },
+    {
+      "name": "powiat karkonoski[e]",
+      "teryt": "0206000",
+      "avgPensionMale": 4182.22,
+      "avgPensionFemale": 3214.6
+    },
+    {
+      "name": "powiat kartuski",
+      "teryt": "2205000",
+      "avgPensionMale": 4340.67,
+      "avgPensionFemale": 3037.58
+    },
+    {
+      "name": "Katowice",
+      "teryt": "2469000",
+      "avgPensionMale": 6319.87,
+      "avgPensionFemale": 3624.47
+    },
+    {
+      "name": "powiat kazimierski",
+      "teryt": "2603000",
+      "avgPensionMale": 3316.19,
+      "avgPensionFemale": 2733.97
+    },
+    {
+      "name": "powiat kędzierzyńsko-kozielski",
+      "teryt": "1603000",
+      "avgPensionMale": 5192.82,
+      "avgPensionFemale": 3299.96
+    },
+    {
+      "name": "powiat kępiński",
+      "teryt": "3008000",
+      "avgPensionMale": 4133.69,
+      "avgPensionFemale": 2881.98
+    },
+    {
+      "name": "powiat kętrzyński",
+      "teryt": "2808000",
+      "avgPensionMale": 4046.56,
+      "avgPensionFemale": 2901.14
+    },
+    {
+      "name": "Kielce",
+      "teryt": "2661000",
+      "avgPensionMale": 4709.72,
+      "avgPensionFemale": 3442.23
+    },
+    {
+      "name": "powiat kielecki",
+      "teryt": "2604000",
+      "avgPensionMale": 3933.27,
+      "avgPensionFemale": 2859.85
+    },
+    {
+      "name": "powiat kluczborski",
+      "teryt": "1604000",
+      "avgPensionMale": 4487.83,
+      "avgPensionFemale": 2966.82
+    },
+    {
+      "name": "powiat kłobucki",
+      "teryt": "2406000",
+      "avgPensionMale": 4271.61,
+      "avgPensionFemale": 2810.63
+    },
+    {
+      "name": "powiat kłodzki",
+      "teryt": "0208000",
+      "avgPensionMale": 4384.28,
+      "avgPensionFemale": 3075.99
+    },
+    {
+      "name": "powiat kolbuszowski",
+      "teryt": "1806000",
+      "avgPensionMale": 3528.46,
+      "avgPensionFemale": 2705.92
+    },
+    {
+      "name": "powiat kolneński",
+      "teryt": "2006000",
+      "avgPensionMale": 3302.75,
+      "avgPensionFemale": 2811.71
+    },
+    {
+      "name": "powiat kolski",
+      "teryt": "3009000",
+      "avgPensionMale": 4236.31,
+      "avgPensionFemale": 2971.21
+    },
+    {
+      "name": "powiat kołobrzeski",
+      "teryt": "3208000",
+      "avgPensionMale": 4186.79,
+      "avgPensionFemale": 3145.19
+    },
+    {
+      "name": "powiat konecki",
+      "teryt": "2605000",
+      "avgPensionMale": 3908.26,
+      "avgPensionFemale": 2857.14
+    },
+    {
+      "name": "Konin",
+      "teryt": "3062000",
+      "avgPensionMale": 5155.3,
+      "avgPensionFemale": 3366.95
+    },
+    {
+      "name": "powiat koniński",
+      "teryt": "3010000",
+      "avgPensionMale": 4500.59,
+      "avgPensionFemale": 2884.21
+    },
+    {
+      "name": "Koszalin",
+      "teryt": "3261000",
+      "avgPensionMale": 4628.08,
+      "avgPensionFemale": 3485.13
+    },
+    {
+      "name": "powiat koszaliński",
+      "teryt": "3209000",
+      "avgPensionMale": 4226.99,
+      "avgPensionFemale": 3026.5
+    },
+    {
+      "name": "powiat kościański",
+      "teryt": "3011000",
+      "avgPensionMale": 4611.29,
+      "avgPensionFemale": 3059.88
+    },
+    {
+      "name": "powiat kościerski",
+      "teryt": "2206000",
+      "avgPensionMale": 4198.73,
+      "avgPensionFemale": 2941.63
+    },
+    {
+      "name": "powiat kozienicki",
+      "teryt": "1407000",
+      "avgPensionMale": 5148.07,
+      "avgPensionFemale": 3137.54
+    },
+    {
+      "name": "powiat krakowski",
+      "teryt": "1206000",
+      "avgPensionMale": 4626.07,
+      "avgPensionFemale": 3113.78
+    },
+    {
+      "name": "Kraków",
+      "teryt": "1261000",
+      "avgPensionMale": 4999.5,
+      "avgPensionFemale": 3561.76
+    },
+    {
+      "name": "powiat krapkowicki",
+      "teryt": "1605000",
+      "avgPensionMale": 5328.2,
+      "avgPensionFemale": 3210.54
+    },
+    {
+      "name": "powiat krasnostawski",
+      "teryt": "0606000",
+      "avgPensionMale": 3705.02,
+      "avgPensionFemale": 2877.56
+    },
+    {
+      "name": "powiat kraśnicki",
+      "teryt": "0607000",
+      "avgPensionMale": 3692.87,
+      "avgPensionFemale": 2848.78
+    },
+    {
+      "name": "Krosno",
+      "teryt": "1861000",
+      "avgPensionMale": 4578.61,
+      "avgPensionFemale": 3226.22
+    },
+    {
+      "name": "powiat krośnieński",
+      "teryt": "0802000",
+      "avgPensionMale": 4125.51,
+      "avgPensionFemale": 3013.42
+    },
+    {
+      "name": "powiat krośnieński",
+      "teryt": "1807000",
+      "avgPensionMale": 4075.06,
+      "avgPensionFemale": 2861.28
+    },
+    {
+      "name": "powiat krotoszyński",
+      "teryt": "3012000",
+      "avgPensionMale": 4240.89,
+      "avgPensionFemale": 2849.92
+    },
+    {
+      "name": "powiat kutnowski",
+      "teryt": "1002000",
+      "avgPensionMale": 4183.85,
+      "avgPensionFemale": 3059.69
+    },
+    {
+      "name": "powiat kwidzyński",
+      "teryt": "2207000",
+      "avgPensionMale": 4605.47,
+      "avgPensionFemale": 3129.91
+    },
+    {
+      "name": "powiat legionowski",
+      "teryt": "1408000",
+      "avgPensionMale": 4856.9,
+      "avgPensionFemale": 3604.47
+    },
+    {
+      "name": "Legnica",
+      "teryt": "0262000",
+      "avgPensionMale": 4944.02,
+      "avgPensionFemale": 3368.25
+    },
+    {
+      "name": "powiat legnicki",
+      "teryt": "0209000",
+      "avgPensionMale": 4536.4,
+      "avgPensionFemale": 3002.42
+    },
+    {
+      "name": "powiat leski",
+      "teryt": "1821000",
+      "avgPensionMale": 3651.9,
+      "avgPensionFemale": 2925.94
+    },
+    {
+      "name": "powiat leszczyński",
+      "teryt": "3013000",
+      "avgPensionMale": 4411.61,
+      "avgPensionFemale": 2892.87
+    },
+    {
+      "name": "Leszno",
+      "teryt": "3063000",
+      "avgPensionMale": 4783.03,
+      "avgPensionFemale": 3356.55
+    },
+    {
+      "name": "powiat leżajski",
+      "teryt": "1808000",
+      "avgPensionMale": 3990.02,
+      "avgPensionFemale": 2906.62
+    },
+    {
+      "name": "powiat lęborski",
+      "teryt": "2208000",
+      "avgPensionMale": 4274.67,
+      "avgPensionFemale": 3039.29
+    },
+    {
+      "name": "powiat lidzbarski",
+      "teryt": "2809000",
+      "avgPensionMale": 3903.21,
+      "avgPensionFemale": 3034.08
+    },
+    {
+      "name": "powiat limanowski",
+      "teryt": "1207000",
+      "avgPensionMale": 3663.42,
+      "avgPensionFemale": 2882.93
+    },
+    {
+      "name": "powiat lipnowski",
+      "teryt": "0408000",
+      "avgPensionMale": 3575.37,
+      "avgPensionFemale": 2851.38
+    },
+    {
+      "name": "powiat lipski",
+      "teryt": "1409000",
+      "avgPensionMale": 3338.9,
+      "avgPensionFemale": 2802.12
+    },
+    {
+      "name": "powiat lubaczowski",
+      "teryt": "1809000",
+      "avgPensionMale": 3554.94,
+      "avgPensionFemale": 2718.14
+    },
+    {
+      "name": "powiat lubański",
+      "teryt": "0210000",
+      "avgPensionMale": 4264.36,
+      "avgPensionFemale": 3014.4
+    },
+    {
+      "name": "powiat lubartowski",
+      "teryt": "0608000",
+      "avgPensionMale": 3764.97,
+      "avgPensionFemale": 2847.49
+    },
+    {
+      "name": "powiat lubelski",
+      "teryt": "0609000",
+      "avgPensionMale": 3990.09,
+      "avgPensionFemale": 2986.17
+    },
+    {
+      "name": "powiat lubiński",
+      "teryt": "0211000",
+      "avgPensionMale": 6705.55,
+      "avgPensionFemale": 3179.37
+    },
+    {
+      "name": "Lublin",
+      "teryt": "0663000",
+      "avgPensionMale": 4807.1,
+      "avgPensionFemale": 3568.92
+    },
+    {
+      "name": "powiat lubliniecki",
+      "teryt": "2407000",
+      "avgPensionMale": 5070.82,
+      "avgPensionFemale": 3093.51
+    },
+    {
+      "name": "powiat lwówecki",
+      "teryt": "0212000",
+      "avgPensionMale": 3831.04,
+      "avgPensionFemale": 2929.54
+    },
+    {
+      "name": "powiat łańcucki",
+      "teryt": "1810000",
+      "avgPensionMale": 4048.52,
+      "avgPensionFemale": 3011.95
+    },
+    {
+      "name": "powiat łaski",
+      "teryt": "1003000",
+      "avgPensionMale": 3962.6,
+      "avgPensionFemale": 2966.09
+    },
+    {
+      "name": "powiat łęczycki",
+      "teryt": "1004000",
+      "avgPensionMale": 3622.49,
+      "avgPensionFemale": 2961.01
+    },
+    {
+      "name": "powiat łęczyński",
+      "teryt": "0610000",
+      "avgPensionMale": 5734.9,
+      "avgPensionFemale": 2836.96
+    },
+    {
+      "name": "powiat łobeski",
+      "teryt": "3218000",
+      "avgPensionMale": 4135.85,
+      "avgPensionFemale": 2893.54
+    },
+    {
+      "name": "Łomża",
+      "teryt": "2062000",
+      "avgPensionMale": 4107.88,
+      "avgPensionFemale": 3246.27
+    },
+    {
+      "name": "powiat łomżyński",
+      "teryt": "2007000",
+      "avgPensionMale": 3197.34,
+      "avgPensionFemale": 2690.81
+    },
+    {
+      "name": "powiat łosicki",
+      "teryt": "1410000",
+      "avgPensionMale": 3343.54,
+      "avgPensionFemale": 2811.28
+    },
+    {
+      "name": "powiat łowicki",
+      "teryt": "1005000",
+      "avgPensionMale": 3948.2,
+      "avgPensionFemale": 3041.49
+    },
+    {
+      "name": "powiat łódzki wschodni",
+      "teryt": "1006000",
+      "avgPensionMale": 4312.65,
+      "avgPensionFemale": 3133.41
+    },
+    {
+      "name": "Łódź",
+      "teryt": "1061000",
+      "avgPensionMale": 4541.09,
+      "avgPensionFemale": 3439.57
+    },
+    {
+      "name": "powiat łukowski",
+      "teryt": "0611000",
+      "avgPensionMale": 3745.62,
+      "avgPensionFemale": 2948.0
+    },
+    {
+      "name": "powiat makowski",
+      "teryt": "1411000",
+      "avgPensionMale": 3308.09,
+      "avgPensionFemale": 2858.95
+    },
+    {
+      "name": "powiat malborski",
+      "teryt": "2209000",
+      "avgPensionMale": 4386.06,
+      "avgPensionFemale": 3040.05
+    },
+    {
+      "name": "powiat miechowski",
+      "teryt": "1208000",
+      "avgPensionMale": 3783.34,
+      "avgPensionFemale": 3006.07
+    },
+    {
+      "name": "powiat mielecki",
+      "teryt": "1811000",
+      "avgPensionMale": 4136.41,
+      "avgPensionFemale": 2956.9
+    },
+    {
+      "name": "powiat międzychodzki",
+      "teryt": "3014000",
+      "avgPensionMale": 4395.8,
+      "avgPensionFemale": 2962.75
+    },
+    {
+      "name": "powiat międzyrzecki",
+      "teryt": "0803000",
+      "avgPensionMale": 4157.12,
+      "avgPensionFemale": 3018.37
+    },
+    {
+      "name": "powiat mikołowski",
+      "teryt": "2408000",
+      "avgPensionMale": 6516.36,
+      "avgPensionFemale": 3249.78
+    },
+    {
+      "name": "powiat milicki",
+      "teryt": "0213000",
+      "avgPensionMale": 4155.84,
+      "avgPensionFemale": 2979.71
+    },
+    {
+      "name": "powiat miński",
+      "teryt": "1412000",
+      "avgPensionMale": 4393.97,
+      "avgPensionFemale": 3469.73
+    },
+    {
+      "name": "powiat mławski",
+      "teryt": "1413000",
+      "avgPensionMale": 3784.27,
+      "avgPensionFemale": 2871.94
+    },
+    {
+      "name": "powiat mogileński",
+      "teryt": "0409000",
+      "avgPensionMale": 4020.46,
+      "avgPensionFemale": 2745.18
+    },
+    {
+      "name": "powiat moniecki",
+      "teryt": "2008000",
+      "avgPensionMale": 3168.32,
+      "avgPensionFemale": 2737.16
+    },
+    {
+      "name": "powiat mrągowski",
+      "teryt": "2810000",
+      "avgPensionMale": 4013.86,
+      "avgPensionFemale": 3045.79
+    },
+    {
+      "name": "Mysłowice",
+      "teryt": "2470000",
+      "avgPensionMale": 6631.04,
+      "avgPensionFemale": 3219.34
+    },
+    {
+      "name": "powiat myszkowski",
+      "teryt": "2409000",
+      "avgPensionMale": 4505.98,
+      "avgPensionFemale": 2958.02
+    },
+    {
+      "name": "powiat myślenicki",
+      "teryt": "1209000",
+      "avgPensionMale": 4023.43,
+      "avgPensionFemale": 2981.67
+    },
+    {
+      "name": "powiat myśliborski",
+      "teryt": "3210000",
+      "avgPensionMale": 4072.45,
+      "avgPensionFemale": 2944.6
+    },
+    {
+      "name": "powiat nakielski",
+      "teryt": "0410000",
+      "avgPensionMale": 4261.32,
+      "avgPensionFemale": 2847.98
+    },
+    {
+      "name": "powiat namysłowski",
+      "teryt": "1606000",
+      "avgPensionMale": 4309.52,
+      "avgPensionFemale": 2871.42
+    },
+    {
+      "name": "powiat nidzicki",
+      "teryt": "2811000",
+      "avgPensionMale": 4004.78,
+      "avgPensionFemale": 2870.9
+    },
+    {
+      "name": "powiat niżański",
+      "teryt": "1812000",
+      "avgPensionMale": 3826.31,
+      "avgPensionFemale": 2682.24
+    },
+    {
+      "name": "powiat nowodworski",
+      "teryt": "1414000",
+      "avgPensionMale": 4478.37,
+      "avgPensionFemale": 3329.35
+    },
+    {
+      "name": "powiat nowodworski",
+      "teryt": "2210000",
+      "avgPensionMale": 4089.17,
+      "avgPensionFemale": 2836.55
+    },
+    {
+      "name": "powiat nowomiejski",
+      "teryt": "2812000",
+      "avgPensionMale": 3883.35,
+      "avgPensionFemale": 2730.59
+    },
+    {
+      "name": "powiat nowosądecki",
+      "teryt": "1210000",
+      "avgPensionMale": 3811.35,
+      "avgPensionFemale": 2869.25
+    },
+    {
+      "name": "powiat nowosolski",
+      "teryt": "0804000",
+      "avgPensionMale": 4288.84,
+      "avgPensionFemale": 2960.0
+    },
+    {
+      "name": "powiat nowotarski",
+      "teryt": "1211000",
+      "avgPensionMale": 3504.32,
+      "avgPensionFemale": 2827.55
+    },
+    {
+      "name": "powiat nowotomyski",
+      "teryt": "3015000",
+      "avgPensionMale": 4582.15,
+      "avgPensionFemale": 3115.44
+    },
+    {
+      "name": "Nowy Sącz",
+      "teryt": "1262000",
+      "avgPensionMale": 4344.38,
+      "avgPensionFemale": 3343.58
+    },
+    {
+      "name": "powiat nyski",
+      "teryt": "1607000",
+      "avgPensionMale": 4413.85,
+      "avgPensionFemale": 3069.07
+    },
+    {
+      "name": "powiat obornicki",
+      "teryt": "3016000",
+      "avgPensionMale": 4618.58,
+      "avgPensionFemale": 3050.26
+    },
+    {
+      "name": "powiat olecki",
+      "teryt": "2813000",
+      "avgPensionMale": 3962.04,
+      "avgPensionFemale": 2949.9
+    },
+    {
+      "name": "powiat oleski",
+      "teryt": "1608000",
+      "avgPensionMale": 4395.83,
+      "avgPensionFemale": 2890.1
+    },
+    {
+      "name": "powiat oleśnicki",
+      "teryt": "0214000",
+      "avgPensionMale": 4189.36,
+      "avgPensionFemale": 3027.11
+    },
+    {
+      "name": "powiat olkuski",
+      "teryt": "1212000",
+      "avgPensionMale": 5178.57,
+      "avgPensionFemale": 3018.4
+    },
+    {
+      "name": "Olsztyn",
+      "teryt": "2862000",
+      "avgPensionMale": 5050.93,
+      "avgPensionFemale": 3729.66
+    },
+    {
+      "name": "powiat olsztyński",
+      "teryt": "2814000",
+      "avgPensionMale": 4412.25,
+      "avgPensionFemale": 3233.95
+    },
+    {
+      "name": "powiat oławski",
+      "teryt": "0215000",
+      "avgPensionMale": 4586.09,
+      "avgPensionFemale": 3103.43
+    },
+    {
+      "name": "powiat opatowski",
+      "teryt": "2606000",
+      "avgPensionMale": 3688.55,
+      "avgPensionFemale": 2803.86
+    },
+    {
+      "name": "powiat opoczyński",
+      "teryt": "1007000",
+      "avgPensionMale": 3983.61,
+      "avgPensionFemale": 2954.64
+    },
+    {
+      "name": "Opole",
+      "teryt": "1661000",
+      "avgPensionMale": 5213.08,
+      "avgPensionFemale": 3818.99
+    },
+    {
+      "name": "powiat opolski",
+      "teryt": "0612000",
+      "avgPensionMale": 3338.19,
+      "avgPensionFemale": 2634.04
+    },
+    {
+      "name": "powiat opolski",
+      "teryt": "1609000",
+      "avgPensionMale": 4731.64,
+      "avgPensionFemale": 3169.73
+    },
+    {
+      "name": "powiat ostrołęcki",
+      "teryt": "1415000",
+      "avgPensionMale": 3482.53,
+      "avgPensionFemale": 2739.24
+    },
+    {
+      "name": "Ostrołęka",
+      "teryt": "1461000",
+      "avgPensionMale": 4818.52,
+      "avgPensionFemale": 3408.62
+    },
+    {
+      "name": "powiat ostrowiecki",
+      "teryt": "2607000",
+      "avgPensionMale": 4300.65,
+      "avgPensionFemale": 2878.29
+    },
+    {
+      "name": "powiat ostrowski",
+      "teryt": "1416000",
+      "avgPensionMale": 3621.97,
+      "avgPensionFemale": 3001.55
+    },
+    {
+      "name": "powiat ostrowski",
+      "teryt": "3017000",
+      "avgPensionMale": 4374.56,
+      "avgPensionFemale": 2986.54
+    },
+    {
+      "name": "powiat ostródzki",
+      "teryt": "2815000",
+      "avgPensionMale": 4259.09,
+      "avgPensionFemale": 3013.68
+    },
+    {
+      "name": "powiat ostrzeszowski",
+      "teryt": "3018000",
+      "avgPensionMale": 4006.93,
+      "avgPensionFemale": 2864.92
+    },
+    {
+      "name": "powiat oświęcimski",
+      "teryt": "1213000",
+      "avgPensionMale": 5698.01,
+      "avgPensionFemale": 3153.29
+    },
+    {
+      "name": "powiat otwocki",
+      "teryt": "1417000",
+      "avgPensionMale": 4509.4,
+      "avgPensionFemale": 3545.93
+    },
+    {
+      "name": "powiat pabianicki",
+      "teryt": "1008000",
+      "avgPensionMale": 4283.25,
+      "avgPensionFemale": 3176.23
+    },
+    {
+      "name": "powiat pajęczański",
+      "teryt": "1009000",
+      "avgPensionMale": 4364.22,
+      "avgPensionFemale": 2718.38
+    },
+    {
+      "name": "powiat parczewski",
+      "teryt": "0613000",
+      "avgPensionMale": 3501.64,
+      "avgPensionFemale": 2866.52
+    },
+    {
+      "name": "powiat piaseczyński",
+      "teryt": "1418000",
+      "avgPensionMale": 5125.03,
+      "avgPensionFemale": 3825.62
+    },
+    {
+      "name": "Piekary Śląskie",
+      "teryt": "2471000",
+      "avgPensionMale": 6209.24,
+      "avgPensionFemale": 2958.07
+    },
+    {
+      "name": "powiat pilski",
+      "teryt": "3019000",
+      "avgPensionMale": 4638.92,
+      "avgPensionFemale": 3273.18
+    },
+    {
+      "name": "powiat pińczowski",
+      "teryt": "2608000",
+      "avgPensionMale": 3735.47,
+      "avgPensionFemale": 2846.99
+    },
+    {
+      "name": "powiat piotrkowski",
+      "teryt": "1010000",
+      "avgPensionMale": 3980.77,
+      "avgPensionFemale": 2730.39
+    },
+    {
+      "name": "Piotrków Trybunalski",
+      "teryt": "1062000",
+      "avgPensionMale": 4847.43,
+      "avgPensionFemale": 3290.61
+    },
+    {
+      "name": "powiat piski",
+      "teryt": "2816000",
+      "avgPensionMale": 3953.69,
+      "avgPensionFemale": 2959.14
+    },
+    {
+      "name": "powiat pleszewski",
+      "teryt": "3020000",
+      "avgPensionMale": 3964.25,
+      "avgPensionFemale": 2759.4
+    },
+    {
+      "name": "Płock",
+      "teryt": "1462000",
+      "avgPensionMale": 5625.52,
+      "avgPensionFemale": 3571.45
+    },
+    {
+      "name": "powiat płocki",
+      "teryt": "1419000",
+      "avgPensionMale": 4275.06,
+      "avgPensionFemale": 2877.31
+    },
+    {
+      "name": "powiat płoński",
+      "teryt": "1420000",
+      "avgPensionMale": 3867.15,
+      "avgPensionFemale": 3040.16
+    },
+    {
+      "name": "powiat poddębicki",
+      "teryt": "1011000",
+      "avgPensionMale": 3459.54,
+      "avgPensionFemale": 2826.22
+    },
+    {
+      "name": "powiat policki",
+      "teryt": "3211000",
+      "avgPensionMale": 5311.35,
+      "avgPensionFemale": 3532.6
+    },
+    {
+      "name": "powiat polkowicki",
+      "teryt": "0216000",
+      "avgPensionMale": 6835.53,
+      "avgPensionFemale": 2934.19
+    },
+    {
+      "name": "Poznań",
+      "teryt": "3064000",
+      "avgPensionMale": 5244.75,
+      "avgPensionFemale": 3699.57
+    },
+    {
+      "name": "powiat poznański",
+      "teryt": "3021000",
+      "avgPensionMale": 5122.23,
+      "avgPensionFemale": 3447.1
+    },
+    {
+      "name": "powiat proszowicki",
+      "teryt": "1214000",
+      "avgPensionMale": 3577.49,
+      "avgPensionFemale": 2953.75
+    },
+    {
+      "name": "powiat prudnicki",
+      "teryt": "1610000",
+      "avgPensionMale": 4266.08,
+      "avgPensionFemale": 3061.04
+    },
+    {
+      "name": "powiat pruszkowski",
+      "teryt": "1421000",
+      "avgPensionMale": 4983.12,
+      "avgPensionFemale": 3826.69
+    },
+    {
+      "name": "powiat przasnyski",
+      "teryt": "1422000",
+      "avgPensionMale": 3713.53,
+      "avgPensionFemale": 2971.71
+    },
+    {
+      "name": "powiat przemyski",
+      "teryt": "1813000",
+      "avgPensionMale": 3875.03,
+      "avgPensionFemale": 2796.83
+    },
+    {
+      "name": "Przemyśl",
+      "teryt": "1862000",
+      "avgPensionMale": 4266.58,
+      "avgPensionFemale": 3190.18
+    },
+    {
+      "name": "powiat przeworski",
+      "teryt": "1814000",
+      "avgPensionMale": 3758.2,
+      "avgPensionFemale": 2741.71
+    },
+    {
+      "name": "powiat przysuski",
+      "teryt": "1423000",
+      "avgPensionMale": 3480.88,
+      "avgPensionFemale": 2780.71
+    },
+    {
+      "name": "powiat pszczyński",
+      "teryt": "2410000",
+      "avgPensionMale": 6509.78,
+      "avgPensionFemale": 3078.92
+    },
+    {
+      "name": "powiat pucki",
+      "teryt": "2211000",
+      "avgPensionMale": 4492.48,
+      "avgPensionFemale": 2966.38
+    },
+    {
+      "name": "powiat puławski",
+      "teryt": "0614000",
+      "avgPensionMale": 4454.91,
+      "avgPensionFemale": 3148.98
+    },
+    {
+      "name": "powiat pułtuski",
+      "teryt": "1424000",
+      "avgPensionMale": 3703.06,
+      "avgPensionFemale": 3009.55
+    },
+    {
+      "name": "powiat pyrzycki",
+      "teryt": "3212000",
+      "avgPensionMale": 4102.52,
+      "avgPensionFemale": 2883.45
+    },
+    {
+      "name": "powiat raciborski",
+      "teryt": "2411000",
+      "avgPensionMale": 5612.2,
+      "avgPensionFemale": 3150.51
+    },
+    {
+      "name": "Radom",
+      "teryt": "1463000",
+      "avgPensionMale": 4369.96,
+      "avgPensionFemale": 3201.62
+    },
+    {
+      "name": "powiat radomski",
+      "teryt": "1425000",
+      "avgPensionMale": 3786.56,
+      "avgPensionFemale": 2767.13
+    },
+    {
+      "name": "powiat radomszczański",
+      "teryt": "1012000",
+      "avgPensionMale": 4265.51,
+      "avgPensionFemale": 2836.14
+    },
+    {
+      "name": "powiat radziejowski",
+      "teryt": "0411000",
+      "avgPensionMale": 3699.16,
+      "avgPensionFemale": 2790.06
+    },
+    {
+      "name": "powiat radzyński",
+      "teryt": "0615000",
+      "avgPensionMale": 3542.54,
+      "avgPensionFemale": 2913.17
+    },
+    {
+      "name": "powiat rawicki",
+      "teryt": "3022000",
+      "avgPensionMale": 4191.47,
+      "avgPensionFemale": 2963.35
+    },
+    {
+      "name": "powiat rawski",
+      "teryt": "1013000",
+      "avgPensionMale": 3665.71,
+      "avgPensionFemale": 2951.8
+    },
+    {
+      "name": "powiat ropczycko-sędziszowski",
+      "teryt": "1815000",
+      "avgPensionMale": 3931.8,
+      "avgPensionFemale": 2822.23
+    },
+    {
+      "name": "Ruda Śląska",
+      "teryt": "2472000",
+      "avgPensionMale": 6860.67,
+      "avgPensionFemale": 3026.95
+    },
+    {
+      "name": "powiat rybnicki",
+      "teryt": "2412000",
+      "avgPensionMale": 6859.33,
+      "avgPensionFemale": 2698.21
+    },
+    {
+      "name": "Rybnik",
+      "teryt": "2473000",
+      "avgPensionMale": 6639.67,
+      "avgPensionFemale": 3041.01
+    },
+    {
+      "name": "powiat rycki",
+      "teryt": "0616000",
+      "avgPensionMale": 3878.81,
+      "avgPensionFemale": 2955.35
+    },
+    {
+      "name": "powiat rypiński",
+      "teryt": "0412000",
+      "avgPensionMale": 3728.43,
+      "avgPensionFemale": 2793.8
+    },
+    {
+      "name": "powiat rzeszowski",
+      "teryt": "1816000",
+      "avgPensionMale": 4011.45,
+      "avgPensionFemale": 2970.53
+    },
+    {
+      "name": "Rzeszów",
+      "teryt": "1863000",
+      "avgPensionMale": 4889.13,
+      "avgPensionFemale": 3558.13
+    },
+    {
+      "name": "powiat sandomierski",
+      "teryt": "2609000",
+      "avgPensionMale": 3718.14,
+      "avgPensionFemale": 2942.74
+    },
+    {
+      "name": "powiat sanocki",
+      "teryt": "1817000",
+      "avgPensionMale": 4077.98,
+      "avgPensionFemale": 2978.86
+    },
+    {
+      "name": "powiat sejneński",
+      "teryt": "2009000",
+      "avgPensionMale": 3282.5,
+      "avgPensionFemale": 2923.98
+    },
+    {
+      "name": "powiat sępoleński",
+      "teryt": "0413000",
+      "avgPensionMale": 3839.68,
+      "avgPensionFemale": 2743.01
+    },
+    {
+      "name": "Siedlce",
+      "teryt": "1464000",
+      "avgPensionMale": 4621.81,
+      "avgPensionFemale": 3503.71
+    },
+    {
+      "name": "powiat siedlecki",
+      "teryt": "1426000",
+      "avgPensionMale": 3566.5,
+      "avgPensionFemale": 2781.15
+    },
+    {
+      "name": "Siemianowice Śląskie",
+      "teryt": "2474000",
+      "avgPensionMale": 5848.9,
+      "avgPensionFemale": 3281.38
+    },
+    {
+      "name": "powiat siemiatycki",
+      "teryt": "2010000",
+      "avgPensionMale": 3483.59,
+      "avgPensionFemale": 2911.15
+    },
+    {
+      "name": "powiat sieradzki",
+      "teryt": "1014000",
+      "avgPensionMale": 3729.15,
+      "avgPensionFemale": 3078.76
+    },
+    {
+      "name": "powiat sierpecki",
+      "teryt": "1427000",
+      "avgPensionMale": 4045.78,
+      "avgPensionFemale": 2975.46
+    },
+    {
+      "name": "powiat skarżyski",
+      "teryt": "2610000",
+      "avgPensionMale": 4291.85,
+      "avgPensionFemale": 2990.0
+    },
+    {
+      "name": "Skierniewice",
+      "teryt": "1063000",
+      "avgPensionMale": 4644.97,
+      "avgPensionFemale": 3483.35
+    },
+    {
+      "name": "powiat skierniewicki",
+      "teryt": "1015000",
+      "avgPensionMale": 3603.54,
+      "avgPensionFemale": 2735.67
+    },
+    {
+      "name": "powiat sławieński",
+      "teryt": "3213000",
+      "avgPensionMale": 3918.62,
+      "avgPensionFemale": 2835.23
+    },
+    {
+      "name": "powiat słubicki",
+      "teryt": "0805000",
+      "avgPensionMale": 4442.8,
+      "avgPensionFemale": 3258.86
+    },
+    {
+      "name": "powiat słupecki",
+      "teryt": "3023000",
+      "avgPensionMale": 4008.38,
+      "avgPensionFemale": 2891.81
+    },
+    {
+      "name": "Słupsk",
+      "teryt": "2263000",
+      "avgPensionMale": 4577.59,
+      "avgPensionFemale": 3382.98
+    },
+    {
+      "name": "powiat słupski",
+      "teryt": "2212000",
+      "avgPensionMale": 4245.98,
+      "avgPensionFemale": 2958.69
+    },
+    {
+      "name": "powiat sochaczewski",
+      "teryt": "1428000",
+      "avgPensionMale": 4188.8,
+      "avgPensionFemale": 3178.06
+    },
+    {
+      "name": "powiat sokołowski",
+      "teryt": "1429000",
+      "avgPensionMale": 3947.16,
+      "avgPensionFemale": 3134.03
+    },
+    {
+      "name": "powiat sokólski",
+      "teryt": "2011000",
+      "avgPensionMale": 3602.19,
+      "avgPensionFemale": 2867.73
+    },
+    {
+      "name": "Sopot",
+      "teryt": "2264000",
+      "avgPensionMale": 4959.76,
+      "avgPensionFemale": 3610.03
+    },
+    {
+      "name": "Sosnowiec",
+      "teryt": "2475000",
+      "avgPensionMale": 5809.29,
+      "avgPensionFemale": 3270.99
+    },
+    {
+      "name": "powiat stalowowolski",
+      "teryt": "1818000",
+      "avgPensionMale": 4471.89,
+      "avgPensionFemale": 3011.84
+    },
+    {
+      "name": "powiat starachowicki",
+      "teryt": "2611000",
+      "avgPensionMale": 3960.39,
+      "avgPensionFemale": 2904.58
+    },
+    {
+      "name": "powiat stargardzki",
+      "teryt": "3214000",
+      "avgPensionMale": 4385.94,
+      "avgPensionFemale": 3031.56
+    },
+    {
+      "name": "powiat starogardzki",
+      "teryt": "2213000",
+      "avgPensionMale": 4532.2,
+      "avgPensionFemale": 3086.18
+    },
+    {
+      "name": "powiat staszowski",
+      "teryt": "2612000",
+      "avgPensionMale": 4677.48,
+      "avgPensionFemale": 3060.19
+    },
+    {
+      "name": "powiat strzelecki",
+      "teryt": "1611000",
+      "avgPensionMale": 5010.29,
+      "avgPensionFemale": 3108.66
+    },
+    {
+      "name": "powiat strzelecko-drezdenecki",
+      "teryt": "0806000",
+      "avgPensionMale": 4106.25,
+      "avgPensionFemale": 2886.12
+    },
+    {
+      "name": "powiat strzeliński",
+      "teryt": "0217000",
+      "avgPensionMale": 4184.88,
+      "avgPensionFemale": 3007.0
+    },
+    {
+      "name": "powiat strzyżowski",
+      "teryt": "1819000",
+      "avgPensionMale": 3788.57,
+      "avgPensionFemale": 2814.78
+    },
+    {
+      "name": "powiat sulęciński",
+      "teryt": "0807000",
+      "avgPensionMale": 4074.3,
+      "avgPensionFemale": 3078.39
+    },
+    {
+      "name": "powiat suski",
+      "teryt": "1215000",
+      "avgPensionMale": 4163.74,
+      "avgPensionFemale": 2859.45
+    },
+    {
+      "name": "powiat suwalski",
+      "teryt": "2012000",
+      "avgPensionMale": 3207.36,
+      "avgPensionFemale": 2757.35
+    },
+    {
+      "name": "Suwałki",
+      "teryt": "2063000",
+      "avgPensionMale": 4369.14,
+      "avgPensionFemale": 3310.41
+    },
+    {
+      "name": "powiat szamotulski",
+      "teryt": "3024000",
+      "avgPensionMale": 4870.48,
+      "avgPensionFemale": 3105.61
+    },
+    {
+      "name": "Szczecin",
+      "teryt": "3262000",
+      "avgPensionMale": 5002.5,
+      "avgPensionFemale": 3560.9
+    },
+    {
+      "name": "powiat szczecinecki",
+      "teryt": "3215000",
+      "avgPensionMale": 4309.07,
+      "avgPensionFemale": 3006.06
+    },
+    {
+      "name": "powiat szczycieński",
+      "teryt": "2817000",
+      "avgPensionMale": 3942.05,
+      "avgPensionFemale": 2968.3
+    },
+    {
+      "name": "powiat sztumski",
+      "teryt": "2216000",
+      "avgPensionMale": 4126.41,
+      "avgPensionFemale": 2917.69
+    },
+    {
+      "name": "powiat szydłowiecki",
+      "teryt": "1430000",
+      "avgPensionMale": 3667.65,
+      "avgPensionFemale": 2762.53
+    },
+    {
+      "name": "powiat średzki",
+      "teryt": "0218000",
+      "avgPensionMale": 4243.75,
+      "avgPensionFemale": 3072.63
+    },
+    {
+      "name": "powiat średzki",
+      "teryt": "3025000",
+      "avgPensionMale": 4572.11,
+      "avgPensionFemale": 3029.45
+    },
+    {
+      "name": "powiat śremski",
+      "teryt": "3026000",
+      "avgPensionMale": 4581.37,
+      "avgPensionFemale": 3128.04
+    },
+    {
+      "name": "powiat świdnicki",
+      "teryt": "0219000",
+      "avgPensionMale": 4506.06,
+      "avgPensionFemale": 3153.83
+    },
+    {
+      "name": "powiat świdnicki",
+      "teryt": "0617000",
+      "avgPensionMale": 4385.4,
+      "avgPensionFemale": 3029.15
+    },
+    {
+      "name": "powiat świdwiński",
+      "teryt": "3216000",
+      "avgPensionMale": 4181.04,
+      "avgPensionFemale": 2967.96
+    },
+    {
+      "name": "powiat świebodziński",
+      "teryt": "0808000",
+      "avgPensionMale": 4352.07,
+      "avgPensionFemale": 3160.2
+    },
+    {
+      "name": "powiat świecki",
+      "teryt": "0414000",
+      "avgPensionMale": 4539.66,
+      "avgPensionFemale": 3046.57
+    },
+    {
+      "name": "Świętochłowice",
+      "teryt": "2476000",
+      "avgPensionMale": 6019.52,
+      "avgPensionFemale": 3200.08
+    },
+    {
+      "name": "Świnoujście",
+      "teryt": "3263000",
+      "avgPensionMale": 4673.53,
+      "avgPensionFemale": 3195.47
+    },
+    {
+      "name": "Tarnobrzeg",
+      "teryt": "1864000",
+      "avgPensionMale": 4378.17,
+      "avgPensionFemale": 3236.0
+    },
+    {
+      "name": "powiat tarnobrzeski",
+      "teryt": "1820000",
+      "avgPensionMale": 4113.5,
+      "avgPensionFemale": 2917.07
+    },
+    {
+      "name": "powiat tarnogórski",
+      "teryt": "2413000",
+      "avgPensionMale": 5724.23,
+      "avgPensionFemale": 3231.83
+    },
+    {
+      "name": "powiat tarnowski",
+      "teryt": "1216000",
+      "avgPensionMale": 3838.77,
+      "avgPensionFemale": 2814.78
+    },
+    {
+      "name": "Tarnów",
+      "teryt": "1263000",
+      "avgPensionMale": 4460.07,
+      "avgPensionFemale": 3236.66
+    },
+    {
+      "name": "powiat tatrzański",
+      "teryt": "1217000",
+      "avgPensionMale": 3427.54,
+      "avgPensionFemale": 2903.79
+    },
+    {
+      "name": "powiat tczewski",
+      "teryt": "2214000",
+      "avgPensionMale": 4633.83,
+      "avgPensionFemale": 3034.48
+    },
+    {
+      "name": "powiat tomaszowski",
+      "teryt": "0618000",
+      "avgPensionMale": 3585.29,
+      "avgPensionFemale": 2810.09
+    },
+    {
+      "name": "powiat tomaszowski",
+      "teryt": "1016000",
+      "avgPensionMale": 3895.46,
+      "avgPensionFemale": 2977.56
+    },
+    {
+      "name": "Toruń",
+      "teryt": "0463000",
+      "avgPensionMale": 4775.64,
+      "avgPensionFemale": 3389.89
+    },
+    {
+      "name": "powiat toruński",
+      "teryt": "0415000",
+      "avgPensionMale": 4312.86,
+      "avgPensionFemale": 3000.25
+    },
+    {
+      "name": "powiat trzebnicki",
+      "teryt": "0220000",
+      "avgPensionMale": 4330.76,
+      "avgPensionFemale": 3148.68
+    },
+    {
+      "name": "powiat tucholski",
+      "teryt": "0416000",
+      "avgPensionMale": 4127.14,
+      "avgPensionFemale": 2869.26
+    },
+    {
+      "name": "powiat turecki",
+      "teryt": "3027000",
+      "avgPensionMale": 4662.46,
+      "avgPensionFemale": 2949.61
+    },
+    {
+      "name": "Tychy",
+      "teryt": "2477000",
+      "avgPensionMale": 6272.01,
+      "avgPensionFemale": 3352.05
+    },
+    {
+      "name": "powiat wadowicki",
+      "teryt": "1218000",
+      "avgPensionMale": 4686.95,
+      "avgPensionFemale": 2931.35
+    },
+    {
+      "name": "Wałbrzych",
+      "teryt": "0265000",
+      "avgPensionMale": 5002.69,
+      "avgPensionFemale": 3268.73
+    },
+    {
+      "name": "powiat wałbrzyski",
+      "teryt": "0221000",
+      "avgPensionMale": 4656.48,
+      "avgPensionFemale": 3072.16
+    },
+    {
+      "name": "powiat wałecki",
+      "teryt": "3217000",
+      "avgPensionMale": 4205.04,
+      "avgPensionFemale": 2957.46
+    },
+    {
+      "name": "Warszawa",
+      "teryt": "1465000",
+      "avgPensionMale": 5456.2,
+      "avgPensionFemale": 4201.2
+    },
+    {
+      "name": "powiat warszawski zachodni",
+      "teryt": "1432000",
+      "avgPensionMale": 5135.19,
+      "avgPensionFemale": 3767.82
+    },
+    {
+      "name": "powiat wąbrzeski",
+      "teryt": "0417000",
+      "avgPensionMale": 3921.31,
+      "avgPensionFemale": 2868.7
+    },
+    {
+      "name": "powiat wągrowiecki",
+      "teryt": "3028000",
+      "avgPensionMale": 4391.59,
+      "avgPensionFemale": 2957.12
+    },
+    {
+      "name": "powiat wejherowski",
+      "teryt": "2215000",
+      "avgPensionMale": 4672.17,
+      "avgPensionFemale": 3087.82
+    },
+    {
+      "name": "powiat węgorzewski",
+      "teryt": "2819000",
+      "avgPensionMale": 3756.97,
+      "avgPensionFemale": 2892.31
+    },
+    {
+      "name": "powiat węgrowski",
+      "teryt": "1433000",
+      "avgPensionMale": 3679.51,
+      "avgPensionFemale": 2947.29
+    },
+    {
+      "name": "powiat wielicki",
+      "teryt": "1219000",
+      "avgPensionMale": 4579.3,
+      "avgPensionFemale": 3172.99
+    },
+    {
+      "name": "powiat wieluński",
+      "teryt": "1017000",
+      "avgPensionMale": 3949.98,
+      "avgPensionFemale": 2857.78
+    },
+    {
+      "name": "powiat wieruszowski",
+      "teryt": "1018000",
+      "avgPensionMale": 4108.6,
+      "avgPensionFemale": 2826.8
+    },
+    {
+      "name": "Włocławek",
+      "teryt": "0464000",
+      "avgPensionMale": 4512.14,
+      "avgPensionFemale": 3202.6
+    },
+    {
+      "name": "powiat włocławski",
+      "teryt": "0418000",
+      "avgPensionMale": 3713.2,
+      "avgPensionFemale": 2807.66
+    },
+    {
+      "name": "powiat włodawski",
+      "teryt": "0619000",
+      "avgPensionMale": 3757.18,
+      "avgPensionFemale": 2879.56
+    },
+    {
+      "name": "powiat włoszczowski",
+      "teryt": "2613000",
+      "avgPensionMale": 4018.75,
+      "avgPensionFemale": 2875.35
+    },
+    {
+      "name": "powiat wodzisławski",
+      "teryt": "2415000",
+      "avgPensionMale": 6743.31,
+      "avgPensionFemale": 2844.62
+    },
+    {
+      "name": "powiat wolsztyński",
+      "teryt": "3029000",
+      "avgPensionMale": 4311.92,
+      "avgPensionFemale": 2961.43
+    },
+    {
+      "name": "powiat wołomiński",
+      "teryt": "1434000",
+      "avgPensionMale": 4473.25,
+      "avgPensionFemale": 3430.27
+    },
+    {
+      "name": "powiat wołowski",
+      "teryt": "0222000",
+      "avgPensionMale": 4561.21,
+      "avgPensionFemale": 3111.65
+    },
+    {
+      "name": "Wrocław",
+      "teryt": "0264000",
+      "avgPensionMale": 4961.61,
+      "avgPensionFemale": 3668.09
+    },
+    {
+      "name": "powiat wrocławski",
+      "teryt": "0223000",
+      "avgPensionMale": 4670.84,
+      "avgPensionFemale": 3325.77
+    },
+    {
+      "name": "powiat wrzesiński",
+      "teryt": "3030000",
+      "avgPensionMale": 4268.11,
+      "avgPensionFemale": 2922.23
+    },
+    {
+      "name": "powiat wschowski",
+      "teryt": "0812000",
+      "avgPensionMale": 4506.36,
+      "avgPensionFemale": 2923.93
+    },
+    {
+      "name": "powiat wysokomazowiecki",
+      "teryt": "2013000",
+      "avgPensionMale": 3324.92,
+      "avgPensionFemale": 2887.67
+    },
+    {
+      "name": "powiat wyszkowski",
+      "teryt": "1435000",
+      "avgPensionMale": 3779.67,
+      "avgPensionFemale": 3021.33
+    },
+    {
+      "name": "Zabrze",
+      "teryt": "2478000",
+      "avgPensionMale": 6258.34,
+      "avgPensionFemale": 3256.06
+    },
+    {
+      "name": "powiat zambrowski",
+      "teryt": "2014000",
+      "avgPensionMale": 3450.31,
+      "avgPensionFemale": 2860.2
+    },
+    {
+      "name": "powiat zamojski",
+      "teryt": "0620000",
+      "avgPensionMale": 3340.2,
+      "avgPensionFemale": 2706.59
+    },
+    {
+      "name": "Zamość",
+      "teryt": "0664000",
+      "avgPensionMale": 4300.35,
+      "avgPensionFemale": 3287.02
+    },
+    {
+      "name": "powiat zawierciański",
+      "teryt": "2416000",
+      "avgPensionMale": 4774.31,
+      "avgPensionFemale": 3124.48
+    },
+    {
+      "name": "powiat ząbkowicki",
+      "teryt": "0224000",
+      "avgPensionMale": 4037.91,
+      "avgPensionFemale": 3031.67
+    },
+    {
+      "name": "powiat zduńskowolski",
+      "teryt": "1019000",
+      "avgPensionMale": 4123.15,
+      "avgPensionFemale": 3096.75
+    },
+    {
+      "name": "powiat zgierski",
+      "teryt": "1020000",
+      "avgPensionMale": 4167.22,
+      "avgPensionFemale": 3177.37
+    },
+    {
+      "name": "powiat zgorzelecki",
+      "teryt": "0225000",
+      "avgPensionMale": 5555.36,
+      "avgPensionFemale": 3432.95
+    },
+    {
+      "name": "Zielona Góra",
+      "teryt": "0862000",
+      "avgPensionMale": 4924.16,
+      "avgPensionFemale": 3600.15
+    },
+    {
+      "name": "powiat zielonogórski",
+      "teryt": "0809000",
+      "avgPensionMale": 4352.04,
+      "avgPensionFemale": 3140.44
+    },
+    {
+      "name": "powiat złotoryjski",
+      "teryt": "0226000",
+      "avgPensionMale": 4551.66,
+      "avgPensionFemale": 3088.97
+    },
+    {
+      "name": "powiat złotowski",
+      "teryt": "3031000",
+      "avgPensionMale": 4212.19,
+      "avgPensionFemale": 2953.95
+    },
+    {
+      "name": "powiat zwoleński",
+      "teryt": "1436000",
+      "avgPensionMale": 3625.01,
+      "avgPensionFemale": 2758.54
+    },
+    {
+      "name": "powiat żagański",
+      "teryt": "0810000",
+      "avgPensionMale": 4085.42,
+      "avgPensionFemale": 2894.73
+    },
+    {
+      "name": "powiat żarski",
+      "teryt": "0811000",
+      "avgPensionMale": 4089.5,
+      "avgPensionFemale": 3005.03
+    },
+    {
+      "name": "powiat żniński",
+      "teryt": "0419000",
+      "avgPensionMale": 4189.4,
+      "avgPensionFemale": 2800.52
+    },
+    {
+      "name": "Żory",
+      "teryt": "2479000",
+      "avgPensionMale": 6816.93,
+      "avgPensionFemale": 2776.0
+    },
+    {
+      "name": "powiat żuromiński",
+      "teryt": "1437000",
+      "avgPensionMale": 3304.22,
+      "avgPensionFemale": 2764.13
+    },
+    {
+      "name": "powiat żyrardowski",
+      "teryt": "1438000",
+      "avgPensionMale": 4258.69,
+      "avgPensionFemale": 3298.6
+    },
+    {
+      "name": "powiat żywiecki",
+      "teryt": "2417000",
+      "avgPensionMale": 4877.42,
+      "avgPensionFemale": 3070.7
+    }
+  ]
+}

@@ -1,6 +1,7 @@
-// Placeholder for benchmarks service
+import { calculateBenchmarks, BenchmarksInput, BenchmarksResult } from '@zus/core';
+
 export const benchmarksService = {
-  getBenchmarks: () => {
-    // To be implemented: delegate to @core
+  getBenchmarks: (input: BenchmarksInput): BenchmarksResult => {
+    return calculateBenchmarks(input);
   },
 };

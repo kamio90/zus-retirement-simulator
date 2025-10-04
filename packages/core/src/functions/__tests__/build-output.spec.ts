@@ -63,10 +63,7 @@ describe('buildOutput', () => {
           contribRuleId: 'DEMO_CONTRIB',
           providerKind: 'DeterministicDemo',
         },
-        explainers: [
-          'Quarter mapping: claimMonth 6 → Q2',
-          'SDŻ table window: SDZ.M.2055',
-        ],
+        explainers: ['Quarter mapping: claimMonth 6 → Q2', 'SDŻ table window: SDZ.M.2055'],
       };
 
       const result = buildOutput(params);
