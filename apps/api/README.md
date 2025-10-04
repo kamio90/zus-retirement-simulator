@@ -20,6 +20,30 @@ Calculate pension based on user input parameters.
 ### `/reports` — Export reports
 Generate and export pension reports (PDF/XLS).
 
+#### `POST /reports/pdf`
+Generate a PDF report from simulation results.
+
+**Request Body:**
+- `input`: Original simulation input parameters
+- `result`: Simulation result data
+- `branding` (optional): Customization options
+
+**Response:** PDF file download
+
+#### `POST /reports/xls`
+Generate an Excel (XLSX) report from simulation results.
+
+**Request Body:**
+- `input`: Original simulation input parameters
+- `result`: Simulation result data
+- `branding` (optional): Customization options
+
+**Response:** XLSX file download
+
+**XLS Structure:**
+- **Summary Sheet**: Key results, scenario details, assumptions
+- **Capital Trajectory Sheet**: Year-by-year breakdown of wages, contributions, and accumulated capital
+
 ### `/benchmarks` — National & Powiat pension averages
 Get benchmark pension data for Poland nationally and by powiat (district).
 
