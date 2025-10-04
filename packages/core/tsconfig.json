@@ -3,11 +3,9 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "baseUrl": ".",
-    "paths": {
-      "@zus/data": ["../../packages/data/dist"],
-      "@zus/data/*": ["../../packages/data/dist/*"]
-    }
+    "declaration": true,
+    "declarationMap": true,
+    "paths": {}
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts"]

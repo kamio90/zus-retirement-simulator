@@ -57,7 +57,9 @@ export async function generatePdfReport(payload: ReportPayload): Promise<Buffer>
       doc.text(`Miesięczna emerytura (nominalna): ${formatCurrency(result.monthlyPensionNominal)}`);
       doc.moveDown(0.3);
       doc.text(
-        `Miesięczna emerytura (wartość dzisiejsza): ${formatCurrency(result.monthlyPensionRealToday)}`
+        `Miesięczna emerytura (wartość dzisiejsza): ${formatCurrency(
+          result.monthlyPensionRealToday
+        )}`
       );
       doc.moveDown(0.3);
       doc.text(`Stopa zastąpienia: ${formatPercentage(result.replacementRate)}`);
@@ -113,7 +115,9 @@ export async function generatePdfReport(payload: ReportPayload): Promise<Buffer>
         const row = trajectory[idx];
         if (row) {
           doc.text(
-            `${row.year}: Wynagrodzenie ${formatCurrency(row.annualWage)}, Kapitał ${formatCurrency(row.cumulativeCapitalAfterAnnual)}`
+            `${row.year}: Wynagrodzenie ${formatCurrency(row.annualWage)}, Kapitał ${formatCurrency(
+              row.cumulativeCapitalAfterAnnual
+            )}`
           );
           doc.moveDown(0.2);
         }
