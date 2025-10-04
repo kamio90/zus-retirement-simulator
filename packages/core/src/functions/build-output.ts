@@ -51,6 +51,8 @@ export function buildOutput(params: BuildOutputParams): EngineOutput {
   const finalization: FinalizationVO = {
     quarterIndexId: params.finalization.indicesApplied.join(','),
     compoundedResult: params.finalization.resultingCapital,
+    quarterUsed: params.finalization.quarterUsed,
+    indicesApplied: params.finalization.indicesApplied,
   };
 
   // Map assumptions
@@ -71,6 +73,10 @@ export function buildOutput(params: BuildOutputParams): EngineOutput {
     replacementRate: params.pension.replacementRate,
     capitalTrajectory,
     finalization,
+    life: {
+      years: params.life.years,
+      lifeTableId: params.life.lifeTableId,
+    },
     assumptions,
     explainers: params.explainers,
   };

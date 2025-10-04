@@ -28,6 +28,8 @@ export interface TrajectoryRowVO {
 export interface FinalizationVO {
   quarterIndexId: string;
   compoundedResult: number;
+  quarterUsed: 'Q1' | 'Q2' | 'Q3' | 'Q4';
+  indicesApplied: string[];
 }
 
 /**
@@ -68,6 +70,10 @@ export interface EngineOutput {
   replacementRate: number;
   capitalTrajectory: TrajectoryRowVO[];
   finalization: FinalizationVO;
+  life: {
+    years: number;
+    lifeTableId: string;
+  };
   assumptions: AssumptionsVO;
   explainers: string[];
 }
