@@ -11,6 +11,7 @@ import simulateRouter from './routes/simulate';
 import reportsRouter from './routes/reports';
 import benchmarksRouter from './routes/benchmarks';
 import telemetryRouter from './routes/telemetry';
+import adminRouter from './routes/admin';
 
 loadEnv();
 
@@ -25,6 +26,7 @@ app.use('/simulate', simulateRouter);
 app.use('/reports', reportsRouter);
 app.use('/benchmarks', benchmarksRouter);
 app.use('/telemetry', telemetryRouter);
+app.use('/admin', adminRouter);
 
 app.use(errorHandler);
 
