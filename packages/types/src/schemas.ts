@@ -1,15 +1,52 @@
-// Zod schemas for all DTOs
-// -------------------------------------------------------------
-// SimulateRequestSchema:
-//   - exact object, strip unknown keys
-//   - field constraints
-//   - cross-field refinements (retirementAge, entitlementYear, chronological checks)
-// SimulationResultSchema:
-//   - non-negative currency, replacementRate in 0..1
-//   - capitalTrajectory length = working years
-// ReportPayloadSchema (PDF/XLS)
-// BenchmarksQuerySchema, BenchmarksResponseSchema
-// TelemetryEventSchema
-// ApiErrorSchema
-// All schemas export both types and validators
-// Note: schemas are shared by API middleware and frontend form validation
+/**
+ * Consolidated Zod schemas for all DTOs
+ * All schemas are exact (strip unknown keys) and shared by API middleware and frontend validation
+ */
+
+// Re-export all schemas for centralized access
+export {
+  SimulateRequestSchema,
+  SimulationResultSchema,
+  SimulateInputSchema,
+  type SimulateRequest,
+  type SimulationResult,
+  type SimulateInput,
+} from './simulate.dto';
+
+export {
+  ReportPayloadSchema,
+  ReportPdfInputSchema,
+  ReportXlsInputSchema,
+  ReportPdfResponseSchema,
+  ReportXlsResponseSchema,
+  type ReportPayload,
+  type ReportPdfInput,
+  type ReportXlsInput,
+  type ReportPdfResponse,
+  type ReportXlsResponse,
+} from './report.dto';
+
+export {
+  BenchmarksQuerySchema,
+  BenchmarksResponseSchema,
+  type BenchmarksQuery,
+  type BenchmarksResponse,
+} from './benchmarks.dto';
+
+export {
+  TelemetryEventSchema,
+  SimulateSuccessEventSchema,
+  DownloadPdfEventSchema,
+  DownloadXlsEventSchema,
+  DashboardOpenEventSchema,
+  FormValidationFailedEventSchema,
+  type TelemetryEvent,
+  type TelemetryEventType,
+  type SimulateSuccessEvent,
+  type DownloadPdfEvent,
+  type DownloadXlsEvent,
+  type DashboardOpenEvent,
+  type FormValidationFailedEvent,
+} from './telemetry.dto';
+
+export { ApiErrorSchema, type ApiError, type ErrorCode, ERROR_HTTP_MAPPING } from './errors';
