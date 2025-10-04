@@ -1,0 +1,17 @@
+{
+  "name": "Quarterly Mapping — Q1 (Jan-Mar)",
+  "description": "Validates Q1 claim maps to Q3 of previous year index",
+  "category": "edge-case",
+  "tags": ["quarterly", "mapping", "Q1"],
+  "input": {
+    "birthYear": 1980,
+    "gender": "M",
+    "startWorkYear": 2000,
+    "currentGrossMonthly": 6000,
+    "claimMonth": 2
+  },
+  "structural": {
+    "finalizationQuarter": "Q1",
+    "explainerMinLength": 1
+  }
+}

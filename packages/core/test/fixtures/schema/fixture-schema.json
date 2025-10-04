@@ -1,0 +1,198 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Golden Fixture Schema",
+  "description": "Schema for golden test fixtures in ZUS Pension Engine",
+  "type": "object",
+  "required": ["name", "description", "category", "tags", "input", "structural"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the fixture"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of what this fixture tests"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["baseline", "edge-case", "comparative", "provider-specific"],
+      "description": "Category for organizing fixtures"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags for filtering and searching fixtures"
+    },
+    "input": {
+      "type": "object",
+      "required": ["birthYear", "gender", "startWorkYear", "currentGrossMonthly"],
+      "properties": {
+        "birthYear": {
+          "type": "number",
+          "minimum": 1900,
+          "maximum": 2100
+        },
+        "gender": {
+          "type": "string",
+          "enum": ["M", "F"]
+        },
+        "startWorkYear": {
+          "type": "number",
+          "minimum": 1900,
+          "maximum": 2100
+        },
+        "currentGrossMonthly": {
+          "type": "number",
+          "minimum": 0
+        },
+        "retirementAge": {
+          "type": "number",
+          "minimum": 60,
+          "maximum": 70
+        },
+        "accumulatedInitialCapital": {
+          "type": "number",
+          "minimum": 0
+        },
+        "subAccountBalance": {
+          "type": "number",
+          "minimum": 0
+        },
+        "absenceFactor": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "claimMonth": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "anchorYear": {
+          "type": "number",
+          "minimum": 1900,
+          "maximum": 2100
+        }
+      }
+    },
+    "structural": {
+      "type": "object",
+      "description": "Structural expectations (no exact numeric values)",
+      "properties": {
+        "trajectoryLength": {
+          "type": "number",
+          "description": "Expected number of years in trajectory"
+        },
+        "trajectoryMonotonic": {
+          "type": "boolean",
+          "description": "Capital should be non-decreasing"
+        },
+        "minNominal": {
+          "type": "number",
+          "description": "Minimum acceptable nominal pension"
+        },
+        "maxNominal": {
+          "type": "number",
+          "description": "Maximum acceptable nominal pension"
+        },
+        "minReplacementRate": {
+          "type": "number",
+          "description": "Minimum acceptable replacement rate"
+        },
+        "maxReplacementRate": {
+          "type": "number",
+          "description": "Maximum acceptable replacement rate"
+        },
+        "annualIndexIdPattern": {
+          "type": "string",
+          "description": "Regex pattern for annual index IDs"
+        },
+        "quarterlyIndexIdPattern": {
+          "type": "string",
+          "description": "Regex pattern for quarterly index IDs"
+        },
+        "lifeTableIdPattern": {
+          "type": "string",
+          "description": "Regex pattern for life table IDs"
+        },
+        "finalizationQuarterCount": {
+          "type": "number",
+          "description": "Expected number of quarterly indices applied"
+        },
+        "finalizationQuarter": {
+          "type": "string",
+          "enum": ["Q1", "Q2", "Q3", "Q4"],
+          "description": "Expected quarter for claim"
+        },
+        "explainerContains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Expected substrings in explainer messages"
+        },
+        "explainerMinLength": {
+          "type": "number",
+          "description": "Minimum number of explainer messages"
+        },
+        "compareTo": {
+          "type": "object",
+          "description": "Comparative validation against another fixture",
+          "required": ["fixtureName", "property", "relation"],
+          "properties": {
+            "fixtureName": {
+              "type": "string"
+            },
+            "property": {
+              "type": "string"
+            },
+            "relation": {
+              "type": "string",
+              "enum": ["GT", "LT", "GTE", "LTE", "EQ"]
+            }
+          }
+        }
+      }
+    },
+    "numeric": {
+      "type": "object",
+      "description": "Numeric golden expectations (future, when production data available)",
+      "properties": {
+        "monthlyPensionNominal": {
+          "type": "number"
+        },
+        "monthlyPensionRealToday": {
+          "type": "number"
+        },
+        "replacementRate": {
+          "type": "number"
+        },
+        "capitalTrajectory": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["year", "cumulativeCapital"],
+            "properties": {
+              "year": {
+                "type": "number"
+              },
+              "cumulativeCapital": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "dataVersion": {
+          "type": "string",
+          "description": "Version of production data used (e.g., 2025-Q1)"
+        },
+        "providerKind": {
+          "type": "string",
+          "description": "Provider type (e.g., ZUS_PRODUCTION)"
+        }
+      }
+    }
+  }
+}

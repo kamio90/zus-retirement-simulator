@@ -1,0 +1,24 @@
+{
+  "name": "Young Worker — Standard Path",
+  "description": "Worker born 2000, started 2020, retiring at 65. Long career with standard path.",
+  "category": "baseline",
+  "tags": ["young", "standard", "long-career"],
+  "input": {
+    "birthYear": 2000,
+    "gender": "M",
+    "startWorkYear": 2020,
+    "currentGrossMonthly": 6000,
+    "retirementAge": 65,
+    "claimMonth": 6
+  },
+  "structural": {
+    "trajectoryLength": 45,
+    "trajectoryMonotonic": true,
+    "minNominal": 1,
+    "maxReplacementRate": 1.5,
+    "annualIndexIdPattern": "^ANNUAL\\.Y\\d{4}$",
+    "quarterlyIndexIdPattern": "^QTR\\.Q[1-4]\\.",
+    "finalizationQuarter": "Q2",
+    "explainerMinLength": 1
+  }
+}
