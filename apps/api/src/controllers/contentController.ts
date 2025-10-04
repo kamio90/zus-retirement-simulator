@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
+import { resolveTokens } from '../utils/tokenResolver';
 
 interface KnowledgeItem {
   id: string;
@@ -104,6 +105,13 @@ export const contentController = {
 
     // Limit results
     items = items.slice(0, requestedLimit);
+
+    // Resolve tokens in items
+    items = items.map(item => ({
+      ...item,
+      body: resolveTokens(item.body),
+      short: item.short ? resolveTokens(item.short) : item.short,
+    }));
 
     // Prepare response
     const response = {
