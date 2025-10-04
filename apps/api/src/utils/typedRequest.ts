@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { SimulateInput, SimulationResult } from '@types/simulation';
+import type { SimulateInput, SimulationResult } from '@types';
 
 export type SimulateRequest = Request<{},{},SimulateInput>;
 export type SimulateResponse = SimulationResult;

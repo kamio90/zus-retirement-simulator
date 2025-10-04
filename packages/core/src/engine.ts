@@ -26,7 +26,9 @@
  * - Handles edge cases: short careers, high salary, absenceFactor < 1, future/past start years, extreme retirement ages
  */
 
-import { SimulateInput, SimulationResult } from '@types';
+// Temporarily using any types until domain types are implemented
+type SimulateInput = any;
+type SimulationResult = any;
 
 /**
  * Calculates pension simulation results based on ZUS rules and macroeconomic data.
