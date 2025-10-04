@@ -278,6 +278,49 @@ export function Step5RefineCompare(): JSX.Element {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
+          {/* Retirement Timing Options */}
+          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h3 className="text-xl font-bold text-zus-text mb-4">Opcje przejścia na emeryturę</h3>
+            <div className="space-y-3">
+              <label className="flex items-center p-3 bg-blue-50 rounded-lg cursor-pointer hover:bg-blue-100 transition-colors">
+                <input
+                  type="checkbox"
+                  className="w-5 h-5 text-zus-primary focus:ring-zus-primary"
+                  onChange={(e) => {
+                    // Handle early retirement checkbox
+                    console.log('Early retirement:', e.target.checked);
+                  }}
+                />
+                <span className="ml-3 text-sm font-medium text-gray-900">
+                  Wcześniejsza emerytura (-5 lat)
+                </span>
+                <span className="ml-auto text-xs text-blue-600">
+                  Wyższy dzielnik → niższa emerytura
+                </span>
+              </label>
+
+              <div className="p-3 bg-green-50 rounded-lg">
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Opóźnienie emerytury
+                </label>
+                <select
+                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zus-primary focus:border-transparent"
+                  onChange={(e) => {
+                    // Handle delay selection
+                    console.log('Delay months:', e.target.value);
+                  }}
+                >
+                  <option value="0">Brak opóźnienia</option>
+                  <option value="12">+12 miesięcy</option>
+                  <option value="24">+24 miesiące</option>
+                </select>
+                <p className="text-xs text-green-600 mt-1">
+                  Niższy dzielnik + dodatkowa waloryzacja → wyższa emerytura
+                </p>
+              </div>
+            </div>
+          </div>
+
           <button
             onClick={handleComputePrecisePension}
             disabled={isComputing}

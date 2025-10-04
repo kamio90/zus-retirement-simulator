@@ -121,6 +121,8 @@ export interface WizardJdgRequest {
   monthlyIncome: number;
   isRyczalt: boolean;
   claimMonth?: number;
+  retirementAgeOverride?: number; // For early retirement what-if
+  delayMonths?: number; // For delayed retirement (0, 12, 24)
 }
 
 export const WizardJdgRequestSchema = z.object({
@@ -130,6 +132,10 @@ export const WizardJdgRequestSchema = z.object({
   monthlyIncome: z.number().min(0).max(1000000),
   isRyczalt: z.boolean(),
   claimMonth: z.number().int().min(1).max(12).optional(),
+  retirementAgeOverride: z.number().int().min(50).max(80).optional(),
+  delayMonths: z.number().int().refine((val) => [0, 12, 24].includes(val), {
+    message: 'Delay months must be 0, 12, or 24',
+  }).optional(),
 });
 
 export type WizardJdgResponse = ScenarioResult;
@@ -139,16 +145,31 @@ export type WizardJdgResponse = ScenarioResult;
 // ============================================================================
 
 export interface RefinementItem {
-  kind: 'contribution_boost' | 'delay_retirement' | 'higher_base';
+  kind:
+    | 'contribution_boost'
+    | 'delay_retirement'
+    | 'higher_base'
+    | 'early_retirement'
+    | 'delay_months'
+    | 'non_contributory_unemployment';
   years?: number;
   monthly?: number;
+  months?: number;
   label?: string;
 }
 
 export const RefinementItemSchema = z.object({
-  kind: z.enum(['contribution_boost', 'delay_retirement', 'higher_base']),
+  kind: z.enum([
+    'contribution_boost',
+    'delay_retirement',
+    'higher_base',
+    'early_retirement',
+    'delay_months',
+    'non_contributory_unemployment',
+  ]),
   years: z.number().int().min(1).max(10).optional(),
   monthly: z.number().min(0).max(1000000).optional(),
+  months: z.number().int().min(0).max(600).optional(), // For delay_months and unemployment periods
   label: z.string().optional(),
 });
 

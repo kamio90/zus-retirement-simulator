@@ -15,5 +15,7 @@ export function errorHandler(err: Error, _req: Request, res: Response, _next: Ne
     correlationId,
   };
 
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('X-Correlation-Id', correlationId);
   res.status(ERROR_HTTP_MAPPING['INTERNAL_ERROR']).json(apiError);
 }
