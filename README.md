@@ -135,6 +135,14 @@ pnpm test
 pnpm --filter @zus/core test
 ```
 
+## 🤝 Contributing
+
+Contributions are welcome! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for:
+- Development workflow
+- Code standards
+- Pull request guidelines
+- CI/CD requirements
+
 ## 📝 License
 
 See LICENSE file in the repository root.
