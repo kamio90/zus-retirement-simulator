@@ -9,8 +9,8 @@ import { Step2ContractType } from './Step2ContractType';
 import { Step3aJdgDetails } from './Step3aJdgDetails';
 import { Step4aResult } from './Step4aResult';
 import { Step5RefineCompare } from './Step5RefineCompare';
-import { calculateJdgQuick } from '../../services/api';
-import type { JdgQuickRequest } from '@zus/types';
+import { wizardJdg } from '../../services/v2-api';
+import type { WizardJdgRequest, ContractTypeV2 } from '@zus/types';
 
 export function Wizard(): JSX.Element {
   const {
@@ -57,22 +57,30 @@ export function Wizard(): JSX.Element {
 
   const handleNext = async (): Promise<void> => {
     if (currentStep === 3) {
-      // Quick calculation - call API
-      if (gender && age && jdgIncome > 0) {
+      // Quick calculation - call v2 API
+      if (gender && age && jdgIncome > 0 && contractType) {
         try {
-          const birthYear = new Date().getFullYear() - age;
-          const request: JdgQuickRequest = {
-            birthYear,
+          // Map contract type to v2 format (uppercase)
+          const contractV2: ContractTypeV2 = contractType === 'uop' 
+            ? 'UOP' 
+            : contractType === 'jdg_ryczalt' 
+            ? 'JDG_RYCZALT' 
+            : 'JDG';
+
+          const request: WizardJdgRequest = {
             gender: gender === 'male' ? 'M' : 'F',
             age,
+            contract: contractV2,
             monthlyIncome: jdgIncome,
             isRyczalt,
+            claimMonth: 6, // Default to June (Q2)
           };
-          const result = await calculateJdgQuick(request);
+          
+          const result = await wizardJdg(request);
           setQuickCalcResult(result);
           nextStep();
         } catch (error) {
-          console.error('JDG quick calculation failed:', error);
+          console.error('V2 JDG calculation failed:', error);
           // Still proceed to show mock data
           nextStep();
         }
@@ -80,7 +88,7 @@ export function Wizard(): JSX.Element {
         nextStep();
       }
     } else if (currentStep === 5) {
-      // Final calculation - could call compose API here
+      // Final calculation - could call simulate v2 API here
       // For now, just proceed
     } else {
       nextStep();

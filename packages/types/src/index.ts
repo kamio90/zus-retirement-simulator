@@ -10,6 +10,7 @@ export * from './report.dto';
 export * from './benchmarks.dto';
 export * from './telemetry.dto';
 export * from './scenarios.dto';
+export * from './v2-wizard.dto';
 
 // Legacy error export for backward compatibility
 export * from './error.dto';

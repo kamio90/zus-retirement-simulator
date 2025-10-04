@@ -14,13 +14,14 @@ import {
 } from 'recharts';
 import { useWizardStore } from '../../store/wizardStore';
 import { BeaverCoach } from './BeaverCoach';
+import type { ScenarioResult } from '@zus/types';
 
 export function Step4aResult(): JSX.Element {
   const { quickCalcResult, setCurrentStep } = useWizardStore();
 
-  // Use API result if available, otherwise fall back to mock
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const apiResult = quickCalcResult as any;
+  // Cast to v2 ScenarioResult
+  const apiResult = quickCalcResult as ScenarioResult | null;
+  
   const mockResult = {
     nominalPension: 3500,
     realPension: 2800,
@@ -38,30 +39,54 @@ export function Step4aResult(): JSX.Element {
     ],
   };
 
-  const result = apiResult || mockResult;
-
-  const kpis = [
+  // Extract KPIs from v2 result or use mock
+  const kpis = apiResult ? [
     {
       label: 'Emerytura nominalna',
-      value: `${Math.round(result.nominalPension || 3500).toLocaleString('pl-PL')} PLN`,
+      value: `${Math.round(apiResult.kpi.monthlyNominal).toLocaleString('pl-PL')} PLN`,
       description: 'Przewidywana kwota emerytury w przyszłości',
       icon: '💰',
     },
     {
       label: 'Emerytura realna (dzisiaj)',
-      value: `${Math.round(result.realPension || 2800).toLocaleString('pl-PL')} PLN`,
+      value: `${Math.round(apiResult.kpi.monthlyRealToday).toLocaleString('pl-PL')} PLN`,
       description: 'Wartość w dzisiejszych pieniądzach',
       icon: '📊',
     },
     {
       label: 'Stopa zastąpienia',
-      value: `${Math.round((result.replacementRate || 0.58) * 100)}%`,
+      value: `${Math.round(apiResult.kpi.replacementRate * 100)}%`,
       description: 'Stosunek emerytury do ostatniego wynagrodzenia',
       icon: '📈',
     },
     {
       label: 'Przejście na emeryturę',
-      value: `${result.scenario?.retirementYear || result.retirementYear} Q${result.scenario?.retirementQuarter || result.retirementQuarter}`,
+      value: `${apiResult.kpi.retirementYear} ${apiResult.kpi.claimQuarter}`,
+      description: 'Rok i kwartał przejścia na emeryturę',
+      icon: '🗓️',
+    },
+  ] : [
+    {
+      label: 'Emerytura nominalna',
+      value: `${Math.round(mockResult.nominalPension).toLocaleString('pl-PL')} PLN`,
+      description: 'Przewidywana kwota emerytury w przyszłości',
+      icon: '💰',
+    },
+    {
+      label: 'Emerytura realna (dzisiaj)',
+      value: `${Math.round(mockResult.realPension).toLocaleString('pl-PL')} PLN`,
+      description: 'Wartość w dzisiejszych pieniądzach',
+      icon: '📊',
+    },
+    {
+      label: 'Stopa zastąpienia',
+      value: `${mockResult.replacementRate}%`,
+      description: 'Stosunek emerytury do ostatniego wynagrodzenia',
+      icon: '📈',
+    },
+    {
+      label: 'Przejście na emeryturę',
+      value: `${mockResult.retirementYear} Q${mockResult.retirementQuarter}`,
       description: 'Rok i kwartał przejścia na emeryturę',
       icon: '🗓️',
     },
@@ -133,7 +158,7 @@ export function Step4aResult(): JSX.Element {
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <h3 className="text-xl font-bold text-zus-text mb-4">Trajektoria kapitału emerytalnego</h3>
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={result.capitalTrajectory || mockResult.capitalTrajectory}>
+          <LineChart data={apiResult?.capitalTrajectory || mockResult.capitalTrajectory}>
             <CartesianGrid strokeDasharray="3 3" stroke="#d8e5dd" />
             <XAxis dataKey="year" stroke="#0b1f17" tick={{ fill: '#0b1f17' }} />
             <YAxis
