@@ -6,7 +6,7 @@ import { TelemetryEvent } from '@zus/types';
  * Convert telemetry events to JSONL format (one JSON per line)
  */
 function eventsToJsonl(events: TelemetryEvent[]): string {
-  return events.map(event => JSON.stringify(event)).join('\n');
+  return events.map((event) => JSON.stringify(event)).join('\n');
 }
 
 /**
@@ -26,18 +26,18 @@ function eventsToCsv(events: TelemetryEvent[]): string {
       event.timestampISO,
       event.correlationId,
       event.userAgentHash || '',
-      event.payloadLite ? JSON.stringify(event.payloadLite) : ''
+      event.payloadLite ? JSON.stringify(event.payloadLite) : '',
     ];
-    
+
     // Escape CSV values
-    const escapedRow = row.map(value => {
+    const escapedRow = row.map((value) => {
       const stringValue = String(value);
       if (stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n')) {
         return `"${stringValue.replace(/"/g, '""')}"`;
       }
       return stringValue;
     });
-    
+
     csvRows.push(escapedRow.join(','));
   }
 
@@ -48,9 +48,9 @@ export const adminController = {
   /**
    * Export telemetry data in JSONL or CSV format
    */
-  exportTelemetry: (req: Request, res: Response) => {
+  exportTelemetry: (req: Request, res: Response): void => {
     try {
-      const format = req.query.format as string || 'jsonl';
+      const format = (req.query.format as string) || 'jsonl';
       const events = telemetryService.getAllEvents();
 
       if (format === 'csv') {
@@ -66,14 +66,14 @@ export const adminController = {
       } else {
         res.status(400).json({
           success: false,
-          message: 'Invalid format. Use "jsonl" or "csv"'
+          message: 'Invalid format. Use "jsonl" or "csv"',
         });
       }
     } catch (error) {
       res.status(500).json({
         success: false,
         message: 'Failed to export telemetry data',
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
     }
   },
@@ -81,7 +81,8 @@ export const adminController = {
   /**
    * Get telemetry statistics
    */
-  getTelemetryStats: (req: Request, res: Response) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getTelemetryStats: (req: Request, res: Response): void => {
     try {
       const events = telemetryService.getAllEvents();
       const eventTypeCounts: Record<string, number> = {};
@@ -94,14 +95,14 @@ export const adminController = {
         totalEvents: telemetryService.getEventsCount(),
         eventTypeCounts,
         oldestEvent: events.length > 0 ? events[0].timestampISO : null,
-        newestEvent: events.length > 0 ? events[events.length - 1].timestampISO : null
+        newestEvent: events.length > 0 ? events[events.length - 1].timestampISO : null,
       });
     } catch (error) {
       res.status(500).json({
         success: false,
         message: 'Failed to get telemetry stats',
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
     }
-  }
+  },
 };

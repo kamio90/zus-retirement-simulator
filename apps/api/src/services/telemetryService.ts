@@ -13,7 +13,7 @@ class TelemetryStore {
    */
   store(event: TelemetryEvent): void {
     this.events.push(event);
-    
+
     // Keep only the last maxEvents to prevent memory overflow
     if (this.events.length > this.maxEvents) {
       this.events = this.events.slice(-this.maxEvents);
