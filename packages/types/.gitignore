@@ -30,3 +30,9 @@ yargs
 yargs-parser
 body-parser
 jest
+
+# Build output
+dist/
+*.js
+*.js.map
+*.d.ts
