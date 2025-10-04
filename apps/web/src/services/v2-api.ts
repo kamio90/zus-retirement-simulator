@@ -57,24 +57,51 @@ async function v2Request<T>(
     });
 
     const responseCorrelationId = response.headers.get('X-Correlation-Id');
+    const contentType = response.headers.get('Content-Type') || '';
+
+    // Get response text first
+    const responseText = await response.text();
+
+    // Try to parse JSON if response has content and proper content-type
+    let responseData: any = null;
+    if (responseText && contentType.includes('application/json')) {
+      try {
+        responseData = JSON.parse(responseText);
+      } catch (parseError) {
+        // JSON parse failed even with correct content-type
+        throw new V2ApiClientError(
+          'Invalid JSON response from server',
+          undefined,
+          response.status,
+          responseCorrelationId || correlationId
+        );
+      }
+    } else if (responseText) {
+      // Non-JSON response
+      responseData = { raw: responseText };
+    }
 
     if (!response.ok) {
-      const errorData: ApiError = await response.json();
+      const errorMessage = responseData?.message || responseData?.raw || 'API request failed';
       throw new V2ApiClientError(
-        errorData.message || 'API request failed',
-        errorData,
+        errorMessage,
+        responseData,
         response.status,
         responseCorrelationId || correlationId
       );
     }
 
-    const result: T = await response.json();
-    return result;
+    return responseData as T;
   } catch (error) {
     if (error instanceof V2ApiClientError) {
       throw error;
     }
-    throw new V2ApiClientError(error instanceof Error ? error.message : 'Unknown error occurred');
+    throw new V2ApiClientError(
+      error instanceof Error ? error.message : 'Unknown error occurred',
+      undefined,
+      undefined,
+      correlationId
+    );
   }
 }
 

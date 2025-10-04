@@ -26,6 +26,12 @@ import {
   simulateV2,
 } from '../services/v2WizardService';
 
+/**
+ * Helper to set standard headers for all responses
+ */
+function setStandardHeaders(res: Response, correlationId: string): void {
+}
+
 export const v2WizardController = {
   /**
    * POST /api/v2/wizard/init
@@ -33,12 +39,12 @@ export const v2WizardController = {
    */
   init: (req: Request, res: Response): void => {
     const correlationId = req.headers['x-correlation-id']?.toString() || uuidv4();
+    setStandardHeaders(res, correlationId);
 
     try {
       const validatedRequest = WizardInitRequestSchema.parse(req.body);
       const result = wizardInit(validatedRequest);
 
-      res.setHeader('X-Correlation-Id', correlationId);
       res.status(200).json(result);
     } catch (error) {
       if (error instanceof ZodError) {
@@ -73,12 +79,12 @@ export const v2WizardController = {
    */
   contract: (req: Request, res: Response): void => {
     const correlationId = req.headers['x-correlation-id']?.toString() || uuidv4();
+    setStandardHeaders(res, correlationId);
 
     try {
       const validatedRequest = WizardContractRequestSchema.parse(req.body);
       const result = wizardContract(validatedRequest);
 
-      res.setHeader('X-Correlation-Id', correlationId);
       res.status(200).json(result);
     } catch (error) {
       if (error instanceof ZodError) {
@@ -113,12 +119,12 @@ export const v2WizardController = {
    */
   jdg: (req: Request, res: Response): void => {
     const correlationId = req.headers['x-correlation-id']?.toString() || uuidv4();
+    setStandardHeaders(res, correlationId);
 
     try {
       const validatedRequest = WizardJdgRequestSchema.parse(req.body);
       const result = wizardJdg(validatedRequest);
 
-      res.setHeader('X-Correlation-Id', correlationId);
       res.status(200).json(result);
     } catch (error) {
       if (error instanceof ZodError) {
@@ -153,12 +159,12 @@ export const v2WizardController = {
    */
   higherZus: (req: Request, res: Response): void => {
     const correlationId = req.headers['x-correlation-id']?.toString() || uuidv4();
+    setStandardHeaders(res, correlationId);
 
     try {
       const validatedRequest = CompareHigherZusRequestSchema.parse(req.body);
       const result = compareHigherZus(validatedRequest);
 
-      res.setHeader('X-Correlation-Id', correlationId);
       res.status(200).json(result);
     } catch (error) {
       if (error instanceof ZodError) {
@@ -193,12 +199,12 @@ export const v2WizardController = {
    */
   asUop: (req: Request, res: Response): void => {
     const correlationId = req.headers['x-correlation-id']?.toString() || uuidv4();
+    setStandardHeaders(res, correlationId);
 
     try {
       const validatedRequest = CompareAsUopRequestSchema.parse(req.body);
       const result = compareAsUop(validatedRequest);
 
-      res.setHeader('X-Correlation-Id', correlationId);
       res.status(200).json(result);
     } catch (error) {
       if (error instanceof ZodError) {
@@ -233,12 +239,12 @@ export const v2WizardController = {
    */
   whatIf: (req: Request, res: Response): void => {
     const correlationId = req.headers['x-correlation-id']?.toString() || uuidv4();
+    setStandardHeaders(res, correlationId);
 
     try {
       const validatedRequest = CompareWhatIfRequestSchema.parse(req.body);
       const result = compareWhatIf(validatedRequest);
 
-      res.setHeader('X-Correlation-Id', correlationId);
       res.status(200).json(result);
     } catch (error) {
       if (error instanceof ZodError) {
@@ -273,12 +279,12 @@ export const v2WizardController = {
    */
   simulate: (req: Request, res: Response): void => {
     const correlationId = req.headers['x-correlation-id']?.toString() || uuidv4();
+    setStandardHeaders(res, correlationId);
 
     try {
       const validatedRequest = SimulateV2RequestSchema.parse(req.body);
       const result = simulateV2(validatedRequest);
 
-      res.setHeader('X-Correlation-Id', correlationId);
       res.status(200).json(result);
     } catch (error) {
       if (error instanceof ZodError) {
