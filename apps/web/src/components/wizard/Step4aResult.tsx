@@ -18,7 +18,7 @@ import { KnowledgeCard } from './KnowledgeCard';
 import type { ScenarioResult } from '@zus/types';
 
 export function Step4aResult(): JSX.Element {
-  const { quickCalcResult, setCurrentStep, contractType, gender, age } = useWizardStore();
+  const { quickCalcResult, setCurrentStep, contractType } = useWizardStore();
 
   // Cast to v2 ScenarioResult
   const apiResult = quickCalcResult as ScenarioResult | null;
@@ -231,9 +231,7 @@ export function Step4aResult(): JSX.Element {
               <div className="text-5xl mb-3" role="img" aria-label="Wcześniejsza emerytura">
                 ⏪
               </div>
-              <h4 className="text-lg font-bold text-blue-900 mb-2">
-                Emerytura 5 lat wcześniej
-              </h4>
+              <h4 className="text-lg font-bold text-blue-900 mb-2">Emerytura 5 lat wcześniej</h4>
               <p className="text-sm text-blue-700">
                 Zobacz jak zmieni się wysokość emerytury przy wcześniejszym przejściu na emeryturę
               </p>

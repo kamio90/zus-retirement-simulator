@@ -133,7 +133,9 @@ export const WizardJdgRequestSchema = z.object({
   isRyczalt: z.boolean(),
   claimMonth: z.number().int().min(1).max(12).optional(),
   retirementAgeOverride: z.number().int().min(50).max(80).optional(),
-  delayMonths: z.enum([0, 12, 24]).optional(),
+  delayMonths: z.number().int().refine((val) => [0, 12, 24].includes(val), {
+    message: 'Delay months must be 0, 12, or 24',
+  }).optional(),
 });
 
 export type WizardJdgResponse = ScenarioResult;

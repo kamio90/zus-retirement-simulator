@@ -33,9 +33,6 @@ export function Step5RefineCompare(): JSX.Element {
     monthlyIncome: 5000,
   });
 
-  const [unemploymentMonths, setUnemploymentMonths] = useState(0);
-  const [showUnemploymentInput, setShowUnemploymentInput] = useState(false);
-
   const [isComputing, setIsComputing] = useState(false);
   const [computeError, setComputeError] = useState<string | null>(null);
   const [computeResult, setComputeResult] = useState<SimulateV2Response | null>(null);

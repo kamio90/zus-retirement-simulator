@@ -61,7 +61,7 @@ export function BeaverCoach({
   onCta,
   canMinimize = true,
   startMinimized = false,
-  stepId: _stepId, // Prefix with _ to indicate intentionally unused
+  stepId: _stepId, // eslint-disable-line @typescript-eslint/no-unused-vars
   title,
 }: BeaverCoachProps): JSX.Element {
   const [isVisible, setIsVisible] = useState(false);

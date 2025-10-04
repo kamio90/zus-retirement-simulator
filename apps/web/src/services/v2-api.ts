@@ -63,7 +63,7 @@ async function v2Request<T>(
     const responseText = await response.text();
 
     // Try to parse JSON if response has content and proper content-type
-    let responseData: any = null;
+    let responseData: unknown = null;
     if (responseText && contentType.includes('application/json')) {
       try {
         responseData = JSON.parse(responseText);
@@ -82,10 +82,13 @@ async function v2Request<T>(
     }
 
     if (!response.ok) {
-      const errorMessage = responseData?.message || responseData?.raw || 'API request failed';
+      const errorMessage =
+        (responseData as { message?: string })?.message ||
+        (responseData as { raw?: string })?.raw ||
+        'API request failed';
       throw new V2ApiClientError(
         errorMessage,
-        responseData,
+        responseData as ApiError | undefined,
         response.status,
         responseCorrelationId || correlationId
       );
