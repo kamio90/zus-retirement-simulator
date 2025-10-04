@@ -131,7 +131,7 @@ export function BeaverCoach({
     return (
       <motion.button
         onClick={() => setIsMinimized(false)}
-        className="fixed bottom-4 left-4 md:bottom-8 md:left-8 z-50 w-16 h-16 rounded-full bg-zus-primary shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-zus-primary focus:ring-offset-2"
+        className="fixed bottom-4 left-4 md:bottom-8 md:left-8 z-50 w-14 h-14 md:w-16 md:h-16 rounded-full bg-zus-primary shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-zus-primary focus:ring-offset-2"
         aria-label="Pokaż Beaver Coach"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
@@ -160,7 +160,7 @@ export function BeaverCoach({
                 <img
                   src={`/assets/beaver/${poseAssets[pose]}`}
                   alt={`Beaver Coach, ${pose} pose`}
-                  className="w-28 h-28 md:w-36 md:h-36 object-contain"
+                  className="w-36 h-36 md:w-48 md:h-48 lg:w-60 lg:h-60 object-contain"
                 />
               </motion.div>
             </div>
@@ -190,10 +190,10 @@ export function BeaverCoach({
                 </span>
 
                 {/* Tone Toggle */}
-                <div className="flex bg-white/50 rounded-md border border-gray-300 text-xs overflow-hidden">
+                <div className="flex bg-white/50 rounded-md border border-gray-300 text-sm overflow-hidden">
                   <button
                     onClick={() => setTone('fun')}
-                    className={`px-2 py-1 transition-colors ${
+                    className={`px-3 py-2 transition-colors min-w-[44px] min-h-[44px] ${
                       contentTone === 'fun' ? 'bg-zus-primary text-white' : 'hover:bg-gray-100'
                     }`}
                     aria-label="Tryb zabawny"
@@ -202,7 +202,7 @@ export function BeaverCoach({
                   </button>
                   <button
                     onClick={() => setTone('formal')}
-                    className={`px-2 py-1 transition-colors ${
+                    className={`px-3 py-2 transition-colors min-w-[44px] min-h-[44px] ${
                       contentTone === 'formal' ? 'bg-zus-primary text-white' : 'hover:bg-gray-100'
                     }`}
                     aria-label="Tryb formalny"
@@ -215,10 +215,10 @@ export function BeaverCoach({
                 {canMinimize && (
                   <button
                     onClick={() => setIsMinimized(true)}
-                    className="ml-auto p-1 text-xs hover:bg-white/50 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-zus-primary"
+                    className="ml-auto p-2 text-base hover:bg-white/50 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-zus-primary min-w-[44px] min-h-[44px] flex items-center justify-center"
                     aria-label="Minimalizuj"
                   >
-                    —
+                    ×
                   </button>
                 )}
 
@@ -227,7 +227,7 @@ export function BeaverCoach({
                   <>
                     <button
                       onClick={handleSpeakToggle}
-                      className="px-2 py-1 text-xs font-medium rounded transition-colors hover:bg-white/50 focus:outline-none focus:ring-2 focus:ring-zus-primary"
+                      className="px-3 py-2 text-sm font-medium rounded transition-colors hover:bg-white/50 focus:outline-none focus:ring-2 focus:ring-zus-primary min-w-[44px] min-h-[44px]"
                       aria-label={isSpeaking ? 'Zatrzymaj czytanie' : 'Odczytaj wiadomość'}
                       aria-live="polite"
                     >
@@ -237,7 +237,7 @@ export function BeaverCoach({
                     {/* Voice selector toggle */}
                     <button
                       onClick={() => setShowVoiceSelector(!showVoiceSelector)}
-                      className="px-2 py-1 text-xs rounded transition-colors hover:bg-white/50 focus:outline-none focus:ring-2 focus:ring-zus-primary"
+                      className="px-3 py-2 text-sm rounded transition-colors hover:bg-white/50 focus:outline-none focus:ring-2 focus:ring-zus-primary min-w-[44px] min-h-[44px]"
                       aria-label="Ustawienia głosu"
                     >
                       ⚙️
@@ -329,7 +329,7 @@ export function BeaverCoach({
               {ctaLabel && onCta && (
                 <button
                   onClick={onCta}
-                  className="mt-4 w-full px-4 py-2 bg-zus-primary text-white font-semibold rounded-md hover:bg-zus-accent transition-colors focus:outline-none focus:ring-2 focus:ring-zus-primary"
+                  className="mt-4 w-full px-4 py-3 bg-zus-primary text-white text-base font-semibold rounded-md hover:bg-zus-accent transition-colors focus:outline-none focus:ring-2 focus:ring-zus-primary min-h-[44px]"
                 >
                   {ctaLabel}
                 </button>
