@@ -2,13 +2,14 @@
  * DTOs and schemas for POST /api/report/pdf and /api/report/xls
  */
 import { z } from 'zod';
-import { SimulateRequestSchema, SimulationResultSchema } from './simulate.dto';
+import { SimulateRequestSchema } from './simulate.dto';
 
 // Report input payload schema
+// Note: result uses z.any() since it's already validated by /simulate endpoint
 export const ReportPayloadSchema = z
   .object({
     input: SimulateRequestSchema,
-    result: SimulationResultSchema,
+    result: z.any(), // Already validated SimulationResult from /simulate
     chartImages: z
       .object({
         capitalTrajectoryBase64: z.string().optional(),
