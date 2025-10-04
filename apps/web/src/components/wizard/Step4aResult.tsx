@@ -18,7 +18,9 @@ import { BeaverCoach } from './BeaverCoach';
 export function Step4aResult(): JSX.Element {
   const { quickCalcResult, setCurrentStep } = useWizardStore();
 
-  const mockResult = (quickCalcResult as any) || {
+  // Use API result if available, otherwise fall back to mock
+  const apiResult = quickCalcResult as any;
+  const mockResult = {
     nominalPension: 3500,
     realPension: 2800,
     replacementRate: 58,
@@ -35,28 +37,30 @@ export function Step4aResult(): JSX.Element {
     ],
   };
 
+  const result = apiResult || mockResult;
+
   const kpis = [
     {
       label: 'Emerytura nominalna',
-      value: `${mockResult.nominalPension.toLocaleString('pl-PL')} PLN`,
+      value: `${Math.round(result.nominalPension || 3500).toLocaleString('pl-PL')} PLN`,
       description: 'Przewidywana kwota emerytury w przyszłości',
       icon: '💰',
     },
     {
       label: 'Emerytura realna (dzisiaj)',
-      value: `${mockResult.realPension.toLocaleString('pl-PL')} PLN`,
+      value: `${Math.round(result.realPension || 2800).toLocaleString('pl-PL')} PLN`,
       description: 'Wartość w dzisiejszych pieniądzach',
       icon: '📊',
     },
     {
       label: 'Stopa zastąpienia',
-      value: `${mockResult.replacementRate}%`,
+      value: `${Math.round((result.replacementRate || 0.58) * 100)}%`,
       description: 'Stosunek emerytury do ostatniego wynagrodzenia',
       icon: '📈',
     },
     {
       label: 'Przejście na emeryturę',
-      value: `${mockResult.retirementYear} Q${mockResult.retirementQuarter}`,
+      value: `${result.scenario?.retirementYear || result.retirementYear} Q${result.scenario?.retirementQuarter || result.retirementQuarter}`,
       description: 'Rok i kwartał przejścia na emeryturę',
       icon: '🗓️',
     },
@@ -128,7 +132,7 @@ export function Step4aResult(): JSX.Element {
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <h3 className="text-xl font-bold text-zus-text mb-4">Trajektoria kapitału emerytalnego</h3>
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={mockResult.capitalTrajectory}>
+          <LineChart data={result.capitalTrajectory || mockResult.capitalTrajectory}>
             <CartesianGrid strokeDasharray="3 3" stroke="#d8e5dd" />
             <XAxis dataKey="year" stroke="#0b1f17" tick={{ fill: '#0b1f17' }} />
             <YAxis

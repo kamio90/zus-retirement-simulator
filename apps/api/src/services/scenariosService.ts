@@ -36,11 +36,11 @@ function getContributionBase(income: number, contractType: ContractType): number
 
 /**
  * Estimate start work year from age and birth year
+ * Returns the year when person started working (typically birthYear + 22)
  */
-function estimateStartWorkYear(birthYear: number, age: number): number {
-  const currentYear = CURRENT_YEAR;
+function estimateStartWorkYear(birthYear: number, _age: number): number {
   const assumedStartAge = 22; // Average higher education completion
-  return Math.max(birthYear + assumedStartAge, currentYear - age + assumedStartAge);
+  return birthYear + assumedStartAge;
 }
 
 /**
