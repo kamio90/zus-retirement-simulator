@@ -18,7 +18,7 @@ import { KnowledgeCard } from './KnowledgeCard';
 import type { ScenarioResult } from '@zus/types';
 
 export function Step4aResult(): JSX.Element {
-  const { quickCalcResult, setCurrentStep } = useWizardStore();
+  const { quickCalcResult, setCurrentStep, contractType } = useWizardStore();
 
   // Cast to v2 ScenarioResult
   const apiResult = quickCalcResult as ScenarioResult | null;
@@ -96,15 +96,26 @@ export function Step4aResult(): JSX.Element {
       ];
 
   const ctaCards = [
+    // Only show "Check higher ZUS" for JDG/JDG_RYCZALT contracts
+    ...(contractType !== 'uop'
+      ? [
+          {
+            title: 'Sprawdź wyższy ZUS',
+            description: 'Oblicz ten sam dochód przy wyższej podstawie składkowej',
+            action: () => setCurrentStep(5),
+            icon: '📈',
+          },
+        ]
+      : []),
     {
-      title: 'Sprawdź wyższy ZUS',
-      description: 'Oblicz ten sam dochód przy wyższej podstawie składkowej',
-      action: () => setCurrentStep(5),
-      icon: '📈',
-    },
-    {
-      title: 'Porównaj z UoP',
-      description: 'Zobacz jak wyglądałaby emerytura na umowie o pracę',
+      title:
+        contractType === 'uop'
+          ? 'Porównaj z działalnością (JDG)'
+          : 'Porównaj z umową o pracę (UoP)',
+      description:
+        contractType === 'uop'
+          ? 'Zobacz jak wyglądałaby emerytura na działalności gospodarczej'
+          : 'Zobacz jak wyglądałaby emerytura na umowie o pracę',
       action: () => setCurrentStep(5),
       icon: '💼',
     },
