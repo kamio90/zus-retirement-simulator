@@ -110,6 +110,7 @@ export function Step1GenderAge(): JSX.Element {
       <BeaverCoach
         message="Wybierz swoją płeć i wiek — to pomoże mi określić domyślny wiek emerytalny. Dla kobiet to 60 lat, dla mężczyzn 65 lat (zgodnie z obecnymi przepisami)."
         tone="info"
+        pose="wave"
       />
 
       <style>{`

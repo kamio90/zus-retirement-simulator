@@ -236,6 +236,7 @@ export function Step4aResult(): JSX.Element {
       <BeaverCoach
         message="Świetnie! To Twoja szybka kalkulacja. Możesz teraz doprecyzować scenariusz, dodając więcej szczegółów jak zmiany umowy czy podwyżki w karierze."
         tone="tip"
+        pose="celebrate"
         ctaLabel="Doprecyzuj obliczenia"
         onCta={() => setCurrentStep(5)}
       />

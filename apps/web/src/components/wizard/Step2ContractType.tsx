@@ -111,6 +111,7 @@ export function Step2ContractType(): JSX.Element {
       <BeaverCoach
         message="Wybierz rodzaj umowy, która dotyczy Twojej sytuacji. To zmieni sposób obliczania składek emerytalnych. Osoby na UoP mają automatycznie wyższą podstawę składek niż na JDG."
         tone="tip"
+        pose="point-left"
       />
     </div>
   );

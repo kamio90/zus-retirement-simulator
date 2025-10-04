@@ -348,6 +348,7 @@ export function Step5RefineCompare(): JSX.Element {
       <BeaverCoach
         message="Dodaj różne okresy swojej kariery — możesz uwzględnić zmiany umów, podwyżki czy przerwy. Im więcej szczegółów podasz, tym dokładniejszy będzie wynik!"
         tone="tip"
+        pose="typing"
       />
     </div>
   );

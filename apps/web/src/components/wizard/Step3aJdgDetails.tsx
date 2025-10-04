@@ -150,6 +150,7 @@ export function Step3aJdgDetails(): JSX.Element {
       <BeaverCoach
         message="Wprowadź swój miesięczny dochód z działalności. Jeśli płacisz ryczałt, zaznacz odpowiednią opcję — to wpłynie na podstawę składek ZUS."
         tone="info"
+        pose="read"
       />
     </div>
   );
