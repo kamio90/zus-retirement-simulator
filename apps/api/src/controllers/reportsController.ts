@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { generatePdfReport } from '../services/reportsService';
+import { generatePdfReport, generateXlsReport } from '../services/reportsService';
 import { ReportPayloadSchema } from '@zus/types';
 import { logger } from '../utils/logger';
 
@@ -31,6 +31,41 @@ export const reportsController = {
     } catch (error) {
       logger.error(
         `PDF generation failed: ${error instanceof Error ? error.message : String(error)}`
+      );
+      next(error);
+    }
+  },
+
+  /**
+   * Generate XLS report
+   * POST /api/reports/xls
+   */
+  generateXls: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      // Validate request body
+      const payload = ReportPayloadSchema.parse(req.body);
+
+      // Generate XLS
+      const xlsBuffer = await generateXlsReport(payload);
+
+      // Set response headers
+      const timestamp = new Date().toISOString().slice(0, 10);
+      const filename = `emerytura-symulacja-${timestamp}.xlsx`;
+
+      res.setHeader(
+        'Content-Type',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      );
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.setHeader('Content-Length', xlsBuffer.length);
+
+      // Send XLS
+      res.send(xlsBuffer);
+
+      logger.info(`XLS generated successfully: ${filename}`);
+    } catch (error) {
+      logger.error(
+        `XLS generation failed: ${error instanceof Error ? error.message : String(error)}`
       );
       next(error);
     }
