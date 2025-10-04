@@ -5,11 +5,15 @@
 import { useState } from 'react';
 import { useWizardStore } from '../../store/wizardStore';
 import { BeaverCoach } from './BeaverCoach';
+import { InfoCard } from './InfoCard';
 
 export function Step3aJdgDetails(): JSX.Element {
-  const { jdgIncome, isRyczalt, setJdgIncome, setIsRyczalt } = useWizardStore();
+  const { jdgIncome, isRyczalt, contractType, setJdgIncome, setIsRyczalt } = useWizardStore();
   const [inputValue, setInputValue] = useState(jdgIncome.toString());
   const [error, setError] = useState('');
+
+  // Only show ryczałt option for JDG contracts (not UoP)
+  const isJdgContract = contractType === 'jdg' || contractType === 'jdg_ryczalt';
 
   const handleIncomeChange = (value: string): void => {
     const cleaned = value.replace(/[^\d]/g, '');
@@ -75,32 +79,37 @@ export function Step3aJdgDetails(): JSX.Element {
           )}
         </div>
 
-        <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg">
-          <input
-            type="checkbox"
-            id="ryczalt-checkbox"
-            checked={isRyczalt}
-            onChange={(e) => setIsRyczalt(e.target.checked)}
-            className="mt-1 w-5 h-5 text-zus-primary border-gray-300 rounded focus:ring-zus-primary"
-            aria-describedby="ryczalt-description"
-          />
-          <div className="flex-1">
-            <label htmlFor="ryczalt-checkbox" className="flex items-center gap-2 cursor-pointer">
-              <span className="font-medium text-zus-text">Opodatkowanie ryczałtem</span>
-              <span
-                className="cursor-help text-gray-400 hover:text-gray-600"
-                title="Ryczałt pozwala płacić składki od niższej podstawy"
-              >
-                ℹ️
-              </span>
-            </label>
-          </div>
-        </div>
-        <p id="ryczalt-description" className="mt-2 text-sm text-gray-600 ml-8">
-          {isRyczalt
-            ? 'Składki będą naliczane od minimalnej podstawy'
-            : 'Składki będą naliczane od pełnego dochodu'}
-        </p>
+        {/* Only show ryczałt option for JDG contracts */}
+        {isJdgContract && (
+          <>
+            <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg">
+              <input
+                type="checkbox"
+                id="ryczalt-checkbox"
+                checked={isRyczalt}
+                onChange={(e) => setIsRyczalt(e.target.checked)}
+                className="mt-1 w-5 h-5 text-zus-primary border-gray-300 rounded focus:ring-zus-primary"
+                aria-describedby="ryczalt-description"
+              />
+              <div className="flex-1">
+                <label htmlFor="ryczalt-checkbox" className="flex items-center gap-2 cursor-pointer">
+                  <span className="font-medium text-zus-text">Opodatkowanie ryczałtem</span>
+                  <span
+                    className="cursor-help text-gray-400 hover:text-gray-600"
+                    title="Ryczałt pozwala płacić składki od niższej podstawy"
+                  >
+                    ℹ️
+                  </span>
+                </label>
+              </div>
+            </div>
+            <p id="ryczalt-description" className="mt-2 text-sm text-gray-600 ml-8">
+              {isRyczalt
+                ? 'Składki będą naliczane od minimalnej podstawy'
+                : 'Składki będą naliczane od pełnego dochodu'}
+            </p>
+          </>
+        )}
       </div>
 
       {isValid && (
@@ -123,6 +132,19 @@ export function Step3aJdgDetails(): JSX.Element {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Worth Knowing InfoCard - only for JDG */}
+      {isJdgContract && isRyczalt && (
+        <InfoCard
+          variant="knowledge"
+          icon="brain"
+          title="Warto wiedzieć: Ryczałt w JDG"
+          description="Przedsiębiorcy opodatkowani ryczałtem od przychodów ewidencjonowanych mogą opłacać składki ZUS od obniżonej podstawy (30% przychodu lub maksymalnie 4500 PLN). To oznacza niższe składki, ale również niższą przyszłą emeryturę."
+          sourceTitle="ZUS - JDG na ryczałcie"
+          sourceUrl="https://www.zus.pl/baza-wiedzy/ryczalt"
+          className="mb-6"
+        />
       )}
 
       <BeaverCoach

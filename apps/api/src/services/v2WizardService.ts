@@ -143,6 +143,11 @@ export function wizardContract(_request: WizardContractRequest): WizardContractR
 export function wizardJdg(request: WizardJdgRequest): ScenarioResult {
   const { gender, age, monthlyIncome, contract, isRyczalt, claimMonth } = request;
 
+  // Validate: UOP cannot have ryczałt
+  if (contract === 'UOP' && isRyczalt) {
+    throw new Error('Invalid combination: UOP contract cannot use ryczałt taxation');
+  }
+
   const engineInput = buildEngineInput(
     gender,
     age,
@@ -253,6 +258,11 @@ export function compareWhatIf(request: CompareWhatIfRequest): CompareWhatIfRespo
  */
 export function simulateV2(request: SimulateV2Request): SimulateV2Response {
   const { baselineContext, variants: variantItems } = request;
+
+  // Validate: UOP cannot have ryczałt
+  if (baselineContext.contract === 'UOP' && baselineContext.isRyczalt) {
+    throw new Error('Invalid combination: UOP contract cannot use ryczałt taxation');
+  }
 
   // Calculate baseline
   const baselineInput = buildEngineInput(

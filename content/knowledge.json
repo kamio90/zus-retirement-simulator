@@ -1,0 +1,74 @@
+{
+  "items": [
+    {
+      "id": "annual-valorization",
+      "title": "Waloryzacja roczna",
+      "body": "Waloryzacja kapitału emerytalnego odbywa się raz w roku - 1 czerwca. Stosuje się wskaźnik waloryzacji z poprzedniego roku kalendarzowego, który uwzględnia średnioroczny wzrost PKB oraz wskaźnik inflacji CPI.",
+      "sourceTitle": "ZUS - Waloryzacja składek i kapitału",
+      "sourceUrl": "https://www.zus.pl/baza-wiedzy/waloryzacja"
+    },
+    {
+      "id": "quarterly-valorization",
+      "title": "Waloryzacja kwartalna",
+      "body": "Jeśli przejście na emeryturę następuje po 31 stycznia danego roku, stosuje się dodatkową waloryzację kwartalną. Uwzględnia ona wzrost gospodarczy od ostatniej waloryzacji do kwartału przejścia na emeryturę.",
+      "sourceTitle": "ZUS - Zasady obliczania emerytury",
+      "sourceUrl": "https://www.zus.pl/emerytura/kalkulator-emerytalny"
+    },
+    {
+      "id": "initial-capital",
+      "title": "Kapitał początkowy",
+      "body": "Kapitał początkowy to zwaloryzowana wartość składek i stażu pracy sprzed 1999 roku. Pierwszy wskaźnik waloryzacji wynosił 115,60% (1999 r.), a następnie stosuje się ścieżkę waloryzacji rocznej.",
+      "sourceTitle": "ZUS - Kapitał początkowy",
+      "sourceUrl": "https://www.zus.pl/baza-wiedzy/kapital-poczatkowy"
+    },
+    {
+      "id": "sdz-window",
+      "title": "Tabela średniego dalszego życia (SDŻ)",
+      "body": "Wysokość emerytury oblicza się dzieląc kapitał przez przewidywany dalszy okres życia (w miesiącach). Tabele SDŻ są publikowane corocznie przez GUS i obowiązują w okresie od 1 kwietnia do 31 marca następnego roku.",
+      "sourceTitle": "GUS - Tablice trwania życia",
+      "sourceUrl": "https://stat.gov.pl/tablice-trwania-zycia/"
+    },
+    {
+      "id": "contribution-rate",
+      "title": "Składka emerytalna",
+      "body": "Składka na ubezpieczenie emerytalne wynosi 19,52% podstawy wymiaru. W przypadku umowy o pracę (UoP) podstawą jest pełne wynagrodzenie brutto. W przypadku JDG przedsiębiorca może wybrać podstawę (minimum lub deklarowaną).",
+      "sourceTitle": "ZUS - Składki na ubezpieczenia",
+      "sourceUrl": "https://www.zus.pl/baza-wiedzy/skladki"
+    },
+    {
+      "id": "uop-vs-jdg",
+      "title": "UoP a JDG - różnice w składkach",
+      "body": "Umowa o pracę (UoP): składki liczone od pełnego wynagrodzenia brutto. Działalność gospodarcza (JDG): możliwość opłacania składek od niższej podstawy lub wybór ryczałtu, co wpływa na przyszłą emeryturę.",
+      "sourceTitle": "ZUS - Przedsiębiorcy i składki",
+      "sourceUrl": "https://www.zus.pl/przedsiebiorcy"
+    },
+    {
+      "id": "ryczalt-jdg",
+      "title": "Ryczałt w JDG",
+      "body": "Przedsiębiorcy opodatkowani ryczałtem od przychodów ewidencjonowanych mogą opłacać składki ZUS od obniżonej podstawy (30% przychodu lub maksymalnie 4500 PLN). To oznacza niższe składki, ale również niższą przyszłą emeryturę.",
+      "sourceTitle": "ZUS - JDG na ryczałcie",
+      "sourceUrl": "https://www.zus.pl/baza-wiedzy/ryczalt"
+    },
+    {
+      "id": "career-periods",
+      "title": "Okresy kariery zawodowej",
+      "body": "Dla dokładniejszego wyniku warto uwzględnić różne okresy kariery: zmiany umów, przerwy, awanse. Każdy okres z innym typem umowy lub wynagrodzeniem wpływa na ostateczny kapitał emerytalny.",
+      "sourceTitle": "ZUS - Kalkulator emerytalny",
+      "sourceUrl": "https://www.zus.pl/emerytura/kalkulator-emerytalny"
+    },
+    {
+      "id": "replacement-rate",
+      "title": "Stopa zastąpienia",
+      "body": "Stopa zastąpienia to stosunek wysokości emerytury do ostatniego wynagrodzenia (w %). W Polsce wynosi średnio 50-60%, ale zależy od długości kariery, wysokości zarobków i typu umów.",
+      "sourceTitle": "GUS - Emerytury i renty",
+      "sourceUrl": "https://stat.gov.pl/obszary-tematyczne/rynek-pracy/emerytury-i-renty/"
+    },
+    {
+      "id": "claim-quarter",
+      "title": "Kwartał przejścia na emeryturę",
+      "body": "Moment przejścia na emeryturę (kwartał) wpływa na waloryzację kwartalną. Im później w roku, tym wyższa waloryzacja dodatkowa. Warto zaplanować termin przejścia na emeryturę.",
+      "sourceTitle": "ZUS - Kiedy przejść na emeryturę",
+      "sourceUrl": "https://www.zus.pl/emerytura"
+    }
+  ]
+}
