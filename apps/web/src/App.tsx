@@ -8,15 +8,17 @@
  * - ZUS brand colors and accessible design
  */
 import { useState } from 'react';
-import type { SimulationResult } from '@zus/types';
+import type { SimulationResult, SimulateRequest } from '@zus/types';
 import { SimulatorForm } from './components/SimulatorForm';
 import { ResultsDisplay } from './components/ResultsDisplay';
 
 function App(): JSX.Element {
   const [result, setResult] = useState<SimulationResult | null>(null);
+  const [input, setInput] = useState<SimulateRequest | null>(null);
 
-  const handleResult = (newResult: SimulationResult): void => {
+  const handleResult = (newResult: SimulationResult, newInput: SimulateRequest): void => {
     setResult(newResult);
+    setInput(newInput);
     // Scroll to results
     setTimeout(() => {
       document.getElementById('results')?.scrollIntoView({ behavior: 'smooth' });
@@ -25,6 +27,7 @@ function App(): JSX.Element {
 
   const handleNewCalculation = (): void => {
     setResult(null);
+    setInput(null);
     // Scroll to form
     setTimeout(() => {
       document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' });
@@ -54,9 +57,9 @@ function App(): JSX.Element {
         </div>
 
         {/* Results Display */}
-        {result && (
+        {result && input && (
           <div id="results">
-            <ResultsDisplay result={result} />
+            <ResultsDisplay result={result} input={input} />
             <div className="mt-6 flex justify-center">
               <button
                 onClick={handleNewCalculation}

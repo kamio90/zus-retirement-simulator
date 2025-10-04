@@ -9,7 +9,7 @@ import { simulatePension, ApiClientError } from '../services/api';
 import type { ValidationError } from '../utils/validation';
 
 interface SimulatorFormProps {
-  onResult: (result: SimulationResult) => void;
+  onResult: (result: SimulationResult, input: SimulateRequest) => void;
 }
 
 interface FormData {
@@ -86,7 +86,7 @@ export function SimulatorForm({ onResult }: SimulatorFormProps): JSX.Element {
     setIsSubmitting(true);
     try {
       const result = await simulatePension(validation.data as SimulateRequest);
-      onResult(result);
+      onResult(result, validation.data as SimulateRequest);
       announceToScreenReader('Symulacja zakończona pomyślnie');
     } catch (error) {
       if (error instanceof ApiClientError && error.apiError) {

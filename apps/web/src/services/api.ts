@@ -2,7 +2,7 @@
  * API Client for ZUS Retirement Simulator
  * Handles communication with the backend API
  */
-import type { SimulateRequest, SimulationResult, ApiError } from '@zus/types';
+import type { SimulateRequest, SimulationResult, ApiError, ReportPayload } from '@zus/types';
 
 const API_BASE_URL = '/api';
 
@@ -90,6 +90,41 @@ export async function fetchBenchmarks(
 
     const result: BenchmarksResponse = await response.json();
     return result;
+  } catch (error) {
+    if (error instanceof ApiClientError) {
+      throw error;
+    }
+    throw new ApiClientError(error instanceof Error ? error.message : 'Unknown error occurred');
+  }
+}
+
+/**
+ * Generate PDF report from simulation results
+ * @param payload Report payload with input, result, and optional benchmarks
+ * @returns PDF blob for download
+ * @throws ApiClientError on validation or server errors
+ */
+export async function generatePdfReport(payload: ReportPayload): Promise<Blob> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/reports/pdf`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorData: ApiError = await response.json();
+      throw new ApiClientError(
+        errorData.message || 'PDF generation failed',
+        errorData,
+        response.status
+      );
+    }
+
+    const blob = await response.blob();
+    return blob;
   } catch (error) {
     if (error instanceof ApiClientError) {
       throw error;
