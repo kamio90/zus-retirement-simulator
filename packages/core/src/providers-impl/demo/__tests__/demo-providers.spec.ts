@@ -17,7 +17,7 @@ describe('DemoProviderBundle', () => {
 
   it('quarterly indices have correct IDs and mapping', () => {
     for (let y = 1980; y <= 2100; y++) {
-      ['Q1','Q2','Q3','Q4'].forEach(q => {
+      ['Q1', 'Q2', 'Q3', 'Q4'].forEach((q) => {
         const idx = providers.quarterly.getQuarterIndex(y, q as any);
         expect(idx.id).toBe(`QTR.Y${y}.${q}`);
         expect(idx.rate).toBeGreaterThan(0);

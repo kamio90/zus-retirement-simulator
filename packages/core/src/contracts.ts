@@ -1,6 +1,16 @@
 // Public engine interfaces (no logic)
 // -----------------------------------
-import { Gender, Year, Month, CurrencyPLN, Percent, TerytCode, TrajectoryRowVO, FinalizationVO, AssumptionsVO } from '@types/domain';
+
+// Temporarily using placeholder types until domain types are implemented
+type Gender = 'M' | 'F';
+type Year = number;
+type Month = number;
+type CurrencyPLN = number;
+type Percent = number;
+type TerytCode = string;
+type TrajectoryRowVO = any;
+type FinalizationVO = any;
+type AssumptionsVO = any;
 
 export interface EngineInput {
   birthYear: Year;
@@ -32,5 +42,5 @@ export interface EngineOutput {
 }
 
 export interface Engine {
-  calculate(input: EngineInput, providers: ProviderBundle): EngineOutput;
+  calculate(input: EngineInput, providers: any): EngineOutput;
 }

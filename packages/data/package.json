@@ -1,15 +1,13 @@
 {
-  "name": "@zus/types",
+  "name": "@zus/data",
   "version": "1.0.0",
+  "description": "Data layer - JSON snapshots from ZUS XLSX sources",
   "main": "src/index.ts",
   "types": "src/index.ts",
   "scripts": {
     "build": "tsc",
     "lint": "eslint src --ext .ts",
     "format": "prettier --write src"
-  },
-  "dependencies": {
-    "zod": "^3.22.4"
   },
   "devDependencies": {
     "typescript": "^5.2.2"

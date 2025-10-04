@@ -11,12 +11,16 @@
   "scripts": {
     "dev": "pnpm --parallel --filter ./apps/api --filter ./apps/web dev",
     "build:data": "pnpm --filter ./packages/data build",
+    "build": "pnpm --recursive --stream build",
     "lint": "pnpm --recursive lint",
-    "format": "pnpm --recursive format"
+    "format": "pnpm --recursive format",
+    "test": "pnpm --recursive test"
   },
   "devDependencies": {
     "@types/jest": "^29.5.8",
     "@types/node": "^20.5.1",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.50.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.29.0",

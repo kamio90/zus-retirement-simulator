@@ -17,7 +17,9 @@ describe('Engine.calculate (integration)', () => {
     expect(output.monthlyPensionRealToday).toBeGreaterThanOrEqual(0);
     expect(output.replacementRate).toBeGreaterThanOrEqual(0);
     expect(output.replacementRate).toBeLessThanOrEqual(1.5);
-    expect(output.capitalTrajectory.length).toBe(output.scenario.retirementYear - input.startWorkYear);
+    expect(output.capitalTrajectory.length).toBe(
+      output.scenario.retirementYear - input.startWorkYear
+    );
     expect(output.finalization.indicesApplied.length).toBeGreaterThan(0);
     expect(Object.keys(output.assumptions)).toContain('annualIndexSetId');
     expect(output.explainers.length).toBeGreaterThan(0);
@@ -37,7 +39,9 @@ describe('Engine.calculate (integration)', () => {
     expect(output.monthlyPensionRealToday).toBeGreaterThanOrEqual(0);
     expect(output.replacementRate).toBeGreaterThanOrEqual(0);
     expect(output.replacementRate).toBeLessThanOrEqual(1.5);
-    expect(output.capitalTrajectory.length).toBe(output.scenario.retirementYear - input.startWorkYear);
+    expect(output.capitalTrajectory.length).toBe(
+      output.scenario.retirementYear - input.startWorkYear
+    );
     expect(output.finalization.indicesApplied.length).toBeGreaterThan(0);
     expect(Object.keys(output.assumptions)).toContain('annualIndexSetId');
     expect(output.explainers.length).toBeGreaterThan(0);
@@ -57,12 +61,16 @@ describe('Engine.calculate (integration)', () => {
     expect(output.monthlyPensionRealToday).toBeGreaterThanOrEqual(0);
     expect(output.replacementRate).toBeGreaterThanOrEqual(0);
     expect(output.replacementRate).toBeLessThanOrEqual(1.5);
-    expect(output.capitalTrajectory.length).toBe(output.scenario.retirementYear - input.startWorkYear);
+    expect(output.capitalTrajectory.length).toBe(
+      output.scenario.retirementYear - input.startWorkYear
+    );
     expect(output.finalization.indicesApplied.length).toBeGreaterThan(0);
     expect(Object.keys(output.assumptions)).toContain('annualIndexSetId');
     expect(output.explainers.length).toBeGreaterThan(0);
     // Initial capital special index
-    expect(output.explainers.some(e => e.includes('Initial capital special index: applied'))).toBe(true);
+    expect(
+      output.explainers.some((e) => e.includes('Initial capital special index: applied'))
+    ).toBe(true);
   });
 
   it('quarter mapping coverage', () => {
@@ -75,7 +83,7 @@ describe('Engine.calculate (integration)', () => {
         claimMonth: m,
       };
       const output = demoEngine(input);
-      expect(['Q1','Q2','Q3','Q4']).toContain(output.finalization.quarterUsed);
+      expect(['Q1', 'Q2', 'Q3', 'Q4']).toContain(output.finalization.quarterUsed);
     }
   });
 
@@ -90,7 +98,9 @@ describe('Engine.calculate (integration)', () => {
     };
     const output = demoEngine(input);
     // Check explainer for special index
-    expect(output.explainers.some(e => e.includes('Initial capital special index: applied'))).toBe(true);
+    expect(
+      output.explainers.some((e) => e.includes('Initial capital special index: applied'))
+    ).toBe(true);
   });
 
   it('determinism: same input yields same output', () => {

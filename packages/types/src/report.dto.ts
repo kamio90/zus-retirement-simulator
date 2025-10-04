@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-
 import { SimulateInputSchema } from './simulate.dto';
 
 export const ReportPdfInputSchema = z.object({
@@ -12,7 +11,6 @@ export const ReportXlsInputSchema = z.object({
   simulation: SimulateInputSchema,
   format: z.literal('xls'),
 });
-
 
 export type ReportPdfInput = z.infer<typeof ReportPdfInputSchema>;
 export type ReportXlsInput = z.infer<typeof ReportXlsInputSchema>;
