@@ -4,7 +4,7 @@
 import { SubAccountProvider } from '../../providers';
 
 export class DemoSubAccountProvider implements SubAccountProvider {
-  valorize(balance: number, claimDate: { y: number; m: number }) {
+  valorize(balance: number, claimDate: { y: number; m: number }): { id: string; balance: number } {
     // Mild geometric growth, 1% per year
     const years = claimDate.y - 2025;
     const rate = Math.pow(1.01, years);

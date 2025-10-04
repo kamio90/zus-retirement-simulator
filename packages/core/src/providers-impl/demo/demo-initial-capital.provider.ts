@@ -4,7 +4,7 @@
 import { InitialCapitalProvider } from '../../providers';
 
 export class DemoInitialCapitalProvider implements InitialCapitalProvider {
-  getInitial1999Index() {
+  getInitial1999Index(): { id: string; rate: number } {
     // Special index for 1999, applied once on 1 June 2000
     return {
       id: 'INIT.1999',
@@ -12,7 +12,7 @@ export class DemoInitialCapitalProvider implements InitialCapitalProvider {
     };
   }
 
-  getAnnualIndexLikeContributions(year: number) {
+  getAnnualIndexLikeContributions(year: number): { id: string; rate: number } {
     // Use same pattern as annual provider
     const baseRate = 1.03;
     const rate = Math.pow(baseRate, year - 2000);

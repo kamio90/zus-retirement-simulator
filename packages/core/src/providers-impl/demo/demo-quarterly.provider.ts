@@ -11,7 +11,10 @@ const QUARTER_BASE_RATES = {
 };
 
 export class DemoQuarterlyValorizationProvider implements QuarterlyValorizationProvider {
-  getQuarterIndex(calendarYear: number, quarter: 'Q1' | 'Q2' | 'Q3' | 'Q4') {
+  getQuarterIndex(
+    calendarYear: number,
+    quarter: 'Q1' | 'Q2' | 'Q3' | 'Q4'
+  ): { id: string; rate: number } {
     const rate = Math.pow(QUARTER_BASE_RATES[quarter], calendarYear - 1980);
     return {
       id: `QTR.Y${calendarYear}.${quarter}`,

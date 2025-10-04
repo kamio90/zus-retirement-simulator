@@ -129,7 +129,9 @@ export const Engine = {
  * Helper to build an engine with demo providers for tests/sandbox
  */
 import { makeDemoProviderBundle } from '../providers-impl/demo/demo-bundle';
-export function buildEngineWithDemoProviders(config?: { anchorYear?: number }) {
+export function buildEngineWithDemoProviders(config?: {
+  anchorYear?: number;
+}): (input: EngineInput) => EngineOutput {
   const providers = makeDemoProviderBundle(config);
   return (input: EngineInput) => Engine.calculate(input, providers);
 }

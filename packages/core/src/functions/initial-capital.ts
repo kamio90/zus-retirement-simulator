@@ -23,7 +23,7 @@ export interface ValorizedInitialCapital {
 export function valorizeInitialCapital(
   initialCapital: number | undefined,
   initialProvider: InitialCapitalProvider,
-  annualProvider: AnnualValorizationProvider,
+  _annualProvider: AnnualValorizationProvider,
   entitlementYear: number
 ): ValorizedInitialCapital {
   if (!initialCapital || initialCapital <= 0) return { amount: 0, steps: [] };
