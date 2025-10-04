@@ -78,7 +78,9 @@ export async function exportToPdf(
 
     if (benchmarks.powiatAvgPension && benchmarks.powiatResolved) {
       doc.text(
-        `Średnia w ${benchmarks.powiatResolved.name}: ${formatCurrency(benchmarks.powiatAvgPension)}`,
+        `Średnia w ${benchmarks.powiatResolved.name}: ${formatCurrency(
+          benchmarks.powiatAvgPension
+        )}`,
         20,
         y
       );

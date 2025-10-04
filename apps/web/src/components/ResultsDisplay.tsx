@@ -197,8 +197,8 @@ export function ResultsDisplay({ result, input }: ResultsDisplayProps): JSX.Elem
               <XAxis dataKey="rok" label={{ value: 'Rok', position: 'insideBottom', offset: -5 }} />
               <YAxis label={{ value: 'Wartość (PLN)', angle: -90, position: 'insideLeft' }} />
               <Tooltip
-                formatter={(value: number) => formatCurrency(value)}
-                labelFormatter={(label) => `Rok: ${label}`}
+                formatter={(value: number): string => formatCurrency(value)}
+                labelFormatter={(label): string => `Rok: ${label}`}
               />
               <Legend />
               <Line

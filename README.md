@@ -49,12 +49,14 @@ git clone https://github.com/kamio90/zus-retirement-simulator.git
 cd zus-retirement-simulator
 pnpm install
 
-# Build all packages
+# Build all packages (REQUIRED before running dev servers)
 pnpm build
 
 # Run development servers
 pnpm dev
 ```
+
+> **Note:** You must run `pnpm build` before `pnpm dev` to compile the workspace packages. The build step only needs to be run once after installing dependencies, unless you modify package source code.
 
 See [SETUP.md](./SETUP.md) for detailed setup instructions.
 

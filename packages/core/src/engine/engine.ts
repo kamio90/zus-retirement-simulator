@@ -105,7 +105,11 @@ export const Engine = {
       `Quarter mapping: claimMonth ${entitlement.claimMonth} → ${entitlement.entitlementQuarter}`,
       `SDŻ table window: ${life.lifeTableId}`,
       `Annual valorization precedes quarterly in final year`,
-      `Initial capital special index: ${initialCapital.steps.find((s) => s.indexId.startsWith('INIT.1999')) ? 'applied' : 'not applied'}`,
+      `Initial capital special index: ${
+        initialCapital.steps.find((s) => s.indexId.startsWith('INIT.1999'))
+          ? 'applied'
+          : 'not applied'
+      }`,
     ];
     return buildOutput({
       scenario: {

@@ -14,7 +14,12 @@ cd zus-retirement-simulator
 
 # Install dependencies
 pnpm install
+
+# Build all packages (REQUIRED before running dev)
+pnpm build
 ```
+
+> **Important:** Always run `pnpm build` after installing dependencies and before running development servers. This compiles the workspace packages that are required by the applications.
 
 ## Project Structure
 
@@ -136,6 +141,21 @@ pnpm --filter ./apps/web build
 ```
 
 ## Troubleshooting
+
+### Error: Cannot find module '@zus/data' or '@zus/core'
+
+This error occurs when you try to run `pnpm dev` without building the packages first. The workspace packages need to be compiled before the applications can use them.
+
+**Solution:**
+```bash
+# Build all packages
+pnpm build
+
+# Then run dev servers
+pnpm dev
+```
+
+The build step only needs to be run once after `pnpm install`, unless you modify source code in the packages.
 
 ### Type definitions not found
 
