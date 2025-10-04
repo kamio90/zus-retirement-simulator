@@ -3,7 +3,7 @@
  * Shows simulation results with charts and export options
  */
 import { useEffect, useState } from 'react';
-import type { SimulationResult } from '@zus/types';
+import type { SimulationResult, SimulateRequest } from '@zus/types';
 import {
   LineChart,
   Line,
@@ -15,14 +15,15 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { fetchBenchmarks, type BenchmarksResponse } from '../services/api';
-import { exportToPdf } from '../utils/exportPdf';
+import { exportToPdfServer } from '../utils/exportPdfServer';
 import { exportToXls } from '../utils/exportXls';
 
 interface ResultsDisplayProps {
   result: SimulationResult;
+  input: SimulateRequest;
 }
 
-export function ResultsDisplay({ result }: ResultsDisplayProps): JSX.Element {
+export function ResultsDisplay({ result, input }: ResultsDisplayProps): JSX.Element {
   const [benchmarks, setBenchmarks] = useState<BenchmarksResponse | null>(null);
   const [loadingBenchmarks, setLoadingBenchmarks] = useState(false);
   const [exportingPdf, setExportingPdf] = useState(false);
@@ -65,7 +66,7 @@ export function ResultsDisplay({ result }: ResultsDisplayProps): JSX.Element {
   const handleExportPdf = async (): Promise<void> => {
     setExportingPdf(true);
     try {
-      await exportToPdf(result, benchmarks || undefined);
+      await exportToPdfServer(result, input);
     } catch (error) {
       console.error('PDF export failed:', error);
       alert('Nie udało się wyeksportować do PDF. Spróbuj ponownie.');
