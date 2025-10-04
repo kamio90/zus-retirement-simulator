@@ -1,0 +1,15 @@
+{
+  "input": {
+    "birthYear": 2000,
+    "gender": "male",
+    "startWorkYear": 2020,
+    "retirementAge": 65,
+    "salary": 6000,
+    "absenceFactor": 1.0
+  },
+  "expected": {
+    "minNominal": 1,
+    "maxReplacementRate": 1,
+    "trajectoryLength": 45
+  }
+}

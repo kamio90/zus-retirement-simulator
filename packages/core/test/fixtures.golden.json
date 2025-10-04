@@ -1,0 +1,17 @@
+{
+  "input": {
+    "birthYear": 1975,
+    "gender": "female",
+    "startWorkYear": 1995,
+    "retirementAge": 60,
+    "salary": 10000,
+    "absenceFactor": 0.97,
+    "accumulatedCapital": 50000
+  },
+  "expected": {
+    "nominal": "TO_BE_UPDATED",
+    "real": "TO_BE_UPDATED",
+    "replacementRate": "TO_BE_UPDATED",
+    "trajectory": "TO_BE_UPDATED"
+  }
+}

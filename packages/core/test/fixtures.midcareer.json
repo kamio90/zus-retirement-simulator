@@ -1,0 +1,15 @@
+{
+  "input": {
+    "birthYear": 1980,
+    "gender": "female",
+    "startWorkYear": 2000,
+    "retirementAge": 60,
+    "salary": 8000,
+    "absenceFactor": 0.95
+  },
+  "expected": {
+    "minNominal": 1,
+    "maxReplacementRate": 1,
+    "trajectoryLength": 40
+  }
+}
