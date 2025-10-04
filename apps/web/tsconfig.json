@@ -16,7 +16,17 @@
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@core": ["../../packages/core/src"],
+      "@core/*": ["../../packages/core/src/*"],
+      "@data": ["../../packages/data/src"],
+      "@data/*": ["../../packages/data/src/*"],
+      "@types": ["../../packages/types/src"],
+      "@types/*": ["../../packages/types/src/*"],
+      "@ui": ["../../packages/ui/src"],
+      "@ui/*": ["../../packages/ui/src/*"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

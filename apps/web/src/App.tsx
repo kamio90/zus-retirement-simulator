@@ -7,8 +7,30 @@
  * - PDF and XLS export functionality
  * - ZUS brand colors and accessible design
  */
+import { useState } from 'react';
+import type { SimulationResult } from '@zus/types';
+import { SimulatorForm } from './components/SimulatorForm';
+import { ResultsDisplay } from './components/ResultsDisplay';
 
 function App(): JSX.Element {
+  const [result, setResult] = useState<SimulationResult | null>(null);
+
+  const handleResult = (newResult: SimulationResult): void => {
+    setResult(newResult);
+    // Scroll to results
+    setTimeout(() => {
+      document.getElementById('results')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
+
+  const handleNewCalculation = (): void => {
+    setResult(null);
+    // Scroll to form
+    setTimeout(() => {
+      document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
+
   return (
     <div className="min-h-screen bg-zus-secondary">
       {/* Header with ZUS branding and WCAG AA compliant contrast */}
@@ -21,34 +43,30 @@ function App(): JSX.Element {
 
       {/* Main content area */}
       <main className="container mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg shadow-lg p-6">
+        {/* Simulator Form */}
+        <div id="form" className="bg-white rounded-lg shadow-lg p-6">
           <h2 className="text-2xl font-bold text-zus-primary mb-4">Kalkulator Emerytalny</h2>
-          <p className="text-gray-700 leading-relaxed">
-            Aplikacja frontendowa w React + Vite + TypeScript z Tailwind CSS. Obliczenia emerytur
-            zgodne z zasadami ZUS, z uwzględnieniem waloryzacji rocznej i kwartalnej, tablic
-            średniego dalszego trwania życia oraz rzeczywistych wskaźników makroekonomicznych.
+          <p className="text-gray-700 leading-relaxed mb-6">
+            Wypełnij formularz, aby obliczyć swoją przyszłą emeryturę na podstawie rzeczywistych
+            danych makroekonomicznych i zasad ZUS.
           </p>
+          <SimulatorForm onResult={handleResult} />
+        </div>
 
-          {/* Accessible color showcase */}
-          <div
-            className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4"
-            role="region"
-            aria-label="Kolory marki ZUS"
-          >
-            <div className="bg-zus-primary text-white p-4 rounded-md">
-              <p className="font-semibold">Kolor Główny</p>
-              <p className="text-sm">#007a33</p>
-            </div>
-            <div className="bg-zus-secondary text-zus-accent border border-zus-primary p-4 rounded-md">
-              <p className="font-semibold">Kolor Drugorzędny</p>
-              <p className="text-sm">#e5f3e8</p>
-            </div>
-            <div className="bg-zus-accent text-white p-4 rounded-md">
-              <p className="font-semibold">Kolor Akcentu</p>
-              <p className="text-sm">#004c1d</p>
+        {/* Results Display */}
+        {result && (
+          <div id="results">
+            <ResultsDisplay result={result} />
+            <div className="mt-6 flex justify-center">
+              <button
+                onClick={handleNewCalculation}
+                className="px-6 py-2 bg-zus-accent text-white font-semibold rounded-md hover:bg-zus-primary focus:outline-none focus:ring-2 focus:ring-zus-accent focus:ring-offset-2 transition-colors"
+              >
+                Nowa symulacja
+              </button>
             </div>
           </div>
-        </div>
+        )}
       </main>
 
       {/* Footer with accessibility info */}
