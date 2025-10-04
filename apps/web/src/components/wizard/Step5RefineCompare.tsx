@@ -6,9 +6,26 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWizardStore, ContractType, CareerPeriod } from '../../store/wizardStore';
 import { BeaverCoach } from './BeaverCoach';
+import { InfoCard } from './InfoCard';
+import { simulateV2 } from '../../services/v2-api';
+import type {
+  SimulateV2Request,
+  SimulateV2Response,
+  WizardJdgRequest,
+  ContractTypeV2,
+} from '@zus/types';
 
 export function Step5RefineCompare(): JSX.Element {
-  const { careerPeriods, addCareerPeriod, removeCareerPeriod } = useWizardStore();
+  const {
+    careerPeriods,
+    addCareerPeriod,
+    removeCareerPeriod,
+    gender,
+    age,
+    contractType,
+    jdgIncome,
+    isRyczalt,
+  } = useWizardStore();
 
   const [newPeriod, setNewPeriod] = useState<Omit<CareerPeriod, 'id'>>({
     contractType: 'uop',
@@ -16,10 +33,24 @@ export function Step5RefineCompare(): JSX.Element {
     monthlyIncome: 5000,
   });
 
+  const [isComputing, setIsComputing] = useState(false);
+  const [computeError, setComputeError] = useState<string | null>(null);
+  const [computeResult, setComputeResult] = useState<SimulateV2Response | null>(null);
+  const [correlationId, setCorrelationId] = useState<string | null>(null);
+
   const contractTypeLabels: Record<ContractType, string> = {
     uop: 'Umowa o pracę (UoP)',
     jdg: 'Działalność (JDG)',
     jdg_ryczalt: 'Działalność (JDG - ryczałt)',
+  };
+
+  // Filter available contract types - no ryczałt for UoP
+  const getAvailableContractTypes = (): ContractType[] => {
+    // If current selection is UoP, don't show JDG_RYCZALT
+    if (newPeriod.contractType === 'uop') {
+      return ['uop', 'jdg'];
+    }
+    return ['uop', 'jdg', 'jdg_ryczalt'];
   };
 
   const handleAddPeriod = (): void => {
@@ -41,6 +72,63 @@ export function Step5RefineCompare(): JSX.Element {
         )
       : 0;
 
+  // Map local contract type to API ContractTypeV2
+  const mapToContractV2 = (type: ContractType): ContractTypeV2 => {
+    switch (type) {
+      case 'uop':
+        return 'UOP';
+      case 'jdg':
+        return 'JDG';
+      case 'jdg_ryczalt':
+        return 'JDG_RYCZALT';
+      default:
+        return 'UOP';
+    }
+  };
+
+  // Handle final compute
+  const handleComputePrecisePension = async (): Promise<void> => {
+    if (!gender || !age || !contractType || careerPeriods.length === 0) {
+      setComputeError('Brak wymaganych danych do obliczeń');
+      return;
+    }
+
+    setIsComputing(true);
+    setComputeError(null);
+    const corrId = `compute-${Date.now()}`;
+    setCorrelationId(corrId);
+
+    try {
+      // Build baseline context from wizard state
+      const baselineContext: WizardJdgRequest = {
+        gender: gender === 'male' ? 'M' : 'F',
+        age,
+        contract: mapToContractV2(contractType),
+        monthlyIncome: jdgIncome,
+        isRyczalt,
+        claimMonth: 6, // Default to June
+      };
+
+      // For now, we're not mapping career periods to variants
+      // This would require additional logic to convert CareerPeriod to RefinementItem
+      const request: SimulateV2Request = {
+        baselineContext,
+        // variants: [], // TODO: Map career periods to refinement items
+      };
+
+      const result = await simulateV2(request, corrId);
+      setComputeResult(result);
+      setComputeError(null);
+    } catch (error) {
+      console.error('Compute failed:', error);
+      setComputeError(
+        error instanceof Error ? error.message : 'Wystąpił błąd podczas obliczeń. Spróbuj ponownie.'
+      );
+    } finally {
+      setIsComputing(false);
+    }
+  };
+
   return (
     <div className="max-w-5xl mx-auto">
       <h2 className="text-3xl font-bold text-zus-text mb-2">Doprecyzuj i porównaj</h2>
@@ -61,9 +149,11 @@ export function Step5RefineCompare(): JSX.Element {
               }
               className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zus-primary focus:border-transparent"
             >
-              <option value="uop">Umowa o pracę</option>
-              <option value="jdg">Działalność (JDG)</option>
-              <option value="jdg_ryczalt">JDG - ryczałt</option>
+              {getAvailableContractTypes().map((type) => (
+                <option key={type} value={type}>
+                  {contractTypeLabels[type]}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -188,15 +278,89 @@ export function Step5RefineCompare(): JSX.Element {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <button className="w-full py-4 bg-zus-accent text-white text-lg font-bold rounded-lg hover:bg-zus-primary focus:outline-none focus:ring-4 focus:ring-zus-primary focus:ring-opacity-50 transition-all shadow-lg hover:shadow-xl">
-            🎯 Oblicz dokładną emeryturę
+          <button
+            onClick={handleComputePrecisePension}
+            disabled={isComputing}
+            className="w-full py-4 bg-zus-accent text-white text-lg font-bold rounded-lg hover:bg-zus-primary focus:outline-none focus:ring-4 focus:ring-zus-primary focus:ring-opacity-50 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isComputing ? '⏳ Obliczanie...' : '🎯 Oblicz dokładną emeryturę'}
           </button>
+
+          {computeError && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="mt-4 p-4 bg-red-50 border-2 border-red-300 rounded-lg"
+              role="alert"
+            >
+              <p className="text-red-900 font-semibold">❌ Błąd obliczeń</p>
+              <p className="text-red-800 text-sm mt-1">{computeError}</p>
+              {correlationId && (
+                <p className="text-red-600 text-xs mt-2">ID korelacji: {correlationId}</p>
+              )}
+            </motion.div>
+          )}
+
+          {computeResult && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6 p-6 bg-green-50 border-2 border-green-300 rounded-lg"
+            >
+              <h4 className="text-xl font-bold text-green-900 mb-4">✅ Dokładny wynik</h4>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-green-700">Emerytura nominalna</p>
+                  <p className="text-2xl font-bold text-green-900">
+                    {Math.round(computeResult.baselineResult.kpi.monthlyNominal).toLocaleString(
+                      'pl-PL'
+                    )}{' '}
+                    PLN
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-green-700">Emerytura (dzisiaj)</p>
+                  <p className="text-2xl font-bold text-green-900">
+                    {Math.round(computeResult.baselineResult.kpi.monthlyRealToday).toLocaleString(
+                      'pl-PL'
+                    )}{' '}
+                    PLN
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-green-700">Stopa zastąpienia</p>
+                  <p className="text-2xl font-bold text-green-900">
+                    {Math.round(computeResult.baselineResult.kpi.replacementRate)}%
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-green-700">Przejście na emeryturę</p>
+                  <p className="text-2xl font-bold text-green-900">
+                    {computeResult.baselineResult.kpi.retirementYear}{' '}
+                    {computeResult.baselineResult.kpi.claimQuarter}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          )}
         </motion.div>
       )}
+
+      {/* Worth Knowing InfoCard */}
+      <InfoCard
+        variant="knowledge"
+        icon="brain"
+        title="Warto wiedzieć: Okresy kariery"
+        description="Dla dokładniejszego wyniku warto uwzględnić różne okresy kariery: zmiany umów, przerwy, awanse. Każdy okres z innym typem umowy lub wynagrodzeniem wpływa na ostateczny kapitał emerytalny."
+        sourceTitle="ZUS - Kalkulator emerytalny"
+        sourceUrl="https://www.zus.pl/emerytura/kalkulator-emerytalny"
+        className="mt-6"
+      />
 
       <BeaverCoach
         message="Dodaj różne okresy swojej kariery — możesz uwzględnić zmiany umów, podwyżki czy przerwy. Im więcej szczegółów podasz, tym dokładniejszy będzie wynik!"
         tone="tip"
+        pose="typing"
       />
     </div>
   );

@@ -143,14 +143,12 @@ export function wizardContract(_request: WizardContractRequest): WizardContractR
 export function wizardJdg(request: WizardJdgRequest): ScenarioResult {
   const { gender, age, monthlyIncome, contract, isRyczalt, claimMonth } = request;
 
-  const engineInput = buildEngineInput(
-    gender,
-    age,
-    monthlyIncome,
-    contract,
-    isRyczalt,
-    claimMonth
-  );
+  // Validate: UOP cannot have ryczałt
+  if (contract === 'UOP' && isRyczalt) {
+    throw new Error('Invalid combination: UOP contract cannot use ryczałt taxation');
+  }
+
+  const engineInput = buildEngineInput(gender, age, monthlyIncome, contract, isRyczalt, claimMonth);
 
   const providers = makeDemoProviderBundle({ anchorYear: CURRENT_YEAR });
   const output = Engine.calculate(engineInput, providers);
@@ -163,20 +161,20 @@ export function wizardJdg(request: WizardJdgRequest): ScenarioResult {
  * Calculate pension with higher contribution base
  */
 export function compareHigherZus(request: CompareHigherZusRequest): ScenarioResult {
-  const { gender, age, monthlyIncome, contract, isRyczalt, claimMonth, zusMultiplier = 1.5 } =
-    request;
+  const {
+    gender,
+    age,
+    monthlyIncome,
+    contract,
+    isRyczalt,
+    claimMonth,
+    zusMultiplier = 1.5,
+  } = request;
 
   // Calculate with higher income
   const higherIncome = monthlyIncome * zusMultiplier;
 
-  const engineInput = buildEngineInput(
-    gender,
-    age,
-    higherIncome,
-    contract,
-    isRyczalt,
-    claimMonth
-  );
+  const engineInput = buildEngineInput(gender, age, higherIncome, contract, isRyczalt, claimMonth);
 
   const providers = makeDemoProviderBundle({ anchorYear: CURRENT_YEAR });
   const output = Engine.calculate(engineInput, providers);
@@ -236,7 +234,7 @@ export function compareWhatIf(request: CompareWhatIfRequest): CompareWhatIfRespo
         break;
       case 'higher_base':
         // Increase contribution base by percentage
-        variantInput.currentGrossMonthly *= 1 + ((item.monthly ?? 20) / 100);
+        variantInput.currentGrossMonthly *= 1 + (item.monthly ?? 20) / 100;
         break;
     }
 
@@ -253,6 +251,11 @@ export function compareWhatIf(request: CompareWhatIfRequest): CompareWhatIfRespo
  */
 export function simulateV2(request: SimulateV2Request): SimulateV2Response {
   const { baselineContext, variants: variantItems } = request;
+
+  // Validate: UOP cannot have ryczałt
+  if (baselineContext.contract === 'UOP' && baselineContext.isRyczalt) {
+    throw new Error('Invalid combination: UOP contract cannot use ryczałt taxation');
+  }
 
   // Calculate baseline
   const baselineInput = buildEngineInput(
@@ -282,7 +285,7 @@ export function simulateV2(request: SimulateV2Request): SimulateV2Response {
           variantInput.retirementAge = (variantInput.retirementAge ?? 65) + (item.years ?? 2);
           break;
         case 'higher_base':
-          variantInput.currentGrossMonthly *= 1 + ((item.monthly ?? 20) / 100);
+          variantInput.currentGrossMonthly *= 1 + (item.monthly ?? 20) / 100;
           break;
       }
 

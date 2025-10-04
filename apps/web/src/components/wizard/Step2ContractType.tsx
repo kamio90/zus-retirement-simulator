@@ -5,6 +5,7 @@
 import { motion } from 'framer-motion';
 import { useWizardStore, ContractType } from '../../store/wizardStore';
 import { BeaverCoach } from './BeaverCoach';
+import { InfoCard } from './InfoCard';
 
 export function Step2ContractType(): JSX.Element {
   const { contractType, setContractType } = useWizardStore();
@@ -95,10 +96,22 @@ export function Step2ContractType(): JSX.Element {
         </p>
       </div>
 
+      {/* Worth Knowing InfoCard */}
+      <InfoCard
+        variant="knowledge"
+        icon="brain"
+        title="Warto wiedzieć"
+        description="Umowa o pracę (UoP): składki liczone od pełnego wynagrodzenia brutto. Działalność gospodarcza (JDG): możliwość opłacania składek od niższej podstawy lub wybór ryczałtu, co wpływa na przyszłą emeryturę."
+        sourceTitle="ZUS - Przedsiębiorcy i składki"
+        sourceUrl="https://www.zus.pl/przedsiebiorcy"
+        className="mt-6"
+      />
+
       {/* Beaver Coach */}
       <BeaverCoach
         message="Wybierz rodzaj umowy, która dotyczy Twojej sytuacji. To zmieni sposób obliczania składek emerytalnych. Osoby na UoP mają automatycznie wyższą podstawę składek niż na JDG."
         tone="tip"
+        pose="point-left"
       />
     </div>
   );

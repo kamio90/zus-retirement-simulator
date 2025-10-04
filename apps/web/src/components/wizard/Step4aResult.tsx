@@ -14,6 +14,7 @@ import {
 } from 'recharts';
 import { useWizardStore } from '../../store/wizardStore';
 import { BeaverCoach } from './BeaverCoach';
+import { InfoCard } from './InfoCard';
 import type { ScenarioResult } from '@zus/types';
 
 export function Step4aResult(): JSX.Element {
@@ -21,7 +22,7 @@ export function Step4aResult(): JSX.Element {
 
   // Cast to v2 ScenarioResult
   const apiResult = quickCalcResult as ScenarioResult | null;
-  
+
   const mockResult = {
     nominalPension: 3500,
     realPension: 2800,
@@ -40,57 +41,59 @@ export function Step4aResult(): JSX.Element {
   };
 
   // Extract KPIs from v2 result or use mock
-  const kpis = apiResult ? [
-    {
-      label: 'Emerytura nominalna',
-      value: `${Math.round(apiResult.kpi.monthlyNominal).toLocaleString('pl-PL')} PLN`,
-      description: 'Przewidywana kwota emerytury w przyszłości',
-      icon: '💰',
-    },
-    {
-      label: 'Emerytura realna (dzisiaj)',
-      value: `${Math.round(apiResult.kpi.monthlyRealToday).toLocaleString('pl-PL')} PLN`,
-      description: 'Wartość w dzisiejszych pieniądzach',
-      icon: '📊',
-    },
-    {
-      label: 'Stopa zastąpienia',
-      value: `${Math.round(apiResult.kpi.replacementRate * 100)}%`,
-      description: 'Stosunek emerytury do ostatniego wynagrodzenia',
-      icon: '📈',
-    },
-    {
-      label: 'Przejście na emeryturę',
-      value: `${apiResult.kpi.retirementYear} ${apiResult.kpi.claimQuarter}`,
-      description: 'Rok i kwartał przejścia na emeryturę',
-      icon: '🗓️',
-    },
-  ] : [
-    {
-      label: 'Emerytura nominalna',
-      value: `${Math.round(mockResult.nominalPension).toLocaleString('pl-PL')} PLN`,
-      description: 'Przewidywana kwota emerytury w przyszłości',
-      icon: '💰',
-    },
-    {
-      label: 'Emerytura realna (dzisiaj)',
-      value: `${Math.round(mockResult.realPension).toLocaleString('pl-PL')} PLN`,
-      description: 'Wartość w dzisiejszych pieniądzach',
-      icon: '📊',
-    },
-    {
-      label: 'Stopa zastąpienia',
-      value: `${mockResult.replacementRate}%`,
-      description: 'Stosunek emerytury do ostatniego wynagrodzenia',
-      icon: '📈',
-    },
-    {
-      label: 'Przejście na emeryturę',
-      value: `${mockResult.retirementYear} Q${mockResult.retirementQuarter}`,
-      description: 'Rok i kwartał przejścia na emeryturę',
-      icon: '🗓️',
-    },
-  ];
+  const kpis = apiResult
+    ? [
+        {
+          label: 'Emerytura nominalna',
+          value: `${Math.round(apiResult.kpi.monthlyNominal).toLocaleString('pl-PL')} PLN`,
+          description: 'Przewidywana kwota emerytury w przyszłości',
+          icon: '💰',
+        },
+        {
+          label: 'Emerytura realna (dzisiaj)',
+          value: `${Math.round(apiResult.kpi.monthlyRealToday).toLocaleString('pl-PL')} PLN`,
+          description: 'Wartość w dzisiejszych pieniądzach',
+          icon: '📊',
+        },
+        {
+          label: 'Stopa zastąpienia',
+          value: `${Math.round(apiResult.kpi.replacementRate * 100)}%`,
+          description: 'Stosunek emerytury do ostatniego wynagrodzenia',
+          icon: '📈',
+        },
+        {
+          label: 'Przejście na emeryturę',
+          value: `${apiResult.kpi.retirementYear} ${apiResult.kpi.claimQuarter}`,
+          description: 'Rok i kwartał przejścia na emeryturę',
+          icon: '🗓️',
+        },
+      ]
+    : [
+        {
+          label: 'Emerytura nominalna',
+          value: `${Math.round(mockResult.nominalPension).toLocaleString('pl-PL')} PLN`,
+          description: 'Przewidywana kwota emerytury w przyszłości',
+          icon: '💰',
+        },
+        {
+          label: 'Emerytura realna (dzisiaj)',
+          value: `${Math.round(mockResult.realPension).toLocaleString('pl-PL')} PLN`,
+          description: 'Wartość w dzisiejszych pieniądzach',
+          icon: '📊',
+        },
+        {
+          label: 'Stopa zastąpienia',
+          value: `${mockResult.replacementRate}%`,
+          description: 'Stosunek emerytury do ostatniego wynagrodzenia',
+          icon: '📈',
+        },
+        {
+          label: 'Przejście na emeryturę',
+          value: `${mockResult.retirementYear} Q${mockResult.retirementQuarter}`,
+          description: 'Rok i kwartał przejścia na emeryturę',
+          icon: '🗓️',
+        },
+      ];
 
   const ctaCards = [
     {
@@ -189,6 +192,17 @@ export function Step4aResult(): JSX.Element {
         </p>
       </div>
 
+      {/* Worth Knowing InfoCard */}
+      <InfoCard
+        variant="knowledge"
+        icon="brain"
+        title="Warto wiedzieć: Waloryzacja"
+        description="Waloryzacja kapitału emerytalnego odbywa się raz w roku - 1 czerwca. Stosuje się wskaźnik waloryzacji z poprzedniego roku kalendarzowego. Jeśli przejście na emeryturę następuje po 31 stycznia, stosuje się dodatkową waloryzację kwartalną."
+        sourceTitle="ZUS - Waloryzacja składek i kapitału"
+        sourceUrl="https://www.zus.pl/baza-wiedzy/waloryzacja"
+        className="mb-8"
+      />
+
       <div className="mb-8">
         <h3 className="text-xl font-bold text-zus-text mb-4">Chcesz dokładniejszy wynik?</h3>
         <motion.div
@@ -224,6 +238,7 @@ export function Step4aResult(): JSX.Element {
       <BeaverCoach
         message="Świetnie! To Twoja szybka kalkulacja. Możesz teraz doprecyzować scenariusz, dodając więcej szczegółów jak zmiany umowy czy podwyżki w karierze."
         tone="tip"
+        pose="celebrate"
         ctaLabel="Doprecyzuj obliczenia"
         onCta={() => setCurrentStep(5)}
       />

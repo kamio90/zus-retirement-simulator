@@ -7,7 +7,7 @@
  * - Beaver Coach assistant
  * - ZUS brand colors and accessible design
  */
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { Wizard } from './components/wizard';
 import { LegacyApp } from './LegacyApp';
 
@@ -17,6 +17,8 @@ function App(): JSX.Element {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/wizard" element={<Wizard />} />
+        {/* Redirect old simulate path to wizard */}
+        <Route path="/simulate" element={<Navigate to="/wizard" replace />} />
         <Route path="/legacy" element={<LegacyApp />} />
       </Routes>
     </BrowserRouter>

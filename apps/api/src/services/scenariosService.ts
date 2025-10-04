@@ -51,10 +51,7 @@ export function calculateJdgQuick(request: JdgQuickRequest): JdgQuickResult {
   const { birthYear, gender, age, monthlyIncome, isRyczalt } = request;
 
   const startWorkYear = estimateStartWorkYear(birthYear, age);
-  const contributionBase = getContributionBase(
-    monthlyIncome,
-    isRyczalt ? 'jdg_ryczalt' : 'jdg'
-  );
+  const contributionBase = getContributionBase(monthlyIncome, isRyczalt ? 'jdg_ryczalt' : 'jdg');
 
   // Build engine input
   const engineInput: EngineInput = {
@@ -199,8 +196,9 @@ export function compareScenarios(request: ComparisonRequest): ComparisonResult {
           monthlyIncome: baseScenario.monthlyIncome, // Use full income for UoP
         });
         comparisonLabel = 'Umowa o pracę (UoP)';
-        
-        recommendation = 'Umowa o pracę może dać wyższą emeryturę dzięki pełnej podstawie składkowej';
+
+        recommendation =
+          'Umowa o pracę może dać wyższą emeryturę dzięki pełnej podstawie składkowej';
       } else {
         throw new Error('UoP vs JDG comparison requires JDG base scenario');
       }
@@ -247,10 +245,18 @@ export function compareScenarios(request: ComparisonRequest): ComparisonResult {
       throw new Error(`Unknown comparison type: ${comparisonType}`);
   }
 
-  const basePension = 'nominalPension' in baseResult ? baseResult.nominalPension : baseResult.monthlyPensionNominal;
-  const basePensionReal = 'realPension' in baseResult ? baseResult.realPension : baseResult.monthlyPensionRealToday;
-  const comparisonPension = 'nominalPension' in comparisonResult ? comparisonResult.nominalPension : comparisonResult.monthlyPensionNominal;
-  const comparisonPensionReal = 'realPension' in comparisonResult ? comparisonResult.realPension : comparisonResult.monthlyPensionRealToday;
+  const basePension =
+    'nominalPension' in baseResult ? baseResult.nominalPension : baseResult.monthlyPensionNominal;
+  const basePensionReal =
+    'realPension' in baseResult ? baseResult.realPension : baseResult.monthlyPensionRealToday;
+  const comparisonPension =
+    'nominalPension' in comparisonResult
+      ? comparisonResult.nominalPension
+      : comparisonResult.monthlyPensionNominal;
+  const comparisonPensionReal =
+    'realPension' in comparisonResult
+      ? comparisonResult.realPension
+      : comparisonResult.monthlyPensionRealToday;
 
   return {
     base: {
