@@ -18,7 +18,15 @@ const DEFAULT_IT_VOICE: VoiceSettings = {
 
 const STORAGE_KEY = 'beaverVoice';
 
-export function useSpeech() {
+export function useSpeech(): {
+  voices: SpeechSynthesisVoice[];
+  settings: VoiceSettings;
+  isSpeaking: boolean;
+  speak: (text: string) => void;
+  stop: () => void;
+  updateSettings: (newSettings: VoiceSettings) => void;
+  speechSupported: boolean;
+} {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [settings, setSettings] = useState<VoiceSettings>(DEFAULT_IT_VOICE);
@@ -30,7 +38,7 @@ export function useSpeech() {
   useEffect(() => {
     if (!speechSupported) return;
 
-    const loadVoices = () => {
+    const loadVoices = (): void => {
       const availableVoices = window.speechSynthesis.getVoices();
       setVoices(availableVoices);
     };
@@ -38,7 +46,7 @@ export function useSpeech() {
     loadVoices();
     window.speechSynthesis.onvoiceschanged = loadVoices;
 
-    return () => {
+    return (): void => {
       window.speechSynthesis.onvoiceschanged = null;
     };
   }, [speechSupported]);
@@ -74,17 +82,17 @@ export function useSpeech() {
 
     // Try exact match by name
     if (settings.voiceName) {
-      const exactMatch = voices.find(v => v.name === settings.voiceName);
+      const exactMatch = voices.find((v) => v.name === settings.voiceName);
       if (exactMatch) return exactMatch;
     }
 
     // Try language match
-    const langMatch = voices.find(v => v.lang.startsWith(settings.lang));
+    const langMatch = voices.find((v) => v.lang.startsWith(settings.lang));
     if (langMatch) return langMatch;
 
     // Fallback to en-GB if pl-PL not available
     if (settings.lang === 'pl-PL') {
-      const enMatch = voices.find(v => v.lang.startsWith('en-GB'));
+      const enMatch = voices.find((v) => v.lang.startsWith('en-GB'));
       if (enMatch) return enMatch;
     }
 
@@ -93,35 +101,38 @@ export function useSpeech() {
   }, [voices, settings]);
 
   // Speak function
-  const speak = useCallback((text: string) => {
-    if (!speechSupported) return;
+  const speak = useCallback(
+    (text: string) => {
+      if (!speechSupported) return;
 
-    // Cancel any ongoing speech
-    if (window.speechSynthesis.speaking) {
-      window.speechSynthesis.cancel();
-      setIsSpeaking(false);
-      return;
-    }
+      // Cancel any ongoing speech
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        setIsSpeaking(false);
+        return;
+      }
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    const voice = getVoice();
-    
-    if (voice) {
-      utterance.voice = voice;
-    }
-    
-    utterance.lang = settings.lang;
-    utterance.rate = settings.rate;
-    utterance.pitch = 1.0 + (settings.pitch / 10); // Convert -0.5 to pitch value
-    utterance.volume = settings.volume;
+      const utterance = new SpeechSynthesisUtterance(text);
+      const voice = getVoice();
 
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
+      if (voice) {
+        utterance.voice = voice;
+      }
 
-    utteranceRef.current = utterance;
-    window.speechSynthesis.speak(utterance);
-  }, [speechSupported, settings, getVoice]);
+      utterance.lang = settings.lang;
+      utterance.rate = settings.rate;
+      utterance.pitch = 1.0 + settings.pitch / 10; // Convert -0.5 to pitch value
+      utterance.volume = settings.volume;
+
+      utterance.onstart = (): void => setIsSpeaking(true);
+      utterance.onend = (): void => setIsSpeaking(false);
+      utterance.onerror = (): void => setIsSpeaking(false);
+
+      utteranceRef.current = utterance;
+      window.speechSynthesis.speak(utterance);
+    },
+    [speechSupported, settings, getVoice]
+  );
 
   // Stop speaking
   const stop = useCallback(() => {

@@ -2,32 +2,47 @@
   "version": "2025.10.0",
   "items": [
     {
-      "id": "annual-valorization",
-      "step": "step4a_result",
-      "title": "Annual valorization",
-      "body": "Every 1 June ZUS valorizes the balance recorded as of 31 January with the index for the previous year.",
+      "id": "defined-contribution",
+      "step": "step1_gender_age",
+      "title": "Defined-contribution system",
+      "tone": "fun",
+      "short": "ZUS works like a piggy bank — what you put in is what you later take out.",
+      "body": "ZUS works like a piggy bank — what you put in is what you later take out (well… almost). Your contributions don't vanish; they quietly grow.",
+      "pose": "idea",
+      "icon": "account_balance",
+      "tokens": [],
       "source": {
-        "title": "ZUS – annual valorization",
-        "url": "https://www.zus.pl/baza-wiedzy/waloryzacja"
+        "title": "ZUS – system",
+        "url": "https://www.zus.pl/baza-wiedzy/system-emerytalny"
       },
       "lang": "en-GB"
     },
     {
-      "id": "quarterly-valorization",
-      "step": "step4a_result",
-      "title": "Quarterly valorization",
-      "body": "If retirement begins after 31 January, an additional quarterly valorization is applied, accounting for economic growth since the last valorization.",
+      "id": "defined-contribution",
+      "step": "step1_gender_age",
+      "title": "Defined-contribution system",
+      "tone": "formal",
+      "short": "Since 1999 ZUS computes pensions based on the sum of contributions.",
+      "body": "Since 1999 ZUS computes pensions based on the sum of contributions recorded on your account. The higher the contributions, the higher the benefit.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
       "source": {
-        "title": "ZUS - Pension calculation rules",
-        "url": "https://www.zus.pl/emerytura/kalkulator-emerytalny"
+        "title": "ZUS – system",
+        "url": "https://www.zus.pl/baza-wiedzy/system-emerytalny"
       },
       "lang": "en-GB"
     },
     {
       "id": "initial-capital",
-      "step": "step1_gender_age",
-      "title": "Initial capital",
-      "body": "Initial capital is the valorized value of contributions and work history before 1999. The first valorization index was 115.60% (1999).",
+      "step": "step3a_jdg",
+      "title": "Initial capital (pre-1999)",
+      "tone": "fun",
+      "short": "If you worked before 1999, ZUS recalculates what you'd have 'saved' in the old world.",
+      "body": "If you worked before 1999, ZUS recalculates what you'd have 'saved' in the old world — a bit like converting old PLN to new, but for pensions.",
+      "pose": "read",
+      "icon": "history",
+      "tokens": [],
       "source": {
         "title": "ZUS - Initial capital",
         "url": "https://www.zus.pl/baza-wiedzy/kapital-poczatkowy"
@@ -35,10 +50,31 @@
       "lang": "en-GB"
     },
     {
-      "id": "life-expectancy-table",
-      "step": "step4a_result",
-      "title": "Life expectancy table (SDŻ)",
-      "body": "Pension amount is calculated by dividing the capital by the expected remaining life (in months). Life expectancy tables are published annually by GUS.",
+      "id": "initial-capital",
+      "step": "step3a_jdg",
+      "title": "Initial capital (pre-1999)",
+      "tone": "formal",
+      "short": "For periods before 1999, ZUS establishes the 'initial capital'.",
+      "body": "For periods before 1999, ZUS establishes the 'initial capital', i.e., the notional value of contributions accrued in the old system, converted into the new formula.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
+      "source": {
+        "title": "ZUS - Initial capital",
+        "url": "https://www.zus.pl/baza-wiedzy/kapital-poczatkowy"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "life-expectancy",
+      "step": "step1_gender_age",
+      "title": "Life expectancy (SDŻ)",
+      "tone": "fun",
+      "short": "ZUS divides your savings by how long you're statistically expected to live.",
+      "body": "ZUS divides your savings by how long you're statistically expected to live. The later you retire, the smaller the divisor — and the higher the monthly amount.",
+      "pose": "idea",
+      "icon": "calendar_month",
+      "tokens": [],
       "source": {
         "title": "GUS - Life expectancy tables",
         "url": "https://stat.gov.pl/tablice-trwania-zycia/"
@@ -46,68 +82,242 @@
       "lang": "en-GB"
     },
     {
-      "id": "pension-contribution",
-      "step": "step2_contract",
-      "title": "Pension contribution",
-      "body": "The pension insurance contribution is 19.52% of the assessment base. For employment contracts (UoP), the base is the full gross salary.",
+      "id": "life-expectancy",
+      "step": "step1_gender_age",
+      "title": "Life expectancy (SDŻ)",
+      "tone": "formal",
+      "short": "The pension base is divided by the average remaining life expectancy.",
+      "body": "The pension base is divided by the average remaining life expectancy (GUS table, window 1 April–31 March). Later retirement → smaller divisor → higher monthly benefit.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
       "source": {
-        "title": "ZUS - Insurance contributions",
-        "url": "https://www.zus.pl/baza-wiedzy/skladki"
+        "title": "GUS - Life expectancy tables",
+        "url": "https://stat.gov.pl/tablice-trwania-zycia/"
       },
       "lang": "en-GB"
     },
     {
-      "id": "uop-vs-jdg-differences",
-      "step": "step2_contract",
-      "title": "UoP vs JDG - contribution differences",
-      "body": "Employment contract (UoP): contributions calculated from full gross salary. Self-employment (JDG): option to pay contributions from a lower base.",
+      "id": "valorization",
+      "step": "step4a_result",
+      "title": "Indexation / Valorization of contributions",
+      "tone": "fun",
+      "short": "Each year ZUS adds some 'percent' so your savings don't lose value.",
+      "body": "Each year ZUS adds some 'percent' so your savings don't lose value. An inflation shield for your pension pot.",
+      "pose": "idea",
+      "icon": "trending_up",
+      "tokens": [],
       "source": {
-        "title": "ZUS - Entrepreneurs and contributions",
-        "url": "https://www.zus.pl/przedsiebiorcy"
+        "title": "ZUS – valorization",
+        "url": "https://www.zus.pl/baza-wiedzy/waloryzacja"
       },
       "lang": "en-GB"
     },
     {
-      "id": "flat-rate-jdg",
+      "id": "valorization",
+      "step": "step4a_result",
+      "title": "Indexation / Valorization of contributions",
+      "tone": "formal",
+      "short": "Annually (1 June) ZUS valorizes the balance with the index for the prior year.",
+      "body": "Annually (1 June) ZUS valorizes the balance recorded as of 31 January by the index for the prior year; quarterly valorization applies to amounts after 31 January.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – valorization",
+        "url": "https://www.zus.pl/baza-wiedzy/waloryzacja"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "minimum-pension",
+      "step": "step4a_result",
+      "title": "Minimum pension",
+      "tone": "fun",
+      "short": "Even if you saved little, there's a floor — provided you meet the service requirements.",
+      "body": "Even if you saved little, there's a floor — provided you meet the service requirements. A 'demo version' of a pension, but it helps.",
+      "pose": "info",
+      "icon": "verified",
+      "tokens": ["{{MIN_PENSION}}"],
+      "source": {
+        "title": "ZUS – minimum pension",
+        "url": "https://www.zus.pl/baza-wiedzy/emerytura-minimalna"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "minimum-pension",
+      "step": "step4a_result",
+      "title": "Minimum pension",
+      "tone": "formal",
+      "short": "If statutory contribution periods are met, the minimum pension is granted.",
+      "body": "If statutory contribution periods are met, the minimum pension is granted regardless of low accrual (exact thresholds/amounts per current law).",
+      "pose": "read",
+      "icon": "info",
+      "tokens": ["{{MIN_PENSION}}"],
+      "source": {
+        "title": "ZUS – minimum pension",
+        "url": "https://www.zus.pl/baza-wiedzy/emerytura-minimalna"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "women-men",
+      "step": "step2_contract",
+      "title": "Women & men",
+      "tone": "fun",
+      "short": "Women retire earlier, so ZUS divides their pot by more months.",
+      "body": "Women retire earlier, so ZUS divides their pot by more months — often a smaller monthly amount (but enjoyed longer).",
+      "pose": "idea",
+      "icon": "groups",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – retirement age",
+        "url": "https://www.zus.pl/baza-wiedzy/wiek-emerytalny"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "women-men",
+      "step": "step2_contract",
+      "title": "Women & men",
+      "tone": "formal",
+      "short": "Different retirement ages imply different divisors.",
+      "body": "Different retirement ages imply different divisors; ceteris paribus this may yield lower monthly benefits for women.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – retirement age",
+        "url": "https://www.zus.pl/baza-wiedzy/wiek-emerytalny"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "very-low-pensions",
       "step": "step3a_jdg",
-      "title": "Flat rate in JDG",
-      "body": "Entrepreneurs taxed with a flat rate can pay ZUS contributions from a reduced base (30% of income or max 4500 PLN). This means lower contributions but also lower future pension.",
+      "title": "Very low ('penny') pensions",
+      "tone": "fun",
+      "short": "Yes, some people receive PLN 5 per month — not a joke.",
+      "body": "Yes, some people receive PLN 5 per month — not a joke. ZUS aggregates those into less frequent, larger payouts so you actually feel something.",
+      "pose": "warning",
+      "icon": "warning",
+      "tokens": [],
       "source": {
-        "title": "ZUS - JDG on flat rate",
-        "url": "https://www.zus.pl/baza-wiedzy/ryczalt"
+        "title": "ZUS – low benefits",
+        "url": "https://www.zus.pl/baza-wiedzy/emerytury"
       },
       "lang": "en-GB"
     },
     {
-      "id": "career-periods",
-      "step": "refine_compare",
-      "title": "Career periods",
-      "body": "For more accurate results, consider different career periods: contract changes, breaks, promotions. Each period with a different contract type or salary affects the final pension capital.",
+      "id": "very-low-pensions",
+      "step": "step3a_jdg",
+      "title": "Very low ('penny') pensions",
+      "tone": "formal",
+      "short": "For marginal accrual, ZUS may pay in a different cadence.",
+      "body": "For marginal accrual, ZUS may pay in a different cadence or aggregate payments according to regulations.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
       "source": {
-        "title": "ZUS - Pension calculator",
+        "title": "ZUS – low benefits",
+        "url": "https://www.zus.pl/baza-wiedzy/emerytury"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "bridging-pensions",
+      "step": "refine_compare",
+      "title": "Bridging (early) pensions",
+      "tone": "fun",
+      "short": "Some jobs wear you out faster — miners, pilots, steelworkers.",
+      "body": "Some jobs wear you out faster — miners, pilots, steelworkers. They can retire earlier and ZUS recognizes it.",
+      "pose": "info",
+      "icon": "engineering",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – bridging pensions",
+        "url": "https://www.zus.pl/baza-wiedzy/emerytury-pomostowe"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "bridging-pensions",
+      "step": "refine_compare",
+      "title": "Bridging (early) pensions",
+      "tone": "formal",
+      "short": "Bridging pensions apply to specific professions.",
+      "body": "Bridging pensions apply to specific professions and are financed by dedicated employer contributions.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – bridging pensions",
+        "url": "https://www.zus.pl/baza-wiedzy/emerytury-pomostowe"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "multi-country",
+      "step": "refine_compare",
+      "title": "Multi-country pensions (EU)",
+      "tone": "fun",
+      "short": "Worked across the EU? ZUS teams up with other countries.",
+      "body": "Worked across the EU? ZUS teams up with other countries — an international pension coalition.",
+      "pose": "idea",
+      "icon": "public",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – international insurance",
+        "url": "https://www.zus.pl/baza-wiedzy/ubezpieczenia-miedzynarodowe"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "multi-country",
+      "step": "refine_compare",
+      "title": "Multi-country pensions (EU)",
+      "tone": "formal",
+      "short": "Insurance periods from different EU states are aggregated.",
+      "body": "Insurance periods from different EU states are aggregated under coordination rules; ZUS cooperates with foreign institutions to determine entitlements.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – international insurance",
+        "url": "https://www.zus.pl/baza-wiedzy/ubezpieczenia-miedzynarodowe"
+      },
+      "lang": "en-GB"
+    },
+    {
+      "id": "pue-calculator",
+      "step": "refine_compare",
+      "title": "PUE ZUS calculator",
+      "tone": "fun",
+      "short": "On ZUS PUE you can preview your future pension. Make tea first.",
+      "body": "On ZUS PUE you can preview your future pension. Make tea first — results can be… emotional.",
+      "pose": "typing",
+      "icon": "calculate",
+      "tokens": [],
+      "source": {
+        "title": "ZUS – pension calculator",
         "url": "https://www.zus.pl/emerytura/kalkulator-emerytalny"
       },
       "lang": "en-GB"
     },
     {
-      "id": "replacement-rate",
-      "step": "step4a_result",
-      "title": "Replacement rate",
-      "body": "The replacement rate is the ratio of pension amount to last salary (in %). In Poland it averages 50-60%, but depends on career length, salary level and contract types.",
+      "id": "pue-calculator",
+      "step": "refine_compare",
+      "title": "PUE ZUS calculator",
+      "tone": "formal",
+      "short": "ZUS PUE provides scenarios for different retirement ages.",
+      "body": "ZUS PUE provides scenarios for different retirement ages and contribution levels; results are indicative.",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
       "source": {
-        "title": "GUS - Pensions and annuities",
-        "url": "https://stat.gov.pl/obszary-tematyczne/rynek-pracy/emerytury-i-renty/"
-      },
-      "lang": "en-GB"
-    },
-    {
-      "id": "retirement-quarter",
-      "step": "step4a_result",
-      "title": "Retirement quarter",
-      "body": "The timing of retirement (quarter) affects quarterly valorization. The later in the year, the higher the additional valorization.",
-      "source": {
-        "title": "ZUS - When to retire",
-        "url": "https://www.zus.pl/emerytura"
+        "title": "ZUS – pension calculator",
+        "url": "https://www.zus.pl/emerytura/kalkulator-emerytalny"
       },
       "lang": "en-GB"
     }

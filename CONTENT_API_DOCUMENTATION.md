@@ -12,6 +12,7 @@ Retrieve educational knowledge items with source attribution for the pension sim
 |-----------|------|---------|-------------|
 | `step` | string | - | Filter by step ID (e.g., `step2_contract`) |
 | `lang` | string | `pl-PL` | Language code (`pl-PL` or `en-GB`) |
+| `tone` | string | - | Filter by tone (`fun` or `formal`) |
 | `limit` | number | 3 | Maximum items to return (1-10) |
 
 #### Response
@@ -26,7 +27,12 @@ Retrieve educational knowledge items with source attribution for the pension sim
       "id": "skladka-emerytalna",
       "step": "step2_contract",
       "title": "Składka emerytalna",
+      "tone": "formal",
+      "short": "Składka emerytalna to 19,52% podstawy wymiaru.",
       "body": "Składka na ubezpieczenie emerytalne wynosi 19,52% podstawy wymiaru...",
+      "pose": "read",
+      "icon": "info",
+      "tokens": [],
       "source": {
         "title": "ZUS - Składki na ubezpieczenia",
         "url": "https://www.zus.pl/baza-wiedzy/skladki"
@@ -58,13 +64,13 @@ Retrieve educational knowledge items with source attribution for the pension sim
 **Get Polish knowledge for step 2**
 
 ```bash
-curl "http://localhost:4000/content/knowledge?step=step2_contract&lang=pl-PL"
+curl "http://localhost:4000/content/knowledge?step=step2_contract&lang=pl-PL&tone=fun"
 ```
 
-**Get English knowledge (all steps, max 5 items)**
+**Get English knowledge (all steps, max 5 items, formal tone)**
 
 ```bash
-curl "http://localhost:4000/content/knowledge?lang=en-GB&limit=5"
+curl "http://localhost:4000/content/knowledge?lang=en-GB&limit=5&tone=formal"
 ```
 
 **Get with ETag caching**
@@ -118,7 +124,12 @@ interface KnowledgeItem {
   id: string;              // Unique identifier
   step?: string;           // Optional step filter
   title: string;           // Display title
-  body: string;            // Educational content (≤300 chars)
+  tone?: 'fun' | 'formal'; // Content tone
+  short?: string;          // Short description (≤140 chars)
+  body: string;            // Educational content (≤600 chars)
+  pose?: string;           // Beaver pose (maps to asset)
+  icon?: string;           // Material icon name
+  tokens?: string[];       // Tokens used in content
   source: {
     title: string;         // Source name
     url: string;          // Official URL
@@ -126,6 +137,13 @@ interface KnowledgeItem {
   lang: string;           // Language code
 }
 ```
+
+#### Supported Tones
+
+- `fun` - Playful, friendly, "Cukiereczek" style
+- `formal` - Neutral, official wording
+
+If no tone is specified, both tones may be returned. Tokens in content (e.g., `{{MIN_PENSION}}`) are automatically resolved to current values.
 
 ## v1 API Deprecation
 

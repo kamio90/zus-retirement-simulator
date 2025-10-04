@@ -5,6 +5,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useSpeech } from '../../hooks/useSpeech';
+import { useBeaverStore } from '../../stores/beaverStore';
 
 export type BeaverPose =
   | 'idle'
@@ -69,7 +70,9 @@ export function BeaverCoach({
   const [isMinimized, setIsMinimized] = useState(startMinimized);
   const [showVoiceSelector, setShowVoiceSelector] = useState(false);
 
-  const { voices, settings, isSpeaking, speak, stop, updateSettings, speechSupported } = useSpeech();
+  const { voices, settings, isSpeaking, speak, stop, updateSettings, speechSupported } =
+    useSpeech();
+  const { tone: contentTone, setTone } = useBeaverStore();
 
   useEffect(() => {
     // Check for reduced motion preference
@@ -186,6 +189,28 @@ export function BeaverCoach({
                   {title || 'Beaver Coach'}
                 </span>
 
+                {/* Tone Toggle */}
+                <div className="flex bg-white/50 rounded-md border border-gray-300 text-xs overflow-hidden">
+                  <button
+                    onClick={() => setTone('fun')}
+                    className={`px-2 py-1 transition-colors ${
+                      contentTone === 'fun' ? 'bg-zus-primary text-white' : 'hover:bg-gray-100'
+                    }`}
+                    aria-label="Tryb zabawny"
+                  >
+                    FUN
+                  </button>
+                  <button
+                    onClick={() => setTone('formal')}
+                    className={`px-2 py-1 transition-colors ${
+                      contentTone === 'formal' ? 'bg-zus-primary text-white' : 'hover:bg-gray-100'
+                    }`}
+                    aria-label="Tryb formalny"
+                  >
+                    FORMAL
+                  </button>
+                </div>
+
                 {/* Minimize button */}
                 {canMinimize && (
                   <button
@@ -208,7 +233,7 @@ export function BeaverCoach({
                     >
                       {isSpeaking ? '🔊 Zatrzymaj' : '🔇 Odczytaj'}
                     </button>
-                    
+
                     {/* Voice selector toggle */}
                     <button
                       onClick={() => setShowVoiceSelector(!showVoiceSelector)}
@@ -231,7 +256,9 @@ export function BeaverCoach({
                     <select
                       id="voice-select"
                       value={settings.voiceName || ''}
-                      onChange={(e) => updateSettings({ ...settings, voiceName: e.target.value || null })}
+                      onChange={(e) =>
+                        updateSettings({ ...settings, voiceName: e.target.value || null })
+                      }
                       className="w-full text-xs p-1 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-zus-primary"
                     >
                       <option value="">Domyślny</option>
@@ -255,7 +282,9 @@ export function BeaverCoach({
                         max="1.1"
                         step="0.1"
                         value={settings.rate}
-                        onChange={(e) => updateSettings({ ...settings, rate: parseFloat(e.target.value) })}
+                        onChange={(e) =>
+                          updateSettings({ ...settings, rate: parseFloat(e.target.value) })
+                        }
                         className="w-full"
                       />
                     </div>
@@ -271,7 +300,9 @@ export function BeaverCoach({
                         max="2"
                         step="0.5"
                         value={settings.pitch}
-                        onChange={(e) => updateSettings({ ...settings, pitch: parseFloat(e.target.value) })}
+                        onChange={(e) =>
+                          updateSettings({ ...settings, pitch: parseFloat(e.target.value) })
+                        }
                         className="w-full"
                       />
                     </div>

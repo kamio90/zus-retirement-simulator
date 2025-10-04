@@ -2,12 +2,18 @@ import { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
+import { resolveTokens } from '../utils/tokenResolver';
 
 interface KnowledgeItem {
   id: string;
   step?: string;
   title: string;
+  tone?: 'fun' | 'formal';
+  short?: string;
   body: string;
+  pose?: string;
+  icon?: string;
+  tokens?: string[];
   source: {
     title: string;
     url: string;
@@ -53,11 +59,15 @@ function calculateETag(content: string): string {
 
 export const contentController = {
   getKnowledge: (req: Request, res: Response): void => {
-    const { step, lang = 'pl-PL', limit = 3 } = req.query;
+    const { step, lang = 'pl-PL', tone, limit = 3 } = req.query;
 
     // Validate language
     const validLangs = ['pl-PL', 'en-GB'];
     const requestedLang = typeof lang === 'string' && validLangs.includes(lang) ? lang : 'pl-PL';
+
+    // Validate tone
+    const validTones = ['fun', 'formal'];
+    const requestedTone = typeof tone === 'string' && validTones.includes(tone) ? tone : undefined;
 
     // Validate limit
     const maxLimit = 10;
@@ -88,8 +98,20 @@ export const contentController = {
       items = items.filter(item => item.step === step);
     }
 
+    // Filter by tone if provided
+    if (requestedTone) {
+      items = items.filter(item => !item.tone || item.tone === requestedTone);
+    }
+
     // Limit results
     items = items.slice(0, requestedLimit);
+
+    // Resolve tokens in items
+    items = items.map(item => ({
+      ...item,
+      body: resolveTokens(item.body),
+      short: item.short ? resolveTokens(item.short) : item.short,
+    }));
 
     // Prepare response
     const response = {
