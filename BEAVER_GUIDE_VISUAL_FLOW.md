@@ -1,5 +1,7 @@
 # Beaver Educational Guide - Visual Flow Diagram
 
+**Note:** As of v0.3, the FUN/FORMAL tone toggle has been removed. All content uses a friendly tone by default.
+
 ## Architecture Overview
 
 ```
@@ -11,10 +13,10 @@
 │  │                                                          │  │
 │  │  ┌────────────────────────────────────────────────┐    │  │
 │  │  │  Header Row                                    │    │  │
-│  │  │  ┌──────┐  ┌──────────────┐  ┌──┐  ┌──┐      │    │  │
-│  │  │  │Title │  │ [FUN|FORMAL] │  │🔇│  │⚙️│  │—│ │    │  │
-│  │  │  └──────┘  └──────────────┘  └──┘  └──┘  └──┘│    │  │
-│  │  │           Tone Toggle    Voice   Settings Min │    │  │
+│  │  │  ┌──────┐  ┌──┐  ┌──┐  ┌──┐                   │    │  │
+│  │  │  │Title │  │🔇│  │⚙️│  │×│                    │    │  │
+│  │  │  └──────┘  └──┘  └──┘  └──┘                   │    │  │
+│  │  │           Voice Settings  Close               │    │  │
 │  │  └────────────────────────────────────────────────┘    │  │
 │  │                                                          │  │
 │  │  ┌────────────────────────────────────────────────┐    │  │
@@ -22,9 +24,7 @@
 │  │  │                                                │    │  │
 │  │  │  📚 Title: "System zdefiniowanej składki"    │    │  │
 │  │  │                                                │    │  │
-│  │  │  Short: "ZUS jak skarbonka..." (FUN)         │    │  │
-│  │  │    OR                                          │    │  │
-│  │  │  Short: "Od 1999 r. emerytura..." (FORMAL)   │    │  │
+│  │  │  Short: "ZUS jak skarbonka..." (friendly)    │    │  │
 │  │  │                                                │    │  │
 │  │  │  Source: ZUS – system ↗                       │    │  │
 │  │  └────────────────────────────────────────────────┘    │  │
@@ -36,7 +36,6 @@
                     │  Beaver Store    │
                     │  (Zustand)       │
                     │                  │
-                    │  - tone: 'fun'   │
                     │  - isMinimized   │
                     │  - lastStepId    │
                     └──────────────────┘
@@ -53,7 +52,7 @@
 ## API Request Flow
 
 ```
-GET /content/knowledge?step=step1_gender_age&lang=pl-PL&tone=fun&limit=1
+GET /content/knowledge?step=step1_gender_age&lang=pl-PL&limit=1
 
                     ┌──────────────────────┐
                     │  Content Controller  │
@@ -69,8 +68,8 @@ GET /content/knowledge?step=step1_gender_age&lang=pl-PL&tone=fun&limit=1
                     ┌──────────────────────┐
                     │  Filter by:          │
                     │  - step              │
-                    │  - tone              │
                     │  - limit             │
+                    │  (tone ignored)      │
                     └──────────────────────┘
                               │
                               ▼
@@ -130,30 +129,16 @@ GET /content/knowledge?step=step1_gender_age&lang=pl-PL&tone=fun&limit=1
 }
 ```
 
-## Tone Toggle UI States
+## Content Tone
 
-### FUN Mode (Active)
+**Note:** As of v0.3, tone toggle has been removed. All content uses a friendly, educational style.
+
+### Friendly Content Style
 ```
-┌──────────────────┐
-│ [FUN] | FORMAL  │  ← FUN has green background
-└──────────────────┘
-
 Content shows:
 - Short: "ZUS jak skarbonka — co wrzucisz, to kiedyś wyjmiesz."
 - Beaver Pose: "idea" (lightbulb)
-- Playful, friendly language
-```
-
-### FORMAL Mode (Active)
-```
-┌──────────────────┐
-│  FUN | [FORMAL] │  ← FORMAL has green background
-└──────────────────┘
-
-Content shows:
-- Short: "Od 1999 r. emerytura = suma zwaloryzowanych składek."
-- Beaver Pose: "read" (reading document)
-- Neutral, official language
+- Friendly, educational language
 ```
 
 ## Step-to-Topic Mapping
@@ -166,23 +151,17 @@ Content shows:
 | step4a_result | • Valorization<br>• Minimum pension |
 | refine_compare | • Bridging pensions<br>• Multi-country (EU)<br>• PUE calculator |
 
-## Content Tone Examples
+## Content Examples
 
 ### Topic: Minimum Pension
 
-**FUN Tone:**
+**Friendly Tone:**
 > "Nawet jeśli mało nazbierałeś, jest dolna granica — pod warunkiem stażu. Coś jak 'wersja demo' emerytury, ale pomaga."
-
-**FORMAL Tone:**
-> "Jeżeli spełnione są ustawowe okresy składkowe, przyznawana jest emerytura minimalna niezależnie od niskiego naliczenia."
 
 ### Topic: Multi-country Pensions
 
-**FUN Tone:**
+**Friendly Tone:**
 > "Pracowałeś po EU? ZUS dogaduje się z innymi krajami — międzynarodowa koalicja emerytalna."
-
-**FORMAL Tone:**
-> "Okresy ubezpieczenia z różnych państw UE agregowane są na mocy przepisów koordynacyjnych; ZUS współpracuje z zagranicznymi instytucjami."
 
 ## Token Resolution System
 
@@ -205,13 +184,12 @@ Output: "Emerytura minimalna wynosi 1780,96 PLN."
 
 ## State Persistence
 
-The tone preference is persisted in `localStorage`:
+The Beaver Coach state is persisted in `localStorage`:
 
 ```typescript
 // Storage key: 'beaver-preferences'
 {
   state: {
-    tone: 'fun',           // User's selected tone
     isMinimized: false,    // Coach minimize state
     lastStepId: null       // Last viewed step
   },
@@ -219,49 +197,44 @@ The tone preference is persisted in `localStorage`:
 }
 ```
 
-When user toggles tone, it:
-1. Updates Zustand store
-2. Saves to localStorage
-3. Triggers re-fetch of knowledge with new tone
-4. Updates all KnowledgeCard components
+**Note:** As of v0.3, tone preference has been removed from storage.
 
 ## Integration Points
 
 ### 1. BeaverCoach Component
-- Displays tone toggle in header
-- Reads tone from store
-- Persists changes to localStorage
+- Displays educational content header
+- Shows TTS and voice controls
+- Close button for minimizing
 
 ### 2. KnowledgeCard Component
-- Reads tone from store via `useBeaverStore()`
-- Passes tone to `useKnowledge()` hook
-- Automatically updates when tone changes
+- No tone parameter needed
+- Displays friendly educational content
+- Automatically fetches from API
 
 ### 3. API Controller
-- Validates tone parameter
-- Filters items by tone
+- Ignores tone parameter (backwards compatible)
+- Returns friendly content by default
 - Resolves tokens in response
 - Returns cached response with ETag
+- Adds X-Content-Tone: friendly header
 
 ## Supported Languages
 
 | Language | Code | Topics | Status |
 |----------|------|--------|--------|
-| Polish | pl-PL | 10 × 2 tones | ✅ Complete |
-| English | en-GB | 10 × 2 tones | ✅ Complete |
+| Polish | pl-PL | 10 topics | ✅ Complete |
+| English | en-GB | 10 topics | ✅ Complete |
 
 ## Testing Checklist
 
-- [x] Polish FUN content loads correctly
-- [x] Polish FORMAL content loads correctly
-- [x] English FUN content loads correctly
-- [x] English FORMAL content loads correctly
-- [x] Tone toggle switches content
-- [x] Tone preference persists across sessions
+- [x] Polish content loads correctly
+- [x] English content loads correctly
+- [x] Tone parameter is ignored (backwards compatible)
 - [x] Tokens are resolved correctly
 - [x] ETag caching works
 - [x] TypeScript compiles without errors
 - [x] Build completes successfully
+- [x] No tone toggle in UI
 
 ## Future Enhancements
 
@@ -276,14 +249,12 @@ The following features are planned for future iterations:
    - 24px proximity zone detection
 
 3. **Dynamic Poses**
-   - FUN tone → wave, idea, celebrate poses
-   - FORMAL tone → read, point-left poses
+   - Context-based beaver poses (idea, wave, celebrate, etc.)
 
 4. **Carousel Navigation**
    - Swipe through multiple tips per step
    - Arrow navigation for multiple knowledge items
 
 5. **Analytics**
-   - Track tone changes
    - Monitor minimize/expand events
    - Measure knowledge engagement
