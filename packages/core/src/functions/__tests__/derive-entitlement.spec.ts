@@ -6,28 +6,28 @@ describe('deriveEntitlement', () => {
   it('maps months to correct quarters', () => {
     expect(
       deriveEntitlement(
-        { birthYear: 1960, gender: 'M', startWorkYear: 1980, claimMonth: 2 },
+        { birthYear: 1960, gender: 'M', startWorkYear: 1980, currentGrossMonthly: 5000, claimMonth: 2 },
         providers.quarterly,
         providers.contrib
       ).entitlementQuarter
     ).toBe('Q1');
     expect(
       deriveEntitlement(
-        { birthYear: 1960, gender: 'M', startWorkYear: 1980, claimMonth: 5 },
+        { birthYear: 1960, gender: 'M', startWorkYear: 1980, currentGrossMonthly: 5000, claimMonth: 5 },
         providers.quarterly,
         providers.contrib
       ).entitlementQuarter
     ).toBe('Q2');
     expect(
       deriveEntitlement(
-        { birthYear: 1960, gender: 'M', startWorkYear: 1980, claimMonth: 8 },
+        { birthYear: 1960, gender: 'M', startWorkYear: 1980, currentGrossMonthly: 5000, claimMonth: 8 },
         providers.quarterly,
         providers.contrib
       ).entitlementQuarter
     ).toBe('Q3');
     expect(
       deriveEntitlement(
-        { birthYear: 1960, gender: 'M', startWorkYear: 1980, claimMonth: 11 },
+        { birthYear: 1960, gender: 'M', startWorkYear: 1980, currentGrossMonthly: 5000, claimMonth: 11 },
         providers.quarterly,
         providers.contrib
       ).entitlementQuarter
@@ -36,7 +36,7 @@ describe('deriveEntitlement', () => {
   it('throws on chronology violation', () => {
     expect(() =>
       deriveEntitlement(
-        { birthYear: 1960, gender: 'M', startWorkYear: 2030 },
+        { birthYear: 1960, gender: 'M', startWorkYear: 2030, currentGrossMonthly: 5000 },
         providers.quarterly,
         providers.contrib
       )
