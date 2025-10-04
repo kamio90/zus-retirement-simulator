@@ -58,6 +58,22 @@ pnpm dev
 
 > **Note:** You must run `pnpm build` before `pnpm dev` to compile the workspace packages. The build step only needs to be run once after installing dependencies, unless you modify package source code.
 
+### V2 Wizard API
+
+The v2 API provides step-by-step pension calculation endpoints:
+
+- **Base URL**: `http://localhost:4000/v2`
+- **Endpoints**:
+  - `POST /v2/wizard/init` - Gender & age validation
+  - `POST /v2/wizard/contract` - Contract type validation
+  - `POST /v2/wizard/jdg` - JDG quick result
+  - `POST /v2/compare/higher-zus` - Higher ZUS comparison
+  - `POST /v2/compare/as-uop` - UoP comparison
+  - `POST /v2/compare/what-if` - What-if scenarios
+  - `POST /v2/simulate` - Final simulation
+
+See [V2_API_DOCUMENTATION.md](./V2_API_DOCUMENTATION.md) for detailed API documentation.
+
 See [SETUP.md](./SETUP.md) for detailed setup instructions.
 
 ## 📦 Packages
