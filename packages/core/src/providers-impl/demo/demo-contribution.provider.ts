@@ -4,14 +4,14 @@
 import { ContributionRuleProvider } from '../../providers';
 
 export class DemoContributionRuleProvider implements ContributionRuleProvider {
-  getContributionRate() {
+  getContributionRate(): { id: string; rate: number } {
     return {
       id: 'CONTRIB.DEMO',
       rate: 0.1952,
     };
   }
 
-  getAbsenceBounds() {
+  getAbsenceBounds(): { min: number; max: number; defaultValue: number } {
     return {
       min: 0.8,
       max: 1.0,

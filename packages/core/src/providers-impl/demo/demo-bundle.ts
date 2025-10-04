@@ -10,7 +10,7 @@ import { DemoContributionRuleProvider } from './demo-contribution.provider';
 import { DemoSubAccountProvider } from './demo-subaccount.provider';
 import { ProviderBundle } from '../../providers';
 
-export function makeDemoProviderBundle(config?: { anchorYear?: number }): ProviderBundle {
+export function makeDemoProviderBundle(_config?: { anchorYear?: number }): ProviderBundle {
   return {
     annual: new DemoAnnualValorizationProvider(),
     quarterly: new DemoQuarterlyValorizationProvider(),

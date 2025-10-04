@@ -19,7 +19,7 @@ export interface BaseComposition {
 }
 
 export function composeBase(
-  annualCapital: number,
+  _annualCapital: number,
   finalization: FinalizationStep,
   initial: ValorizedInitialCapital,
   subAccount?: number

@@ -4,7 +4,7 @@
 import { AnnualValorizationProvider } from '../../providers';
 
 export class DemoAnnualValorizationProvider implements AnnualValorizationProvider {
-  getAnnualIndex(year: number) {
+  getAnnualIndex(year: number): { id: string; rate: number } {
     // Stable geometric growth, e.g., 3% per year
     const baseRate = 1.03;
     const rate = Math.pow(baseRate, year - 1980);

@@ -4,13 +4,17 @@
 import { MacroProjectionProvider } from '../../providers';
 
 export class DemoMacroProjectionProvider implements MacroProjectionProvider {
-  getWageGrowthFactor(fromYear: number, toYear: number) {
+  getWageGrowthFactor(fromYear: number, toYear: number): number {
     // 4% wage growth per year
     const rate = 1.04;
     return Math.pow(rate, toYear - fromYear);
   }
 
-  getCpiDiscountFactor(fromClaimYear: number, fromClaimMonth: number, toAnchorYear: number) {
+  getCpiDiscountFactor(
+    fromClaimYear: number,
+    _fromClaimMonth: number,
+    toAnchorYear: number
+  ): number {
     // 2% inflation per year
     const rate = 1.02;
     return Math.pow(rate, toAnchorYear - fromClaimYear);

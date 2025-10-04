@@ -1,3 +1,15 @@
 {
-  "extends": "../../.eslintrc.json"
+  "extends": "../../.eslintrc.json",
+  "ignorePatterns": ["**/*.spec.ts", "**/*.test.ts", "**/__tests__/**"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "args": "all",
+        "vars": "all",
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ]
+  }
 }
