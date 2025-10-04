@@ -1,0 +1,23 @@
+{
+  "name": "Wage Comparison — Higher Wage",
+  "description": "Higher wage scenario. Pension should be higher than wage-comparison-base.json (metamorphic property).",
+  "category": "comparative",
+  "tags": ["comparative", "wage", "higher"],
+  "input": {
+    "birthYear": 1990,
+    "gender": "M",
+    "startWorkYear": 2010,
+    "currentGrossMonthly": 6600,
+    "claimMonth": 6
+  },
+  "structural": {
+    "trajectoryLength": 55,
+    "minNominal": 1,
+    "maxReplacementRate": 1.5,
+    "compareTo": {
+      "fixtureName": "wage-comparison-base",
+      "property": "monthlyPensionNominal",
+      "relation": "GT"
+    }
+  }
+}

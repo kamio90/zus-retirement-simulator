@@ -1,0 +1,17 @@
+{
+  "name": "Quarterly Mapping — Q3 (Jul-Sep)",
+  "description": "Validates Q3 claim maps to Q1 of current year index",
+  "category": "edge-case",
+  "tags": ["quarterly", "mapping", "Q3"],
+  "input": {
+    "birthYear": 1980,
+    "gender": "M",
+    "startWorkYear": 2000,
+    "currentGrossMonthly": 6000,
+    "claimMonth": 8
+  },
+  "structural": {
+    "finalizationQuarter": "Q3",
+    "explainerMinLength": 1
+  }
+}
