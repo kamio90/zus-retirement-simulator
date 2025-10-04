@@ -25,7 +25,7 @@ export function projectAnnualWageSeries(
   const { startWorkYear, currentGrossMonthly } = input;
   const years: number[] = [];
   for (let y = startWorkYear; y < retirementYear; y++) years.push(y);
-  return years.map(year => {
+  return years.map((year) => {
     const growthFactor = macroProvider.getWageGrowthFactor(anchorYear, year);
     return {
       year,

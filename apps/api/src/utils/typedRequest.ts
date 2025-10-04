@@ -1,6 +1,6 @@
 import { Request } from 'express';
-import type { SimulateInput, SimulationResult } from '@types';
+import type { SimulateInput, SimulationResult } from '@zus/types';
 
-export type SimulateRequest = Request<{},{},SimulateInput>;
+export type SimulateRequest = Request<{}, {}, SimulateInput>;
 export type SimulateResponse = SimulationResult;
 // Add more typed helpers as needed for other endpoints

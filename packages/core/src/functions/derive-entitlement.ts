@@ -16,7 +16,7 @@ export interface EntitlementContext {
   retirementAge: number;
   retirementYear: number;
   claimMonth: number;
-  entitlementQuarter: 'Q1'|'Q2'|'Q3'|'Q4';
+  entitlementQuarter: 'Q1' | 'Q2' | 'Q3' | 'Q4';
 }
 
 export function deriveEntitlement(

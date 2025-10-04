@@ -53,7 +53,7 @@ importers:
 
   apps/api:
     dependencies:
-      '@types':
+      '@zus/types':
         specifier: workspace:*
         version: link:../../packages/types
       body-parser:
@@ -142,7 +142,7 @@ importers:
 
   packages/core:
     dependencies:
-      '@types':
+      '@zus/types':
         specifier: workspace:*
         version: link:../types
     devDependencies:

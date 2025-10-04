@@ -7,10 +7,7 @@
  * Preconditions: input validated, providers deterministic, no I/O.
  * Postconditions: output shape, trajectory length, monotonicity, ID population, explainers.
  */
-import {
-  EngineInput,
-  EngineOutput,
-} from '../contracts';
+import { EngineInput, EngineOutput } from '../contracts';
 import { ProviderBundle } from '../providers';
 import {
   deriveEntitlement,
@@ -37,13 +34,27 @@ export const Engine = {
     const entitlement = deriveEntitlement(input, providers.quarterly, providers.contrib);
     // Step b: Wage projection
     const anchorYear = input.anchorYear ?? 2025;
-  const wageSeries = projectAnnualWageSeries(input, providers.macro, anchorYear, entitlement.retirementYear);
+    const wageSeries = projectAnnualWageSeries(
+      input,
+      providers.macro,
+      anchorYear,
+      entitlement.retirementYear
+    );
     // Step c: Contributions
-    const contributions = computeAnnualContributions(wageSeries, providers.contrib, input.absenceFactor ?? providers.contrib.getAbsenceBounds().defaultValue);
+    const contributions = computeAnnualContributions(
+      wageSeries,
+      providers.contrib,
+      input.absenceFactor ?? providers.contrib.getAbsenceBounds().defaultValue
+    );
     // Step d: Annual valorization
     const annualTrajectory = applyAnnualValorization(contributions, providers.annual);
     // Step e: Initial capital
-    const initialCapital = valorizeInitialCapital(input.accumulatedInitialCapital, providers.initial, providers.annual, entitlement.retirementYear);
+    const initialCapital = valorizeInitialCapital(
+      input.accumulatedInitialCapital,
+      providers.initial,
+      providers.annual,
+      entitlement.retirementYear
+    );
     // Step f: Quarterly valorization
     const finalization = applyQuarterlyValorization(
       annualTrajectory[annualTrajectory.length - 1],
@@ -52,9 +63,13 @@ export const Engine = {
       providers.quarterly
     );
     // Step g: Compose base
-    const subAccountAdjusted = input.subAccountBalance !== undefined && providers.subAccount
-      ? providers.subAccount.valorize(input.subAccountBalance, { y: entitlement.retirementYear, m: entitlement.claimMonth }).balance
-      : undefined;
+    const subAccountAdjusted =
+      input.subAccountBalance !== undefined && providers.subAccount
+        ? providers.subAccount.valorize(input.subAccountBalance, {
+            y: entitlement.retirementYear,
+            m: entitlement.claimMonth,
+          }).balance
+        : undefined;
     const base = composeBase(
       annualTrajectory[annualTrajectory.length - 1].cumulativeCapitalAfterAnnual,
       finalization,
@@ -62,7 +77,11 @@ export const Engine = {
       subAccountAdjusted
     );
     // Step h: Life expectancy
-    const life = selectLifeExpectancy(input.gender, { year: entitlement.retirementYear, month: entitlement.claimMonth }, providers.life);
+    const life = selectLifeExpectancy(
+      input.gender,
+      { year: entitlement.retirementYear, month: entitlement.claimMonth },
+      providers.life
+    );
     // Step i: Pension calculations
     const pension = pensionCalcs(
       base.baseCapital,
@@ -86,7 +105,7 @@ export const Engine = {
       `Quarter mapping: claimMonth ${entitlement.claimMonth} → ${entitlement.entitlementQuarter}`,
       `SDŻ table window: ${life.lifeTableId}`,
       `Annual valorization precedes quarterly in final year`,
-      `Initial capital special index: ${initialCapital.steps.find(s => s.indexId.startsWith('INIT.1999')) ? 'applied' : 'not applied'}`,
+      `Initial capital special index: ${initialCapital.steps.find((s) => s.indexId.startsWith('INIT.1999')) ? 'applied' : 'not applied'}`,
     ];
     return buildOutput({
       scenario: {

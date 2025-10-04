@@ -15,7 +15,9 @@ describe('Engine.calculate (property/metamorphic)', () => {
     const outBase = demoEngine(baseInput);
     const outHigher = demoEngine(higherWageInput);
     expect(outHigher.monthlyPensionNominal).toBeGreaterThanOrEqual(outBase.monthlyPensionNominal);
-    expect(outHigher.monthlyPensionRealToday).toBeGreaterThanOrEqual(outBase.monthlyPensionRealToday);
+    expect(outHigher.monthlyPensionRealToday).toBeGreaterThanOrEqual(
+      outBase.monthlyPensionRealToday
+    );
   });
 
   it('absenceFactor decrease lowers pension', () => {

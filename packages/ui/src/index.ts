@@ -1,6 +1,6 @@
 /**
  * UI Package — Shared UI components
- * 
+ *
  * This package will contain reusable React components following:
  * - ZUS brand identity (#007a33, #e5f3e8)
  * - WCAG 2.1 AA accessibility standards

@@ -1,6 +1,6 @@
 /**
  * ZUS Retirement Simulator — Web Application
- * 
+ *
  * React + Vite + TypeScript frontend
  * - Form for user inputs (birthYear, gender, salary, etc.)
  * - Results display with charts (Recharts)

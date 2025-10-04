@@ -11,5 +11,12 @@ coverage/
 *.tsbuildinfo
 *.tgz
 
+# TypeScript compiled files
+*.js
+*.js.map
+!jest.config.js
+!vite.config.js
+!*.config.js
+
 # OS
 Thumbs.db

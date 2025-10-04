@@ -12,14 +12,14 @@ import { QuarterlyValorizationProvider } from '../providers';
 import { assertQuarterlyIndices } from '../utils/assert';
 
 export interface FinalizationStep {
-  quarterUsed: 'Q1'|'Q2'|'Q3'|'Q4';
+  quarterUsed: 'Q1' | 'Q2' | 'Q3' | 'Q4';
   indicesApplied: string[];
   resultingCapital: number;
 }
 
 export function applyQuarterlyValorization(
   lastAnnualState: AnnualValorizedState,
-  entitlementQuarter: 'Q1'|'Q2'|'Q3'|'Q4',
+  entitlementQuarter: 'Q1' | 'Q2' | 'Q3' | 'Q4',
   claimDate: { year: number; month: number },
   quarterlyProvider: QuarterlyValorizationProvider
 ): FinalizationStep {
@@ -35,14 +35,14 @@ export function applyQuarterlyValorization(
   } else if (entitlementQuarter === 'Q4') {
     indices = [quarterlyProvider.getQuarterIndex(year, 'Q2')];
   }
-  indices.forEach(idx => assertQuarterlyIndices(idx, year));
+  indices.forEach((idx) => assertQuarterlyIndices(idx, year));
   let capital = lastAnnualState.cumulativeCapitalAfterAnnual;
-  indices.forEach(idx => {
+  indices.forEach((idx) => {
     capital *= idx.rate;
   });
   return {
     quarterUsed: entitlementQuarter,
-    indicesApplied: indices.map(i => i.id),
+    indicesApplied: indices.map((i) => i.id),
     resultingCapital: capital,
   };
 }

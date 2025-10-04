@@ -18,7 +18,7 @@ export interface BuildOutputParams {
     retirementAge: number;
     retirementYear: number;
     claimMonth: number;
-    gender: 'M'|'F';
+    gender: 'M' | 'F';
   };
   annualTrajectory: AnnualValorizedState[];
   finalization: FinalizationStep;

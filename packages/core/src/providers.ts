@@ -6,8 +6,11 @@ export interface AnnualValorizationProvider {
 }
 
 export interface QuarterlyValorizationProvider {
-  getQuarterIndex(calendarYear: number, quarter: "Q1"|"Q2"|"Q3"|"Q4"): { id: string; rate: number };
-  mapEntitlementQuarter(claimMonth: number): "Q1"|"Q2"|"Q3"|"Q4";
+  getQuarterIndex(
+    calendarYear: number,
+    quarter: 'Q1' | 'Q2' | 'Q3' | 'Q4'
+  ): { id: string; rate: number };
+  mapEntitlementQuarter(claimMonth: number): 'Q1' | 'Q2' | 'Q3' | 'Q4';
 }
 
 export interface InitialCapitalProvider {
@@ -16,7 +19,10 @@ export interface InitialCapitalProvider {
 }
 
 export interface LifeExpectancyProvider {
-  getLifeExpectancyYears(gender: "M"|"F", claimDate: { year: number; month: number }): { id: string; years: number };
+  getLifeExpectancyYears(
+    gender: 'M' | 'F',
+    claimDate: { year: number; month: number }
+  ): { id: string; years: number };
 }
 
 export interface MacroProjectionProvider {

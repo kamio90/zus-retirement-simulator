@@ -1,22 +1,23 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@core/*": ["packages/core/src/*"],
-      "@data/*": ["packages/data/src/*"],
-      "@types/*": ["packages/types/src/*"],
-      "@ui/*": ["packages/ui/src/*"]
-    }
+      "@zus/core/*": ["packages/core/src/*"],
+      "@zus/data/*": ["packages/data/src/*"],
+      "@zus/types/*": ["packages/types/src/*"],
+      "@zus/ui/*": ["packages/ui/src/*"]
+    },
+    "typeRoots": ["./node_modules/@types"]
   },
-  "include": ["apps", "packages", "tools/scripts"],
   "exclude": ["node_modules", "dist", "build"]
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@core",
+  "name": "@zus/core",
   "version": "1.0.0",
   "main": "src/engine.ts",
   "types": "src/engine.ts",
@@ -10,7 +10,7 @@
     "format": "prettier --write src"
   },
   "dependencies": {
-    "@types": "workspace:*"
+    "@zus/types": "workspace:*"
   },
   "devDependencies": {
     "@types/jest": "^29.5.8",

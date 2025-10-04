@@ -11,7 +11,7 @@
     "format": "prettier --write src"
   },
   "dependencies": {
-    "@types": "workspace:*",
+    "@zus/types": "workspace:*",
     "express": "^4.18.2",
     "cors": "^2.8.5",
     "morgan": "^1.10.0",

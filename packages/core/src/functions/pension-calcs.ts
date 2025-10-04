@@ -24,7 +24,11 @@ export function pensionCalcs(
 ): PensionCalcsResult {
   const months = lifeExpectancyYears * 12;
   const monthlyPensionNominal = baseCapital / months;
-  const cpiDiscount = macroProvider.getCpiDiscountFactor(claimDate.year, claimDate.month, anchorYear);
+  const cpiDiscount = macroProvider.getCpiDiscountFactor(
+    claimDate.year,
+    claimDate.month,
+    anchorYear
+  );
   const monthlyPensionRealToday = monthlyPensionNominal / cpiDiscount;
   const replacementRate = monthlyPensionRealToday / currentGrossMonthly;
   return {

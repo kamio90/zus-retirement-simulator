@@ -7,7 +7,6 @@ export const BenchmarksQuerySchema = z.object({
 
 export type BenchmarksQuery = z.infer<typeof BenchmarksQuerySchema>;
 
-
 export interface BenchmarkResult {
   powiat: string;
   gender: 'male' | 'female';

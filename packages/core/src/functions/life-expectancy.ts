@@ -13,7 +13,7 @@ export interface LifeExpectancySelection {
 }
 
 export function selectLifeExpectancy(
-  gender: 'M'|'F',
+  gender: 'M' | 'F',
   claimDate: { year: number; month: number },
   lifeProvider: LifeExpectancyProvider
 ): LifeExpectancySelection {
