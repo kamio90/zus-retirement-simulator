@@ -25,7 +25,7 @@ interface ExplainOverlayState {
   showTranscript: boolean;
   isTTSSpeaking: boolean;
   cache: Map<string, ExplainerContent>;
-  
+
   // Actions
   openExplainer: (targetId: string, targetElement: HTMLElement, content: ExplainerContent) => void;
   closeExplainer: () => void;
@@ -47,7 +47,11 @@ export const useExplainOverlayStore = create<ExplainOverlayState>((set, get) => 
   isTTSSpeaking: false,
   cache: new Map(),
 
-  openExplainer: (targetId: string, targetElement: HTMLElement, content: ExplainerContent): void => {
+  openExplainer: (
+    targetId: string,
+    targetElement: HTMLElement,
+    content: ExplainerContent
+  ): void => {
     set({
       isOpen: true,
       targetId,
@@ -86,7 +90,7 @@ export const useExplainOverlayStore = create<ExplainOverlayState>((set, get) => 
   cacheExplainer: (targetId: string, content: ExplainerContent): void => {
     set((state) => {
       const newCache = new Map(state.cache);
-      
+
       // Remove oldest entry if cache is full
       if (newCache.size >= MAX_CACHE_SIZE && !newCache.has(targetId)) {
         const firstKey = newCache.keys().next().value;
@@ -94,7 +98,7 @@ export const useExplainOverlayStore = create<ExplainOverlayState>((set, get) => 
           newCache.delete(firstKey);
         }
       }
-      
+
       newCache.set(targetId, content);
       return { cache: newCache };
     });

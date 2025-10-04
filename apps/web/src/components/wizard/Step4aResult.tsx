@@ -57,7 +57,10 @@ export function Step4aResult(): JSX.Element {
   const apiResult = currentResult || (quickCalcResult as ScenarioResult | null);
 
   // Calculate delta from baseline
-  const calculateDelta = (current: number, baseline: number): { value: number; percent: number } => {
+  const calculateDelta = (
+    current: number,
+    baseline: number
+  ): { value: number; percent: number } => {
     const value = current - baseline;
     const percent = baseline !== 0 ? (value / baseline) * 100 : 0;
     return { value, percent };
@@ -369,8 +372,17 @@ export function Step4aResult(): JSX.Element {
         })}
       </motion.div>
 
-      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-        <h3 className="text-xl font-bold text-zus-text mb-4">Trajektoria kapitału emerytalnego</h3>
+      <div className="bg-white rounded-lg shadow-md p-6 mb-8" data-kpi-tile>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-xl font-bold text-zus-text">Trajektoria kapitału emerytalnego</h3>
+          <button
+            onClick={(e) => handleExplainClick('chart_capital_trajectory', e)}
+            className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-zus-primary hover:bg-gray-100 rounded-full transition-colors"
+            aria-label="Wyjaśnij: Trajektoria kapitału emerytalnego"
+          >
+            ℹ️
+          </button>
+        </div>
         <div className={isLoadingWhatIf ? 'animate-pulse' : ''}>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={apiResult?.capitalTrajectory || mockResult.capitalTrajectory}>
@@ -395,7 +407,21 @@ export function Step4aResult(): JSX.Element {
                 stroke={appliedWhatIf ? '#0066cc' : '#007a33'}
                 strokeWidth={3}
                 dot={{ fill: appliedWhatIf ? '#0066cc' : '#007a33', r: 5 }}
-                activeDot={{ r: 8 }}
+                activeDot={{
+                  r: 8,
+                  onClick: (e: React.MouseEvent<SVGCircleElement>) => {
+                    const element = (e.target as HTMLElement).closest(
+                      '[data-kpi-tile]'
+                    ) as HTMLElement;
+                    if (element) {
+                      const fakeEvent = {
+                        currentTarget: element,
+                      } as React.MouseEvent<HTMLButtonElement>;
+                      handleExplainClick('chart_point', fakeEvent);
+                    }
+                  },
+                  style: { cursor: 'pointer' },
+                }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -444,9 +470,7 @@ export function Step4aResult(): JSX.Element {
               <h4 className="text-lg font-bold text-yellow-900 mb-2">
                 Emerytura pomostowa (wcześniejsza)
               </h4>
-              <p className="text-sm text-yellow-800 mb-2">
-                Dostępna tylko dla określonych zawodów
-              </p>
+              <p className="text-sm text-yellow-800 mb-2">Dostępna tylko dla określonych zawodów</p>
               <p className="text-xs text-yellow-700">
                 Zobacz jak zmieni się wysokość emerytury przy wcześniejszym przejściu na emeryturę
               </p>

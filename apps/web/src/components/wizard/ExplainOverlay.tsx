@@ -9,8 +9,7 @@ import { useSpeech } from '../../hooks/useSpeech';
 
 // Check for reduced motion preference
 const shouldReduceMotion =
-  typeof window !== 'undefined' &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export function ExplainOverlay(): JSX.Element {
   const {
@@ -36,7 +35,7 @@ export function ExplainOverlay(): JSX.Element {
   // Handle TTS play/pause
   const handleSpeakToggle = useCallback((): void => {
     if (!content) return;
-    
+
     if (isSpeaking) {
       stop();
     } else {
@@ -73,7 +72,11 @@ export function ExplainOverlay(): JSX.Element {
   };
 
   // Calculate position and arrow direction
-  const getOverlayPosition = (): { top: number; left: number; arrowPosition: 'left' | 'right' | 'top' | 'bottom' } => {
+  const getOverlayPosition = (): {
+    top: number;
+    left: number;
+    arrowPosition: 'left' | 'right' | 'top' | 'bottom';
+  } => {
     if (!targetElement) return { top: 50, left: 50, arrowPosition: 'left' };
 
     const rect = targetElement.getBoundingClientRect();
@@ -107,7 +110,10 @@ export function ExplainOverlay(): JSX.Element {
     return { top, left, arrowPosition };
   };
 
-  const position = isOpen && targetElement ? getOverlayPosition() : { top: 50, left: 50, arrowPosition: 'left' as const };
+  const position =
+    isOpen && targetElement
+      ? getOverlayPosition()
+      : { top: 50, left: 50, arrowPosition: 'left' as const };
 
   const animations = shouldReduceMotion
     ? {}
@@ -184,11 +190,7 @@ export function ExplainOverlay(): JSX.Element {
             {/* Header */}
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
-                <img
-                  src="/assets/beaver/beaver_idea.png"
-                  alt="Beaver"
-                  className="w-12 h-12"
-                />
+                <img src="/assets/beaver/beaver_idea.png" alt="Beaver" className="w-12 h-12" />
                 <h3 id="explainer-title" className="text-lg font-bold text-zus-text">
                   {content.title}
                 </h3>
