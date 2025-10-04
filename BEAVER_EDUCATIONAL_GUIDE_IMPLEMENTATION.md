@@ -2,13 +2,15 @@
 
 ## Overview
 
-This document summarizes the implementation of the Beaver Educational Guide feature, which provides users with educational content about pension rules in two tones: FUN (playful, friendly) and FORMAL (neutral, official).
+This document summarizes the implementation of the Beaver Educational Guide feature, which provides users with educational content about pension rules in a friendly, educational tone.
+
+**Note:** As of v0.3, the FUN/FORMAL tone toggle has been removed. All content now uses a consistent friendly tone by default.
 
 ## What Was Implemented
 
-### 1. Content Curriculum (10 Topics × 2 Tones)
+### 1. Content Curriculum (10 Topics)
 
-Created a comprehensive 10-topic curriculum covering essential pension concepts, each available in both FUN and FORMAL tones:
+Created a comprehensive 10-topic curriculum covering essential pension concepts in a friendly, educational tone:
 
 1. **Defined-contribution system** - How ZUS works like a piggy bank
 2. **Initial capital (pre-1999)** - Converting old system contributions
@@ -30,7 +32,7 @@ interface KnowledgeItem {
   id: string;              // Unique identifier
   step?: string;           // Optional step filter
   title: string;           // Display title
-  tone?: 'fun' | 'formal'; // Content tone ⭐ NEW
+  tone?: 'fun' | 'formal'; // DEPRECATED - Content tone (legacy field)
   short?: string;          // Short description (≤140 chars) ⭐ NEW
   body: string;            // Educational content (≤600 chars)
   pose?: string;           // Beaver pose (maps to asset) ⭐ NEW
@@ -44,9 +46,9 @@ interface KnowledgeItem {
 }
 ```
 
-#### New Query Parameters
+#### Deprecated Query Parameters
 
-- `tone` - Filter by content tone (`fun` or `formal`)
+- `tone` - **DEPRECATED** - No longer used; all content returns friendly tone
 
 #### Token Resolution System
 
@@ -63,54 +65,52 @@ Tokens are automatically resolved in API responses to ensure up-to-date values.
 #### Beaver Store (State Management)
 
 Created `/apps/web/src/stores/beaverStore.ts` using Zustand:
-- Persists user tone preference (FUN/FORMAL)
+- **Removed** tone preference (as of v0.3)
 - Stores minimize state
 - Tracks last step ID
 
 #### Updated BeaverCoach Component
 
-Added tone toggle UI in the header:
-```tsx
-<div className="flex bg-white/50 rounded-md border border-gray-300 text-xs overflow-hidden">
-  <button onClick={() => setTone('fun')} className={...}>FUN</button>
-  <button onClick={() => setTone('formal')} className={...}>FORMAL</button>
-</div>
-```
+**Removed** tone toggle UI from header (as of v0.3). Header now shows:
+- Title ("Beaver Coach")
+- Close button (×)
+- Read aloud button (TTS controls)
+- Voice settings (⚙️)
 
 #### Enhanced useKnowledge Hook
 
-Updated to support tone parameter:
+**Removed** tone parameter (as of v0.3):
 ```typescript
-useKnowledge(stepId?: string, lang: string = 'pl-PL', limit: number = 3, tone?: 'fun' | 'formal')
+useKnowledge(stepId?: string, lang: string = 'pl-PL', limit: number = 3)
 ```
 
 #### Updated KnowledgeCard Component
 
-- Reads tone from Beaver store
+- **Removed** tone from Beaver store usage
 - Displays `short` text if available (fallback to `body`)
-- Passes tone to API requests
+- No longer passes tone to API requests
 
 ### 4. Documentation Updates
 
-Updated `CONTENT_API_DOCUMENTATION.md` with:
-- New `tone` query parameter
-- Extended KnowledgeItem schema
-- Example requests with tone filtering
-- Token resolution documentation
+Updated documentation to reflect tone removal:
+- Updated `CONTENT_API_DOCUMENTATION.md` - marked `tone` as deprecated
+- Extended KnowledgeItem schema with deprecation notice
+- Updated example requests to remove tone parameter
+- Token resolution documentation maintained
 
 ## File Changes
 
 ### Backend Files
-- ✅ `/apps/api/content/knowledge.pl-PL.json` - Polish 10 topics × 2 tones
-- ✅ `/apps/api/content/knowledge.en-GB.json` - English 10 topics × 2 tones
-- ✅ `/apps/api/src/controllers/contentController.ts` - Added tone filtering and token resolution
-- ✅ `/apps/api/src/utils/tokenResolver.ts` - NEW: Token resolution utility
+- ✅ `/apps/api/content/knowledge.pl-PL.json` - Polish topics in friendly tone
+- ✅ `/apps/api/content/knowledge.en-GB.json` - English topics in friendly tone
+- ✅ `/apps/api/src/controllers/contentController.ts` - **Updated**: ignores tone parameter, defaults to friendly
+- ✅ `/apps/api/src/utils/tokenResolver.ts` - Token resolution utility
 
 ### Frontend Files
-- ✅ `/apps/web/src/stores/beaverStore.ts` - NEW: Beaver state management
-- ✅ `/apps/web/src/hooks/useKnowledge.ts` - Added tone parameter support
-- ✅ `/apps/web/src/components/wizard/BeaverCoach.tsx` - Added tone toggle UI
-- ✅ `/apps/web/src/components/wizard/KnowledgeCard.tsx` - Integrated tone from store
+- ✅ `/apps/web/src/stores/beaverStore.ts` - **Updated**: removed tone state
+- ✅ `/apps/web/src/hooks/useKnowledge.ts` - **Updated**: removed tone parameter
+- ✅ `/apps/web/src/components/wizard/BeaverCoach.tsx` - **Updated**: removed tone toggle UI
+- ✅ `/apps/web/src/components/wizard/KnowledgeCard.tsx` - **Updated**: removed tone usage
 
 ### Documentation
 - ✅ `/CONTENT_API_DOCUMENTATION.md` - Updated with new schema and examples
@@ -119,24 +119,21 @@ Updated `CONTENT_API_DOCUMENTATION.md` with:
 
 ### Polish Content
 ```bash
-# FUN tone
-curl "http://localhost:4000/content/knowledge?step=step1_gender_age&lang=pl-PL&tone=fun&limit=1"
-# Returns: "ZUS działa jak skarbonka — co wrzucisz, to później wyjmiesz..."
-
-# FORMAL tone
-curl "http://localhost:4000/content/knowledge?step=step1_gender_age&lang=pl-PL&tone=formal&limit=1"
-# Returns: "Od 1999 roku ZUS oblicza emerytury na podstawie sumy składek..."
+curl "http://localhost:4000/content/knowledge?step=step1_gender_age&lang=pl-PL&limit=1"
+# Returns friendly tone content (formerly "fun" tone)
 ```
 
 ### English Content
 ```bash
-# FUN tone
-curl "http://localhost:4000/content/knowledge?step=step1_gender_age&lang=en-GB&tone=fun&limit=1"
-# Returns: "ZUS works like a piggy bank — what you put in is what you later take out..."
+curl "http://localhost:4000/content/knowledge?step=step1_gender_age&lang=en-GB&limit=1"
+# Returns friendly tone content (formerly "fun" tone)
+```
 
-# FORMAL tone
-curl "http://localhost:4000/content/knowledge?step=step1_gender_age&lang=en-GB&tone=formal&limit=1"
-# Returns: "Since 1999 ZUS computes pensions based on the sum of contributions..."
+### Backwards Compatibility
+```bash
+# Old requests with tone parameter still work (tone is ignored)
+curl "http://localhost:4000/content/knowledge?step=step1_gender_age&lang=pl-PL&tone=formal&limit=1"
+# Returns same friendly content, logs deprecation notice
 ```
 
 ### Token Resolution
@@ -154,13 +151,13 @@ curl "http://localhost:4000/content/knowledge?step=step1_gender_age&lang=en-GB&t
 
 From the original epic requirements:
 
-1. ✅ **Curriculum present**: 10 topics available in both FUN and FORMAL tones, Polish & English
+1. ✅ **Curriculum present**: 10 topics available in friendly tone, Polish & English
 2. ✅ **No emojis** rendered; reactions shown via beaver poses and icons (pose/icon fields added)
-3. ✅ **Knowledge endpoint** returns items for given `step` + `tone` + `lang` with ETag and cache headers
-4. ⚠️ **Beaver is the guide**: Tone toggle implemented; full layout integration (left rail/bottom sheet) not implemented in this PR
-5. ✅ **TTS works**: Already implemented in previous version (voice selection, rate/pitch controls, transcript)
-6. ✅ **Tone toggle** switches content between FUN and FORMAL; persisted in localStorage via Zustand
-7. ✅ **A11y**: Existing implementation maintains accessibility features
+3. ✅ **Knowledge endpoint** returns items for given `step` + `lang` with ETag and cache headers
+4. ✅ **Beaver is the guide**: Friendly educational content with TTS support
+5. ✅ **TTS works**: Voice selection, rate/pitch controls, transcript available
+6. ✅ **Simplified UX**: Removed tone toggle for consistent friendly experience (v0.3 update)
+7. ✅ **A11y**: Accessibility features maintained
 
 ## What's NOT in This Implementation
 
@@ -186,7 +183,7 @@ function Step1GenderAge() {
     <div>
       <h2>Select Your Gender and Age</h2>
       
-      {/* Knowledge card automatically uses tone from store */}
+      {/* Knowledge card displays friendly educational content */}
       <KnowledgeCard 
         stepId="step1_gender_age" 
         lang="pl-PL" 
@@ -199,18 +196,18 @@ function Step1GenderAge() {
 
 ### User Experience
 
-1. User sees Beaver Coach with tone toggle (FUN | FORMAL)
-2. Clicking toggle changes tone preference (saved to localStorage)
-3. Knowledge cards automatically update to show selected tone
-4. Content style matches user preference throughout the app
+1. User sees Beaver Coach with educational content
+2. No tone selection needed - consistent friendly experience
+3. TTS and voice controls available for accessibility
+4. Content style is friendly and educational throughout the app
 
 ## Next Steps (Optional)
 
-If full layout integration is needed:
+If additional features are needed:
 1. Implement two-column grid layout for desktop (`grid-cols-[320px_1fr]`)
 2. Add bottom sheet component for mobile with drag handle
 3. Implement collision detection for auto-minimize
-4. Add pose switching based on tone (FUN → wave/idea, FORMAL → read/point-left)
+4. Add dynamic pose switching based on content type
 5. Add carousel for multiple knowledge items per step
 
 ## References

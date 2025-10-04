@@ -55,7 +55,7 @@ function loadKnowledgeFile(lang: string): KnowledgeData | null {
   }
 
   const filePath = path.join(process.cwd(), 'content', `knowledge.${lang}.json`);
-  
+
   if (!fs.existsSync(filePath)) {
     return null;
   }
@@ -78,7 +78,7 @@ function loadExplainerFile(lang: string): ExplainerData | null {
   }
 
   const filePath = path.join(process.cwd(), 'content', `explainers.${lang}.json`);
-  
+
   if (!fs.existsSync(filePath)) {
     return null;
   }
@@ -107,20 +107,21 @@ export const contentController = {
     const validLangs = ['pl-PL', 'en-GB'];
     const requestedLang = typeof lang === 'string' && validLangs.includes(lang) ? lang : 'pl-PL';
 
-    // Validate tone
-    const validTones = ['fun', 'formal'];
-    const requestedTone = typeof tone === 'string' && validTones.includes(tone) ? tone : undefined;
+    // Note: tone parameter is now ignored - always returns friendly content
+    // Kept for backwards compatibility with clients that still send it
+    if (tone) {
+      console.log(
+        `[INFO] Tone parameter '${tone}' received but ignored - returning friendly content`
+      );
+    }
 
     // Validate limit
     const maxLimit = 10;
-    const requestedLimit = Math.min(
-      typeof limit === 'string' ? parseInt(limit, 10) : 3,
-      maxLimit
-    );
+    const requestedLimit = Math.min(typeof limit === 'string' ? parseInt(limit, 10) : 3, maxLimit);
 
     // Load knowledge data
     let knowledgeData = loadKnowledgeFile(requestedLang);
-    
+
     // Fallback to en-GB if requested language not available
     if (!knowledgeData && requestedLang !== 'en-GB') {
       knowledgeData = loadKnowledgeFile('en-GB');
@@ -137,19 +138,16 @@ export const contentController = {
     // Filter by step if provided
     let items = knowledgeData.items;
     if (step && typeof step === 'string') {
-      items = items.filter(item => item.step === step);
+      items = items.filter((item) => item.step === step);
     }
 
-    // Filter by tone if provided
-    if (requestedTone) {
-      items = items.filter(item => !item.tone || item.tone === requestedTone);
-    }
+    // No tone filtering - return friendly content by default
 
     // Limit results
     items = items.slice(0, requestedLimit);
 
     // Resolve tokens in items
-    items = items.map(item => ({
+    items = items.map((item) => ({
       ...item,
       body: resolveTokens(item.body),
       short: item.short ? resolveTokens(item.short) : item.short,
@@ -175,6 +173,7 @@ export const contentController = {
     res.setHeader('Cache-Control', 'public, max-age=3600');
     res.setHeader('ETag', etag);
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('X-Content-Tone', 'friendly'); // Indicate tone used
 
     res.json(response);
   },
@@ -188,7 +187,7 @@ export const contentController = {
 
     // Load explainer data
     let explainerData = loadExplainerFile(requestedLang);
-    
+
     // Fallback to en-GB if requested language not available
     if (!explainerData && requestedLang !== 'en-GB') {
       explainerData = loadExplainerFile('en-GB');
@@ -205,7 +204,7 @@ export const contentController = {
     // Filter by targetId if provided
     let explainers = explainerData.explainers;
     if (targetId && typeof targetId === 'string') {
-      const explainer = explainers.find(item => item.targetId === targetId);
+      const explainer = explainers.find((item) => item.targetId === targetId);
       if (!explainer) {
         res.status(404).json({
           code: 'EXPLAINER_NOT_FOUND',
@@ -217,7 +216,7 @@ export const contentController = {
     }
 
     // Resolve tokens in items
-    explainers = explainers.map(item => ({
+    explainers = explainers.map((item) => ({
       ...item,
       body: resolveTokens(item.body),
     }));

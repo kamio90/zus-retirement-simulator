@@ -3,7 +3,6 @@
  */
 import { useKnowledge } from '../../hooks/useKnowledge';
 import { InfoCard } from './InfoCard';
-import { useBeaverStore } from '../../stores/beaverStore';
 
 export interface KnowledgeCardProps {
   stepId?: string;
@@ -18,8 +17,7 @@ export function KnowledgeCard({
   limit = 1,
   className = '',
 }: KnowledgeCardProps): JSX.Element | null {
-  const tone = useBeaverStore((state) => state.tone);
-  const { data, loading, error } = useKnowledge(stepId, lang, limit, tone);
+  const { data, loading, error } = useKnowledge(stepId, lang, limit);
 
   if (loading) {
     return (

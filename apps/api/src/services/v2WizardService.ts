@@ -114,7 +114,7 @@ function buildEngineInput(
 
   // Calculate retirement age based on override or delay
   let retirementAge: number | undefined;
-  
+
   if (retirementAgeOverride !== undefined) {
     // Early retirement override - validate minimum age
     const minAge = gender === 'F' ? 50 : 50;
@@ -126,7 +126,7 @@ function buildEngineInput(
     // Delayed retirement - add months to statutory age
     const statutoryAge = gender === 'F' ? 60 : 65;
     retirementAge = statutoryAge + Math.floor(delayMonths / 12);
-    
+
     // Adjust claim month for partial year delays
     const delayYearRemainder = delayMonths % 12;
     if (delayYearRemainder > 0 && claimMonth !== undefined) {
@@ -281,7 +281,8 @@ export function compareWhatIf(request: CompareWhatIfRequest): CompareWhatIfRespo
         break;
       case 'early_retirement':
         // Reduce retirement age by specified years (default 5)
-        const currentRetirementAge = variantInput.retirementAge ?? (baselineContext.gender === 'F' ? 60 : 65);
+        const currentRetirementAge =
+          variantInput.retirementAge ?? (baselineContext.gender === 'F' ? 60 : 65);
         const earlyYears = item.years ?? 5;
         const minAge = baselineContext.gender === 'F' ? 50 : 50;
         variantInput.retirementAge = Math.max(currentRetirementAge - earlyYears, minAge);
@@ -308,7 +309,7 @@ export function compareWhatIf(request: CompareWhatIfRequest): CompareWhatIfRespo
 
     const variantOutput = Engine.calculate(variantInput, providers);
     const result = toScenarioResult(variantOutput);
-    
+
     // Add explainer for the variant
     const explainers = [...result.explainers];
     switch (item.kind) {
@@ -328,7 +329,7 @@ export function compareWhatIf(request: CompareWhatIfRequest): CompareWhatIfRespo
         );
         break;
     }
-    
+
     return { ...result, explainers };
   });
 
@@ -378,7 +379,8 @@ export function simulateV2(request: SimulateV2Request): SimulateV2Response {
           variantInput.currentGrossMonthly *= 1 + (item.monthly ?? 20) / 100;
           break;
         case 'early_retirement':
-          const currentRetirementAge = variantInput.retirementAge ?? (baselineContext.gender === 'F' ? 60 : 65);
+          const currentRetirementAge =
+            variantInput.retirementAge ?? (baselineContext.gender === 'F' ? 60 : 65);
           const earlyYears = item.years ?? 5;
           const minAge = baselineContext.gender === 'F' ? 50 : 50;
           variantInput.retirementAge = Math.max(currentRetirementAge - earlyYears, minAge);

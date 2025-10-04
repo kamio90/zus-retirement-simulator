@@ -29,8 +29,7 @@ import {
 /**
  * Helper to set standard headers for all responses
  */
-function setStandardHeaders(res: Response, correlationId: string): void {
-}
+function setStandardHeaders(res: Response, correlationId: string): void {}
 
 export const v2WizardController = {
   /**
