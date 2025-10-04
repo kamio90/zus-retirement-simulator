@@ -2,13 +2,49 @@
  * Results Display Component
  * Shows simulation results with charts and export options
  */
+import { useEffect, useState } from 'react';
 import type { SimulationResult } from '@zus/types';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+import { fetchBenchmarks, type BenchmarksResponse } from '../services/api';
+import { exportToPdf } from '../utils/exportPdf';
+import { exportToXls } from '../utils/exportXls';
 
 interface ResultsDisplayProps {
   result: SimulationResult;
 }
 
 export function ResultsDisplay({ result }: ResultsDisplayProps): JSX.Element {
+  const [benchmarks, setBenchmarks] = useState<BenchmarksResponse | null>(null);
+  const [loadingBenchmarks, setLoadingBenchmarks] = useState(false);
+  const [exportingPdf, setExportingPdf] = useState(false);
+  const [exportingXls, setExportingXls] = useState(false);
+
+  useEffect(() => {
+    // Fetch benchmarks when results are displayed
+    const loadBenchmarks = async (): Promise<void> => {
+      setLoadingBenchmarks(true);
+      try {
+        const data = await fetchBenchmarks(undefined, result.scenario.gender);
+        setBenchmarks(data);
+      } catch (error) {
+        console.error('Failed to load benchmarks:', error);
+      } finally {
+        setLoadingBenchmarks(false);
+      }
+    };
+
+    loadBenchmarks();
+  }, [result.scenario.gender]);
+
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat('pl-PL', {
       style: 'currency',
@@ -25,6 +61,37 @@ export function ResultsDisplay({ result }: ResultsDisplayProps): JSX.Element {
       maximumFractionDigits: 1,
     }).format(value);
   };
+
+  const handleExportPdf = async (): Promise<void> => {
+    setExportingPdf(true);
+    try {
+      await exportToPdf(result, benchmarks || undefined);
+    } catch (error) {
+      console.error('PDF export failed:', error);
+      alert('Nie udało się wyeksportować do PDF. Spróbuj ponownie.');
+    } finally {
+      setExportingPdf(false);
+    }
+  };
+
+  const handleExportXls = async (): Promise<void> => {
+    setExportingXls(true);
+    try {
+      await exportToXls(result, benchmarks || undefined);
+    } catch (error) {
+      console.error('XLS export failed:', error);
+      alert('Nie udało się wyeksportować do XLS. Spróbuj ponownie.');
+    } finally {
+      setExportingXls(false);
+    }
+  };
+
+  // Prepare chart data
+  const chartData = result.capitalTrajectory.map((item) => ({
+    rok: item.year,
+    'Kapitał skumulowany': item.cumulativeCapitalAfterAnnual,
+    'Roczne wynagrodzenie': item.annualWage,
+  }));
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 mt-8">
@@ -78,6 +145,77 @@ export function ResultsDisplay({ result }: ResultsDisplayProps): JSX.Element {
               {result.scenario.gender === 'M' ? 'Mężczyzna' : 'Kobieta'}
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Benchmarks Comparison */}
+      {loadingBenchmarks && (
+        <div className="mb-8 bg-gray-50 border border-gray-200 rounded-md p-4">
+          <p className="text-gray-600">Ładowanie danych porównawczych...</p>
+        </div>
+      )}
+
+      {benchmarks && !loadingBenchmarks && (
+        <div className="mb-8 bg-zus-secondary border border-zus-primary rounded-md p-4">
+          <h3 className="text-lg font-semibold text-gray-800 mb-3">Porównanie z benchmarkami</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <p className="text-sm text-gray-600">Średnia krajowa</p>
+              <p className="text-xl font-bold text-zus-primary">
+                {formatCurrency(benchmarks.nationalAvgPension)}
+              </p>
+            </div>
+            {benchmarks.powiatAvgPension && benchmarks.powiatResolved && (
+              <div>
+                <p className="text-sm text-gray-600">Średnia w {benchmarks.powiatResolved.name}</p>
+                <p className="text-xl font-bold text-zus-primary">
+                  {formatCurrency(benchmarks.powiatAvgPension)}
+                </p>
+              </div>
+            )}
+            <div>
+              <p className="text-sm text-gray-600">Twoja emerytura</p>
+              <p className="text-xl font-bold text-zus-accent">
+                {((result.monthlyPensionRealToday / benchmarks.nationalAvgPension) * 100).toFixed(
+                  1
+                )}
+                %<span className="text-sm font-normal ml-1">średniej krajowej</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Capital Trajectory Chart */}
+      <div className="mb-8">
+        <h3 className="text-lg font-semibold text-gray-800 mb-3">Wykres trajektorii kapitału</h3>
+        <div className="bg-white border border-gray-200 rounded-md p-4">
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="rok" label={{ value: 'Rok', position: 'insideBottom', offset: -5 }} />
+              <YAxis label={{ value: 'Wartość (PLN)', angle: -90, position: 'insideLeft' }} />
+              <Tooltip
+                formatter={(value: number) => formatCurrency(value)}
+                labelFormatter={(label) => `Rok: ${label}`}
+              />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="Kapitał skumulowany"
+                stroke="#007a33"
+                strokeWidth={2}
+                dot={false}
+              />
+              <Line
+                type="monotone"
+                dataKey="Roczne wynagrodzenie"
+                stroke="#004c1d"
+                strokeWidth={2}
+                dot={false}
+              />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </div>
 
@@ -181,19 +319,21 @@ export function ResultsDisplay({ result }: ResultsDisplayProps): JSX.Element {
         </div>
       </div>
 
-      {/* Export Buttons (Placeholder for future implementation) */}
+      {/* Export Buttons */}
       <div className="mt-8 flex justify-center gap-4">
         <button
-          className="px-6 py-2 bg-zus-primary text-white font-semibold rounded-md hover:bg-zus-accent focus:outline-none focus:ring-2 focus:ring-zus-primary focus:ring-offset-2 transition-colors"
-          onClick={() => alert('Eksport PDF - funkcja dostępna wkrótce')}
+          className="px-6 py-2 bg-zus-primary text-white font-semibold rounded-md hover:bg-zus-accent focus:outline-none focus:ring-2 focus:ring-zus-primary focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          onClick={handleExportPdf}
+          disabled={exportingPdf}
         >
-          Eksportuj do PDF
+          {exportingPdf ? 'Eksportowanie...' : 'Eksportuj do PDF'}
         </button>
         <button
-          className="px-6 py-2 bg-zus-primary text-white font-semibold rounded-md hover:bg-zus-accent focus:outline-none focus:ring-2 focus:ring-zus-primary focus:ring-offset-2 transition-colors"
-          onClick={() => alert('Eksport XLS - funkcja dostępna wkrótce')}
+          className="px-6 py-2 bg-zus-primary text-white font-semibold rounded-md hover:bg-zus-accent focus:outline-none focus:ring-2 focus:ring-zus-primary focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          onClick={handleExportXls}
+          disabled={exportingXls}
         >
-          Eksportuj do XLS
+          {exportingXls ? 'Eksportowanie...' : 'Eksportuj do XLS'}
         </button>
       </div>
     </div>
