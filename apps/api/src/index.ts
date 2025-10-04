@@ -6,6 +6,7 @@ import { loadEnv } from './utils/env';
 import { logger } from './utils/logger';
 import { errorHandler } from './middleware/errorHandler';
 import { validateRequest } from './middleware/validateRequest';
+import { v1DeprecationMiddleware } from './middleware/v1Deprecation';
 import healthcheckRouter from './routes/healthcheck';
 import simulateRouter from './routes/simulate';
 import reportsRouter from './routes/reports';
@@ -14,6 +15,7 @@ import telemetryRouter from './routes/telemetry';
 import adminRouter from './routes/admin';
 import scenariosRouter from './routes/scenarios';
 import v2Router from './routes/v2';
+import contentRouter from './routes/content';
 
 loadEnv();
 
@@ -22,6 +24,7 @@ app.use(cors());
 app.use(morgan('dev', { stream: logger.stream }));
 app.use(json());
 app.use(validateRequest);
+app.use(v1DeprecationMiddleware);
 
 app.use('/healthcheck', healthcheckRouter);
 app.use('/simulate', simulateRouter);
@@ -31,6 +34,7 @@ app.use('/telemetry', telemetryRouter);
 app.use('/admin', adminRouter);
 app.use('/scenarios', scenariosRouter);
 app.use('/v2', v2Router);
+app.use('/content', contentRouter);
 
 app.use(errorHandler);
 

@@ -1,9 +1,10 @@
 /**
  * BeaverCoach Component - Friendly assistant with speech bubble
- * Version 2.0: Multiple poses, TTS speech, and transcript support
+ * Version 2.0: Real PNG assets, TTS with voice selection, and enhanced controls
  */
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
+import { useSpeech } from '../../hooks/useSpeech';
 
 export type BeaverPose =
   | 'idle'
@@ -15,7 +16,7 @@ export type BeaverPose =
   | 'typing'
   | 'idea'
   | 'warning'
-  | 'info-card'
+  | 'info'
   | 'celebrate';
 
 export interface BeaverCoachProps {
@@ -24,6 +25,10 @@ export interface BeaverCoachProps {
   pose?: BeaverPose;
   ctaLabel?: string;
   onCta?: () => void;
+  canMinimize?: boolean;
+  startMinimized?: boolean;
+  stepId?: string;
+  title?: string;
 }
 
 const toneStyles = {
@@ -32,25 +37,19 @@ const toneStyles = {
   warning: 'bg-yellow-50 border-yellow-200 text-yellow-900',
 };
 
-const toneIcons = {
-  info: 'ℹ️',
-  tip: '💡',
-  warning: '⚠️',
-};
-
-// Map poses to emoji representations (until we have actual assets)
-const poseEmojis: Record<BeaverPose, string> = {
-  idle: '🦫',
-  wave: '👋🦫',
-  'point-left': '👈🦫',
-  'point-right': '🦫👉',
-  think: '🤔🦫',
-  read: '📖🦫',
-  typing: '⌨️🦫',
-  idea: '💡🦫',
-  warning: '⚠️🦫',
-  'info-card': '🧠🦫',
-  celebrate: '🎉🦫',
+// Map poses to PNG asset filenames
+const poseAssets: Record<BeaverPose, string> = {
+  idle: 'beaver_idle.png',
+  wave: 'beaver_wave.png',
+  'point-left': 'beaver_point_left.png',
+  'point-right': 'beaver_point_right.png',
+  think: 'beaver_think.png',
+  read: 'beaver_read.png',
+  typing: 'beaver_typing.png',
+  idea: 'beaver_idea.png',
+  warning: 'beaver_warning.png',
+  info: 'beaver_info.png',
+  celebrate: 'beaver_celebrate.png',
 };
 
 export function BeaverCoach({
@@ -59,15 +58,18 @@ export function BeaverCoach({
   pose = 'idle',
   ctaLabel,
   onCta,
+  canMinimize = true,
+  startMinimized = false,
+  stepId: _stepId, // Prefix with _ to indicate intentionally unused
+  title,
 }: BeaverCoachProps): JSX.Element {
   const [isVisible, setIsVisible] = useState(false);
   const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
   const [showTranscript, setShowTranscript] = useState(true);
-  const [isSpeaking, setIsSpeaking] = useState(false);
-  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const [isMinimized, setIsMinimized] = useState(startMinimized);
+  const [showVoiceSelector, setShowVoiceSelector] = useState(false);
 
-  // Check for Web Speech API support
-  const speechSupported = typeof window !== 'undefined' && 'speechSynthesis' in window;
+  const { voices, settings, isSpeaking, speak, stop, updateSettings, speechSupported } = useSpeech();
 
   useEffect(() => {
     // Check for reduced motion preference
@@ -85,44 +87,19 @@ export function BeaverCoach({
   useEffect(() => {
     setIsVisible(true);
     // Cancel any ongoing speech when message changes
-    if (speechSupported && window.speechSynthesis.speaking) {
-      window.speechSynthesis.cancel();
-      setIsSpeaking(false);
+    if (speechSupported) {
+      stop();
     }
-  }, [message, speechSupported]);
+  }, [message, speechSupported, stop]);
 
-  // Speak the message using Web Speech API
-  const speak = (): void => {
-    if (!speechSupported) return;
-
-    // Cancel any ongoing speech
-    if (window.speechSynthesis.speaking) {
-      window.speechSynthesis.cancel();
-      setIsSpeaking(false);
-      return;
+  // Handle speak/stop toggle
+  const handleSpeakToggle = (): void => {
+    if (isSpeaking) {
+      stop();
+    } else {
+      speak(message);
     }
-
-    const utterance = new SpeechSynthesisUtterance(message);
-    utterance.lang = 'pl-PL';
-    utterance.rate = 0.9;
-    utterance.pitch = 1.0;
-
-    utterance.onstart = (): void => setIsSpeaking(true);
-    utterance.onend = (): void => setIsSpeaking(false);
-    utterance.onerror = (): void => setIsSpeaking(false);
-
-    utteranceRef.current = utterance;
-    window.speechSynthesis.speak(utterance);
   };
-
-  // Cleanup speech on unmount
-  useEffect(() => {
-    return () => {
-      if (speechSupported && window.speechSynthesis.speaking) {
-        window.speechSynthesis.cancel();
-      }
-    };
-  }, [speechSupported]);
 
   // Keyboard shortcut to re-read helper
   useEffect(() => {
@@ -146,31 +123,51 @@ export function BeaverCoach({
         transition: { duration: 0.3 },
       };
 
+  // If minimized, show FAB
+  if (isMinimized) {
+    return (
+      <motion.button
+        onClick={() => setIsMinimized(false)}
+        className="fixed bottom-4 left-4 md:bottom-8 md:left-8 z-50 w-16 h-16 rounded-full bg-zus-primary shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-zus-primary focus:ring-offset-2"
+        aria-label="Pokaż Beaver Coach"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <img
+          src="/assets/beaver/beaver_idle.png"
+          alt="Beaver Coach"
+          className="w-full h-full object-contain p-2"
+        />
+      </motion.button>
+    );
+  }
+
   return (
     <div className="beaver-coach-container fixed bottom-4 left-4 md:bottom-8 md:left-8 z-50 max-w-md md:max-w-lg">
       <AnimatePresence mode="wait">
         {isVisible && (
           <motion.div {...animations} className="flex items-start gap-4">
-            {/* Beaver Image - Larger size with pose */}
+            {/* Beaver Image - Real PNG asset */}
             <div className="flex-shrink-0">
               <motion.div
                 animate={shouldReduceMotion ? {} : { y: [0, -5, 0] }}
                 transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
                 className="relative"
               >
-                {/* Using emoji representation until assets are added */}
-                <div className="w-28 h-28 md:w-36 md:h-36 flex items-center justify-center text-6xl md:text-7xl">
-                  {poseEmojis[pose]}
-                </div>
+                <img
+                  src={`/assets/beaver/${poseAssets[pose]}`}
+                  alt={`Beaver Coach, ${pose} pose`}
+                  className="w-28 h-28 md:w-36 md:h-36 object-contain"
+                />
               </motion.div>
             </div>
 
             {/* Speech Bubble */}
             <div
               className={`relative flex-1 p-5 rounded-lg border-2 shadow-lg ${toneStyles[tone]}`}
-              role="status"
-              aria-live="polite"
-              aria-atomic="true"
+              role="dialog"
+              aria-labelledby="beaver-coach-title"
+              aria-describedby="beaver-coach-message"
             >
               {/* Triangle pointer */}
               <div
@@ -183,27 +180,111 @@ export function BeaverCoach({
                 }`}
               />
 
-              {/* Icon and Title Row */}
+              {/* Header Row */}
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-xl" role="img" aria-label={`Ton: ${tone}`}>
-                  {toneIcons[tone]}
+                <span id="beaver-coach-title" className="text-sm font-bold">
+                  {title || 'Beaver Coach'}
                 </span>
-                <span className="text-sm font-bold">Beaver Coach</span>
+
+                {/* Minimize button */}
+                {canMinimize && (
+                  <button
+                    onClick={() => setIsMinimized(true)}
+                    className="ml-auto p-1 text-xs hover:bg-white/50 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-zus-primary"
+                    aria-label="Minimalizuj"
+                  >
+                    —
+                  </button>
+                )}
 
                 {/* TTS Controls */}
                 {speechSupported && (
-                  <button
-                    onClick={speak}
-                    className="ml-auto px-2 py-1 text-xs font-medium rounded transition-colors hover:bg-white/50 focus:outline-none focus:ring-2 focus:ring-zus-primary"
-                    aria-label={isSpeaking ? 'Zatrzymaj czytanie' : 'Odczytaj wiadomość'}
-                  >
-                    {isSpeaking ? '🔊 Zatrzymaj' : '🔇 Odczytaj'}
-                  </button>
+                  <>
+                    <button
+                      onClick={handleSpeakToggle}
+                      className="px-2 py-1 text-xs font-medium rounded transition-colors hover:bg-white/50 focus:outline-none focus:ring-2 focus:ring-zus-primary"
+                      aria-label={isSpeaking ? 'Zatrzymaj czytanie' : 'Odczytaj wiadomość'}
+                      aria-live="polite"
+                    >
+                      {isSpeaking ? '🔊 Zatrzymaj' : '🔇 Odczytaj'}
+                    </button>
+                    
+                    {/* Voice selector toggle */}
+                    <button
+                      onClick={() => setShowVoiceSelector(!showVoiceSelector)}
+                      className="px-2 py-1 text-xs rounded transition-colors hover:bg-white/50 focus:outline-none focus:ring-2 focus:ring-zus-primary"
+                      aria-label="Ustawienia głosu"
+                    >
+                      ⚙️
+                    </button>
+                  </>
                 )}
               </div>
 
+              {/* Voice Selector Dropdown */}
+              {speechSupported && showVoiceSelector && (
+                <div className="mb-3 p-3 bg-white/50 rounded-md space-y-2">
+                  <div>
+                    <label htmlFor="voice-select" className="text-xs font-medium block mb-1">
+                      Głos:
+                    </label>
+                    <select
+                      id="voice-select"
+                      value={settings.voiceName || ''}
+                      onChange={(e) => updateSettings({ ...settings, voiceName: e.target.value || null })}
+                      className="w-full text-xs p-1 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-zus-primary"
+                    >
+                      <option value="">Domyślny</option>
+                      {voices.map((voice) => (
+                        <option key={voice.name} value={voice.name}>
+                          {voice.name} ({voice.lang})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label htmlFor="rate-slider" className="text-xs font-medium block mb-1">
+                        Prędkość: {settings.rate.toFixed(1)}
+                      </label>
+                      <input
+                        id="rate-slider"
+                        type="range"
+                        min="0.9"
+                        max="1.1"
+                        step="0.1"
+                        value={settings.rate}
+                        onChange={(e) => updateSettings({ ...settings, rate: parseFloat(e.target.value) })}
+                        className="w-full"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="pitch-slider" className="text-xs font-medium block mb-1">
+                        Ton: {settings.pitch.toFixed(1)}
+                      </label>
+                      <input
+                        id="pitch-slider"
+                        type="range"
+                        min="-2"
+                        max="2"
+                        step="0.5"
+                        value={settings.pitch}
+                        onChange={(e) => updateSettings({ ...settings, pitch: parseFloat(e.target.value) })}
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Message - Show/hide based on transcript toggle */}
-              {showTranscript && <p className="text-base leading-relaxed mb-3">{message}</p>}
+              {showTranscript && (
+                <p id="beaver-coach-message" className="text-base leading-relaxed mb-3">
+                  {message}
+                </p>
+              )}
 
               {/* Transcript Toggle */}
               <button

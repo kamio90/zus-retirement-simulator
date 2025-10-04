@@ -14,7 +14,7 @@ import {
 } from 'recharts';
 import { useWizardStore } from '../../store/wizardStore';
 import { BeaverCoach } from './BeaverCoach';
-import { InfoCard } from './InfoCard';
+import { KnowledgeCard } from './KnowledgeCard';
 import type { ScenarioResult } from '@zus/types';
 
 export function Step4aResult(): JSX.Element {
@@ -192,16 +192,8 @@ export function Step4aResult(): JSX.Element {
         </p>
       </div>
 
-      {/* Worth Knowing InfoCard */}
-      <InfoCard
-        variant="knowledge"
-        icon="brain"
-        title="Warto wiedzieć: Waloryzacja"
-        description="Waloryzacja kapitału emerytalnego odbywa się raz w roku - 1 czerwca. Stosuje się wskaźnik waloryzacji z poprzedniego roku kalendarzowego. Jeśli przejście na emeryturę następuje po 31 stycznia, stosuje się dodatkową waloryzację kwartalną."
-        sourceTitle="ZUS - Waloryzacja składek i kapitału"
-        sourceUrl="https://www.zus.pl/baza-wiedzy/waloryzacja"
-        className="mb-8"
-      />
+      {/* Worth Knowing InfoCard - Load from API */}
+      <KnowledgeCard stepId="step4a_result" className="mb-8" />
 
       <div className="mb-8">
         <h3 className="text-xl font-bold text-zus-text mb-4">Chcesz dokładniejszy wynik?</h3>
@@ -241,6 +233,7 @@ export function Step4aResult(): JSX.Element {
         pose="celebrate"
         ctaLabel="Doprecyzuj obliczenia"
         onCta={() => setCurrentStep(5)}
+        stepId="step4a_result"
       />
     </div>
   );

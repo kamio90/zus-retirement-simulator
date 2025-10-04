@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWizardStore, ContractType, CareerPeriod } from '../../store/wizardStore';
 import { BeaverCoach } from './BeaverCoach';
-import { InfoCard } from './InfoCard';
+import { KnowledgeCard } from './KnowledgeCard';
 import { simulateV2 } from '../../services/v2-api';
 import type {
   SimulateV2Request,
@@ -346,21 +346,14 @@ export function Step5RefineCompare(): JSX.Element {
         </motion.div>
       )}
 
-      {/* Worth Knowing InfoCard */}
-      <InfoCard
-        variant="knowledge"
-        icon="brain"
-        title="Warto wiedzieć: Okresy kariery"
-        description="Dla dokładniejszego wyniku warto uwzględnić różne okresy kariery: zmiany umów, przerwy, awanse. Każdy okres z innym typem umowy lub wynagrodzeniem wpływa na ostateczny kapitał emerytalny."
-        sourceTitle="ZUS - Kalkulator emerytalny"
-        sourceUrl="https://www.zus.pl/emerytura/kalkulator-emerytalny"
-        className="mt-6"
-      />
+      {/* Worth Knowing InfoCard - Load from API */}
+      <KnowledgeCard stepId="refine_compare" className="mt-6" />
 
       <BeaverCoach
         message="Dodaj różne okresy swojej kariery — możesz uwzględnić zmiany umów, podwyżki czy przerwy. Im więcej szczegółów podasz, tym dokładniejszy będzie wynik!"
         tone="tip"
         pose="typing"
+        stepId="refine_compare"
       />
     </div>
   );
