@@ -1,0 +1,23 @@
+{
+  "name": "Mid-Career Worker — Typical Tenure",
+  "description": "Female worker born 1980, started 2000, retiring at 60. Moderate absence factor.",
+  "category": "baseline",
+  "tags": ["midcareer", "female", "typical"],
+  "input": {
+    "birthYear": 1980,
+    "gender": "F",
+    "startWorkYear": 2000,
+    "currentGrossMonthly": 8000,
+    "retirementAge": 60,
+    "absenceFactor": 0.95,
+    "claimMonth": 6
+  },
+  "structural": {
+    "trajectoryLength": 40,
+    "trajectoryMonotonic": true,
+    "minNominal": 1,
+    "maxReplacementRate": 1.5,
+    "finalizationQuarter": "Q2",
+    "explainerMinLength": 1
+  }
+}

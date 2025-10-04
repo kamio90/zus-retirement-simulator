@@ -1,0 +1,23 @@
+{
+  "name": "Near Retirement — With Initial Capital",
+  "description": "Worker born 1960, initial capital from pre-1999 work. Tests special 1999 index.",
+  "category": "baseline",
+  "tags": ["near-retirement", "initial-capital", "special-index"],
+  "input": {
+    "birthYear": 1960,
+    "gender": "F",
+    "startWorkYear": 1980,
+    "currentGrossMonthly": 12000,
+    "retirementAge": 60,
+    "accumulatedInitialCapital": 200000,
+    "absenceFactor": 0.9,
+    "claimMonth": 6
+  },
+  "structural": {
+    "trajectoryLength": 40,
+    "minNominal": 1,
+    "maxReplacementRate": 1.5,
+    "explainerContains": ["Initial capital special index: applied"],
+    "explainerMinLength": 1
+  }
+}

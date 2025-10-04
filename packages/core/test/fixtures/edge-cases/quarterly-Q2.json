@@ -1,0 +1,17 @@
+{
+  "name": "Quarterly Mapping — Q2 (Apr-Jun)",
+  "description": "Validates Q2 claim maps to Q4 of previous year index",
+  "category": "edge-case",
+  "tags": ["quarterly", "mapping", "Q2"],
+  "input": {
+    "birthYear": 1980,
+    "gender": "M",
+    "startWorkYear": 2000,
+    "currentGrossMonthly": 6000,
+    "claimMonth": 5
+  },
+  "structural": {
+    "finalizationQuarter": "Q2",
+    "explainerMinLength": 1
+  }
+}

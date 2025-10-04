@@ -1,0 +1,20 @@
+{
+  "name": "Sub-Account — Optional Provider",
+  "description": "Validates optional sub-account valorization when sub-account balance is provided.",
+  "category": "provider-specific",
+  "tags": ["subaccount", "optional-provider"],
+  "input": {
+    "birthYear": 1980,
+    "gender": "M",
+    "startWorkYear": 2000,
+    "currentGrossMonthly": 8000,
+    "subAccountBalance": 30000,
+    "claimMonth": 6
+  },
+  "structural": {
+    "trajectoryLength": 45,
+    "minNominal": 1,
+    "maxReplacementRate": 1.5,
+    "explainerMinLength": 1
+  }
+}

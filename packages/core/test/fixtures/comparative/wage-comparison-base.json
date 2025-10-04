@@ -1,0 +1,18 @@
+{
+  "name": "Wage Comparison — Base Scenario",
+  "description": "Base scenario for wage comparison. Used with wage-comparison-higher.json to validate wage increase → pension increase.",
+  "category": "comparative",
+  "tags": ["comparative", "wage", "base"],
+  "input": {
+    "birthYear": 1990,
+    "gender": "M",
+    "startWorkYear": 2010,
+    "currentGrossMonthly": 6000,
+    "claimMonth": 6
+  },
+  "structural": {
+    "trajectoryLength": 55,
+    "minNominal": 1,
+    "maxReplacementRate": 1.5
+  }
+}

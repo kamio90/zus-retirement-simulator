@@ -1,0 +1,25 @@
+{
+  "name": "High Absence Factor — Sickness Impact",
+  "description": "Worker with significant sickness absence (70% contribution). Should produce lower pension than baseline.",
+  "category": "edge-case",
+  "tags": ["absence", "boundary", "sickness"],
+  "input": {
+    "birthYear": 1990,
+    "gender": "M",
+    "startWorkYear": 2010,
+    "currentGrossMonthly": 7000,
+    "retirementAge": 65,
+    "absenceFactor": 0.7,
+    "claimMonth": 6
+  },
+  "structural": {
+    "trajectoryLength": 55,
+    "minNominal": 1,
+    "maxReplacementRate": 1.5,
+    "compareTo": {
+      "fixtureName": "young-worker",
+      "property": "monthlyPensionNominal",
+      "relation": "LT"
+    }
+  }
+}
