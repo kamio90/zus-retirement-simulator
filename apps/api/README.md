@@ -17,6 +17,20 @@ Simple health check endpoint.
 ### `/simulate` — Pension simulation
 Calculate pension based on user input parameters.
 
+### `/scenarios` — Scenario Engine v2 (NEW)
+Step-by-step pension calculations for wizard UI with instant previews and comparisons.
+
+**See [SCENARIO_API_v2.md](../../SCENARIO_API_v2.md) for complete documentation.**
+
+#### `POST /scenarios/jdg-quick`
+Fast JDG (self-employment) pension preview for wizard step 3→4.
+
+#### `POST /scenarios/compose`
+Multi-period career composition with different contract types (UoP/JDG/Ryczałt).
+
+#### `POST /scenarios/compare`
+Compare scenarios: UoP vs JDG, higher ZUS contributions, delayed retirement.
+
 ### `/reports` — Export reports
 Generate and export pension reports (PDF/XLS).
 
