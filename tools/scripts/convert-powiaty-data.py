@@ -18,7 +18,7 @@ def main():
     # Setup paths
     repo_root = Path(__file__).parent.parent.parent
     excel_path = repo_root / "data" / "pkt 6_emerytury_powiaty.xlsx"
-    output_path = repo_root / "packages" / "data" / "json" / "powiaty.json"
+    output_path = repo_root / "packages" / "data" / "src" / "json" / "powiaty.json"
     
     print(f"Reading Excel file: {excel_path}")
     
