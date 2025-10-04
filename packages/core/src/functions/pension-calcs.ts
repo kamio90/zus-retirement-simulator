@@ -29,7 +29,7 @@ export function pensionCalcs(
     claimDate.month,
     anchorYear
   );
-  const monthlyPensionRealToday = monthlyPensionNominal / cpiDiscount;
+  const monthlyPensionRealToday = monthlyPensionNominal * cpiDiscount;
   const replacementRate = monthlyPensionRealToday / currentGrossMonthly;
   return {
     monthlyPensionNominal,
