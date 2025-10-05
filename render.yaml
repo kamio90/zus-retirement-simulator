@@ -2,18 +2,17 @@ services:
   # 1) API — Node/Express (Web Service)
   - type: web
     name: zus-sim-api
-    runtime: node                   # was: env: node
+    env: node                 # ← use env, not runtime
     plan: starter
     region: frankfurt
-    autoDeployTrigger: commit       # replaces deprecated autoDeploy
+    autoDeploy: true
     buildCommand: |
       corepack enable
       corepack prepare pnpm@9.12.0 --activate
       pnpm i --frozen-lockfile
       pnpm -F api build
     startCommand: pnpm -F api start
-    healthCheckPath: /health
-    healthCheckTimeout: 10
+    healthCheckPath: /health  # ← supported
     envVars:
       - key: NODE_VERSION
         value: 20.12.2
@@ -31,17 +30,16 @@ services:
       sizeGB: 1
 
   # 2) WEB — Static Site (Vite build)
-  - type: web                     # <— static site is also a 'web' service
+  - type: web                 # ← static sites are also 'web'
     name: zus-sim-web
-    runtime: static               # <— REQUIRED for static sites
+    env: static               # ← declare static via env: static
     buildCommand: |
       corepack enable
       corepack prepare pnpm@9.12.0 --activate
       pnpm i --frozen-lockfile
       pnpm -F web build
-    staticPublishPath: apps/web/dist   # <— required field for static sites
-    previews:
-      generation: automatic            # replaces deprecated pullRequestPreviewsEnabled
+    staticPublishPath: apps/web/dist
+    pullRequestPreviewsEnabled: true
     envVars:
       - fromGroup: zus-sim-public
     routes:
