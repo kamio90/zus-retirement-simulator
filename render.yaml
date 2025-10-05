@@ -5,15 +5,14 @@ services:
     env: node
     plan: starter
     runtime: node
-    # Render will export PORT; Express must listen on process.env.PORT
+    region: frankfurt
+    autoDeploy: true
     buildCommand: |
       corepack enable
       corepack prepare pnpm@9.12.0 --activate
       pnpm i --frozen-lockfile
       pnpm -F api build
     startCommand: pnpm -F api start
-    autoDeploy: true
-    region: frankfurt
     healthCheckPath: /health
     healthCheckTimeout: 10
     envVars:
@@ -24,7 +23,7 @@ services:
       - fromGroup: zus-sim-shared
       - fromGroup: zus-sim-api
     routes:
-      # Optional: define CORS preflight routing, else handle in app
+      # Optional alias for health (keeps bots happy)
       - type: rewrite
         source: /.well-known/health
         destination: /health
@@ -34,19 +33,19 @@ services:
       sizeGB: 1
 
   # 2) WEB — Static Site (Vite build)
-  - type: static
+  - type: static_site            # <-- IMPORTANT: was "static"
     name: zus-sim-web
     buildCommand: |
       corepack enable
       corepack prepare pnpm@9.12.0 --activate
       pnpm i --frozen-lockfile
       pnpm -F web build
-    staticPublishPath: apps/web/dist
+    publishPath: apps/web/dist   # <-- IMPORTANT: was "staticPublishPath"
     pullRequestPreviewsEnabled: true
     envVars:
       - fromGroup: zus-sim-public
     routes:
-      # SPA rewrite: all routes → index.html
+      # SPA rewrite: all app routes → /index.html
       - type: rewrite
         source: /*
         destination: /index.html
