@@ -151,11 +151,13 @@ export interface RefinementItem {
     | 'higher_base'
     | 'early_retirement'
     | 'delay_months'
-    | 'non_contributory_unemployment';
+    | 'non_contributory_unemployment'
+    | 'compare_contract';
   years?: number;
   monthly?: number;
   months?: number;
   label?: string;
+  contractType?: string; // For compare_contract: 'uop', 'jdg', 'jdg_ryczalt'
 }
 
 export const RefinementItemSchema = z.object({
@@ -166,11 +168,13 @@ export const RefinementItemSchema = z.object({
     'early_retirement',
     'delay_months',
     'non_contributory_unemployment',
+    'compare_contract',
   ]),
   years: z.number().int().min(1).max(10).optional(),
   monthly: z.number().min(0).max(1000000).optional(),
   months: z.number().int().min(0).max(600).optional(), // For delay_months and unemployment periods
   label: z.string().optional(),
+  contractType: z.string().optional(), // For compare_contract
 });
 
 // ============================================================================

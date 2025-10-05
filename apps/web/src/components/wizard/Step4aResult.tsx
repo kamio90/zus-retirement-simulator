@@ -75,29 +75,40 @@ export function Step4aResult(): JSX.Element {
     // - JDG/JDG_RYCZALT pinned to legal minimum base
     // (removed) legacy scaling with REF_BASE
 
+    // Determine effective contract type (use scenario's contractType if comparing)
+    let effectiveContractType = type;
+    if (scenario?.kind === 'compare_contract' && scenario.contractType) {
+      effectiveContractType = scenario.contractType;
+    }
+
     // Dynamic capital trajectory: yearly accumulation until retirement
     const now = new Date();
     const currentYear = now.getFullYear();
 
     // Calculate retirement age based on scenario
-    let baseRetirementAge = sex === 'female' ? 60 : 65;
+    const baseRetirementAge = sex === 'female' ? 60 : 65;
     let retirementAge = baseRetirementAge;
 
     // Apply scenario modifications
     if (scenario) {
       switch (scenario.kind) {
-        case 'early_retirement':
+        case 'early_retirement': {
           // Retire earlier by specified years (default 5)
           retirementAge = baseRetirementAge - (scenario.years ?? 5);
           break;
-        case 'delay_months':
+        }
+        case 'delay_months': {
           // Delay retirement by specified months
           const delayMonths = scenario.months ?? 12;
           retirementAge = baseRetirementAge + Math.floor(delayMonths / 12);
           break;
+        }
         case 'delay_retirement':
           // Delay by years
           retirementAge = baseRetirementAge + (scenario.years ?? 2);
+          break;
+        case 'compare_contract':
+          // No change to retirement age, just contract type
           break;
       }
     }
@@ -116,7 +127,7 @@ export function Step4aResult(): JSX.Element {
     for (let y = currentYear, i = 0; y <= retirementYear; y++, i++) {
       // Miesięczna podstawa w danym roku (z limitem 30x)
       const monthlyBaseRaw =
-        type === 'uop'
+        effectiveContractType === 'uop'
           ? monthlyIncome * Math.pow(1 + WAGE_GROWTH, i)
           : MIN_BASE_JDG * Math.pow(1 + WAGE_GROWTH, i); // uproszczenie: min podstawa rośnie razem ze średnim
       const monthlyBaseCapped = Math.min(monthlyBaseRaw, MONTHLY_BASE_CAP);
@@ -211,6 +222,14 @@ export function Step4aResult(): JSX.Element {
       // Calculate what-if scenario using frontend logic
       const whatIfCalc = computeMockResult(contractType, jdgIncome, age, gender, item);
 
+      // Build explainer text based on scenario
+      let scenarioDescription = `Scenario: ${item.kind}`;
+      if (item.kind === 'compare_contract') {
+        const contractLabel =
+          item.contractType === 'uop' ? 'Umowa o pracę (UoP)' : 'Działalność gospodarcza (JDG)';
+        scenarioDescription = `Porównanie z: ${contractLabel}`;
+      }
+
       // Convert to ScenarioResult format
       const whatIfResult: ScenarioResult = {
         kpi: {
@@ -230,10 +249,7 @@ export function Step4aResult(): JSX.Element {
           wageVintageId: 'MOCK_WAGE',
           contribRuleId: 'CONTRIB.MOCK',
         },
-        explainers: [
-          'Calculation performed on frontend using mock logic',
-          `Scenario: ${item.kind}`,
-        ],
+        explainers: ['Calculation performed on frontend using mock logic', scenarioDescription],
       };
 
       setCurrentResult(whatIfResult);
@@ -370,7 +386,12 @@ export function Step4aResult(): JSX.Element {
         contractType === 'uop'
           ? 'Zobacz jak wyglądałaby emerytura na działalności gospodarczej'
           : 'Zobacz jak wyglądałaby emerytura na umowie o pracę',
-      action: () => setCurrentStep(5),
+      action: () => {
+        // Trigger contract comparison what-if scenario
+        const compareContractType = contractType === 'uop' ? 'jdg' : 'uop';
+        const whatIfKey = `compare_contract_${compareContractType}`;
+        handleWhatIf({ kind: 'compare_contract', contractType: compareContractType }, whatIfKey);
+      },
       icon: '💼',
     },
     {
