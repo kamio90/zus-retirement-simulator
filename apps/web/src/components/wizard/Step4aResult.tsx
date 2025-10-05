@@ -54,7 +54,11 @@ export function Step4aResult(): JSX.Element {
   }, [quickCalcResult, baselineResult, setBaselineResult]);
 
   // Cast to v2 ScenarioResult
-  const apiResult = currentResult || (quickCalcResult as ScenarioResult | null);
+  // Temporary: force using mock data instead of API
+  const USE_MOCK_RESULT = true;
+  const apiResult = USE_MOCK_RESULT
+    ? null
+    : (currentResult || (quickCalcResult as ScenarioResult | null));
 
   // Calculate delta from baseline
   const calculateDelta = (
@@ -143,22 +147,90 @@ export function Step4aResult(): JSX.Element {
     }
   };
 
-  const mockResult = {
-    nominalPension: 3500,
-    realPension: 2800,
-    replacementRate: 58,
-    retirementYear: 2053,
-    retirementQuarter: 3,
-    capitalTrajectory: [
-      { year: 2025, capital: 0 },
-      { year: 2030, capital: 45000 },
-      { year: 2035, capital: 95000 },
-      { year: 2040, capital: 158000 },
-      { year: 2045, capital: 235000 },
-      { year: 2050, capital: 328000 },
-      { year: 2053, capital: 385000 },
-    ],
+  // Dynamic mock based on contractType and jdgIncome
+  const computeMockResult = (
+    type: string | undefined | null,
+    income: number | undefined,
+    currentAge: number | undefined,
+    sex: string | undefined | null
+  ) => {
+    const monthlyIncome = typeof income === 'number' && income > 0 ? income : 5000;
+
+    // Approximation of ZUS rules for mock purposes:
+    // - UoP: pension contribution base ~ gross salary
+    // - JDG/JDG_RYCZALT: base not lower than 60% of projected average wage
+    //   Here we assume avg wage ~ 8000 PLN (placeholder for mock only), so minBase ~ 4800 PLN
+    //   Multiplier ≈ contribution base (contract) / contribution base (UoP)
+  // 2025 mock assumption: projected average monthly wage ≈ 7 824 PLN
+  // JDG minimum base for pension/disability = 60% * projected average ≈ 4 694.40 PLN
+  // NOTE: Replace with @data macro.json when available
+  const ASSUMED_AVG_WAGE = 7824;
+  const MIN_BASE_JDG = 0.6 * ASSUMED_AVG_WAGE; // 4 694.4 PLN
+  const YEARLY_BASE_CAP = 30 * ASSUMED_AVG_WAGE; // roczny limit podstawy
+  const MONTHLY_BASE_CAP = YEARLY_BASE_CAP / 12; // ≈ 2.5 x avg miesięczna
+
+    const contributionBase = (t: string | undefined): number => {
+      if (t === 'uop') return monthlyIncome;
+      if (t === 'jdg' || t === 'jdg_ryczalt') return MIN_BASE_JDG;
+      return MIN_BASE_JDG;
+    };
+
+  // Reference base used in the original static mock
+  // Dynamic accumulation below derives from contribution base; no static reference base needed
+  // Multiplier ties to contribution base vs reference base
+  // - UoP scales with income
+  // - JDG/JDG_RYCZALT pinned to legal minimum base
+  // (removed) legacy scaling with REF_BASE
+
+    // Dynamic capital trajectory: yearly accumulation until retirement
+    const now = new Date();
+    const currentYear = now.getFullYear();
+  const retirementAge = sex === 'female' ? 60 : 65;
+    const ageValue = typeof currentAge === 'number' && currentAge > 0 ? currentAge : 30;
+    const yearsToRetire = Math.max(1, retirementAge - ageValue);
+    const retirementYear = currentYear + yearsToRetire;
+
+    // Mock rates for contributions and valorization
+  const PENSION_RATE = 0.1952; // 19.52% (emerytalna+rentowa)
+  const WAGE_GROWTH = 0.02; // 2% rocznie (przybliżenie wzrostu płac)
+  const VALORIZATION = 0.02; // 2% rocznie (przybliżenie waloryzacji)
+
+    let capital = 0;
+    const capitalTrajectory: { year: number; capital: number }[] = [];
+    for (let y = currentYear, i = 0; y <= retirementYear; y++, i++) {
+      // Miesięczna podstawa w danym roku (z limitem 30x)
+      const monthlyBaseRaw = (type === 'uop')
+        ? (monthlyIncome * Math.pow(1 + WAGE_GROWTH, i))
+        : (MIN_BASE_JDG * Math.pow(1 + WAGE_GROWTH, i)); // uproszczenie: min podstawa rośnie razem ze średnim
+      const monthlyBaseCapped = Math.min(monthlyBaseRaw, MONTHLY_BASE_CAP);
+      const annualContribution = monthlyBaseCapped * 12 * PENSION_RATE;
+      capital = Math.round(capital * (1 + VALORIZATION) + annualContribution);
+      capitalTrajectory.push({ year: y, capital });
+    }
+
+    // Derive mock pension from accumulated capital
+  const lifeExpYears = sex === 'female' ? 23 : 20; // przybliżenie
+    const nominalPension = Math.max(
+      1200,
+      Math.round(capital / Math.max(12, lifeExpYears * 12))
+    );
+    const realPension = Math.round(nominalPension * 0.8);
+    const replacementRate = Math.min(
+      99,
+      Math.max(10, Math.round((realPension / Math.max(1, monthlyIncome)) * 100))
+    );
+
+    return {
+      nominalPension,
+      realPension,
+      replacementRate,
+      retirementYear,
+      retirementQuarter: 3,
+      capitalTrajectory,
+    };
   };
+
+  const mockResult = computeMockResult(contractType, jdgIncome, age, gender);
 
   // Extract KPIs from v2 result or use mock
   const kpis = apiResult

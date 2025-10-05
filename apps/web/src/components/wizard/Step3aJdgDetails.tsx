@@ -74,7 +74,7 @@ export function Step3aJdgDetails(): JSX.Element {
             </p>
           ) : (
             <p id="income-hint" className="mt-2 text-sm text-gray-500">
-              Podaj średni miesięczny dochód z działalności gospodarczej
+              {contractType === 'uop' ? 'Podaj swoje wynagrodzenie brutto z umowy o pracę': 'Podaj średni miesięczny dochód z działalności gospodarczej'}
             </p>
           )}
         </div>
@@ -125,7 +125,7 @@ export function Step3aJdgDetails(): JSX.Element {
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Forma opodatkowania:</span>
-              <span className="font-semibold">{isRyczalt ? 'Ryczałt' : 'Standardowa'}</span>
+              <span className="font-semibold">{isRyczalt ? 'Ryczałt' : contractType === 'jdg' ? 'Podatek Liniowy' : 'Umowa o Pracę'}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Szacunkowa składka (19.52%):</span>

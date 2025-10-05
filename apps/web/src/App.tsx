@@ -48,12 +48,12 @@ function HomePage(): JSX.Element {
             🚀 Rozpocznij kreator (v2)
           </Link>
 
-          <Link
+          {/* <Link
             to="/legacy"
             className="px-8 py-4 bg-white text-zus-primary text-lg font-semibold rounded-lg border-2 border-zus-primary hover:bg-zus-secondary focus:outline-none focus:ring-4 focus:ring-zus-primary focus:ring-opacity-50 transition-all"
           >
             📊 Klasyczny kalkulator (v1)
-          </Link>
+          </Link> */}
         </div>
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
