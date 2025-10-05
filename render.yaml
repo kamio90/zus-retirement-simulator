@@ -37,6 +37,10 @@ services:
     staticPublishPath: apps/web/dist
     pullRequestPreviewsEnabled: true
     envVars:
+      - key: NODE_VERSION
+        value: 20.12.2
+      - key: PNPM_VERSION
+        value: 9.12.0
       - fromGroup: zus-sim-public
     routes:
       # SPA rewrite: all routes → index.html
