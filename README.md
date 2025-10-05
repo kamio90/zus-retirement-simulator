@@ -153,6 +153,36 @@ pnpm test
 pnpm --filter @zus/core test
 ```
 
+## 🚀 Deployment
+
+### Deploy to Render
+
+This project includes a `render.yaml` configuration for easy deployment to [Render](https://render.com):
+
+1. **Fork/clone** this repository
+2. **Sign up** at [dashboard.render.com](https://dashboard.render.com)
+3. **Create Environment Groups** (see [docs/deploy-render.md](./docs/deploy-render.md))
+4. **Deploy via Blueprint**:
+   - Go to "Blueprint" → "New Blueprint Instance"
+   - Connect your GitHub repository
+   - Render will create both API and Web services automatically
+
+The deployment includes:
+- **API Service**: Node/Express with health checks and persistent disk for logs
+- **Web Service**: Static Vite build with SPA routing and PR previews
+- **Auto-deploy**: Enabled on `main` branch pushes
+
+For detailed instructions, see [docs/deploy-render.md](./docs/deploy-render.md).
+
+### Environment Variables
+
+Required environment variables are organized into groups:
+- `zus-sim-shared`: Shared configuration (telemetry, PDF settings)
+- `zus-sim-api`: API-specific (CORS origins)
+- `zus-sim-public`: Frontend variables (`VITE_*` prefix required)
+
+See the deployment guide for complete environment configuration.
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for:
