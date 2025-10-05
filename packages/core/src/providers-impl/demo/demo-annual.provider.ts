@@ -1,13 +1,14 @@
 // Demo Annual Valorization Provider
-// Implements a strictly positive, monotonic annual index for years 1980..2100
+// Returns annual valorization indices as FRACTIONS (e.g., 0.10 for 10%)
+// Applied as: capital * (1 + fraction)
 // SPEC_ENGINE.md: Section D (Annual valorization)
 import { AnnualValorizationProvider } from '../../providers';
 
 export class DemoAnnualValorizationProvider implements AnnualValorizationProvider {
   getAnnualIndex(year: number): { id: string; rate: number } {
-    // Stable geometric growth, e.g., 3% per year
-    const baseRate = 1.03;
-    const rate = Math.pow(baseRate, year - 1980);
+    // Simple constant annual index for demo (10% per year)
+    // In production, this would come from actual ZUS tables
+    const rate = 0.10; // 10% as fraction
     return {
       id: `ANNUAL.Y${year}`,
       rate,

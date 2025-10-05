@@ -10,17 +10,19 @@ describe('DemoProviderBundle - Edge Cases', () => {
       const year1980 = providers.annual.getAnnualIndex(1980);
       const year2100 = providers.annual.getAnnualIndex(2100);
 
-      expect(year1980.rate).toBe(1); // Base year should have rate 1
-      expect(year2100.rate).toBeGreaterThan(1);
+      // Canonical demo: constant 0.10 (10%) fraction
+      expect(year1980.rate).toBe(0.10);
+      expect(year2100.rate).toBe(0.10);
       expect(year2100.id).toBe('ANNUAL.Y2100');
     });
 
-    it('maintains consistent growth rate between years', () => {
+    it('maintains consistent rate across years', () => {
       const y2024 = providers.annual.getAnnualIndex(2024);
       const y2025 = providers.annual.getAnnualIndex(2025);
 
-      const growthRate = y2025.rate / y2024.rate;
-      expect(growthRate).toBeCloseTo(1.03, 5); // 3% growth
+      // Canonical demo: constant 10% fraction
+      expect(y2024.rate).toBe(0.10);
+      expect(y2025.rate).toBe(0.10);
     });
   });
 
@@ -47,9 +49,12 @@ describe('DemoProviderBundle - Edge Cases', () => {
       const q3 = providers.quarterly.getQuarterIndex(year, 'Q3');
       const q4 = providers.quarterly.getQuarterIndex(year, 'Q4');
 
-      expect(q1.rate).toBeLessThan(q2.rate);
-      expect(q2.rate).toBeLessThan(q3.rate);
-      expect(q3.rate).toBeLessThan(q4.rate);
+      // Canonical demo values: Q1=0.009, Q2=0.011, Q3=0.010, Q4=0.012
+      // Order is now: Q1 < Q3 < Q2 < Q4
+      expect(q1.rate).toBe(0.009);
+      expect(q2.rate).toBe(0.011);
+      expect(q3.rate).toBe(0.010);
+      expect(q4.rate).toBe(0.012);
     });
   });
 
@@ -59,15 +64,15 @@ describe('DemoProviderBundle - Edge Cases', () => {
       const idx2 = providers.initial.getInitial1999Index();
 
       expect(idx1).toEqual(idx2);
-      expect(idx1.rate).toBe(1.15);
+      expect(idx1.rate).toBe(1.1560); // Canonical 115.60%
     });
 
-    it('annual indices start from year 2000', () => {
+    it('annual indices are fractions for 2000+', () => {
       const y2000 = providers.initial.getAnnualIndexLikeContributions(2000);
-      expect(y2000.rate).toBe(1); // Base year
+      expect(y2000.rate).toBe(0.10); // 10% as fraction
 
       const y2001 = providers.initial.getAnnualIndexLikeContributions(2001);
-      expect(y2001.rate).toBeCloseTo(1.03, 5);
+      expect(y2001.rate).toBe(0.10); // Constant 10% in demo
     });
   });
 

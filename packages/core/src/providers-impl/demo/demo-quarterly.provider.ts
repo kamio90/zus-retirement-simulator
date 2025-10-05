@@ -3,11 +3,13 @@
 // SPEC_ENGINE.md: Section E (Quarterly valorization)
 import { QuarterlyValorizationProvider } from '../../providers';
 
-const QUARTER_BASE_RATES = {
-  Q1: 1.007,
-  Q2: 1.008,
-  Q3: 1.009,
-  Q4: 1.01,
+// Quarterly indices as FRACTIONS (not multiplicative rates)
+// These will be used as: capital * (1 + fraction)
+const QUARTER_BASE_FRACTIONS = {
+  Q1: 0.009,  // 0.9%
+  Q2: 0.011,  // 1.1%
+  Q3: 0.010,  // 1.0%
+  Q4: 0.012,  // 1.2%
 };
 
 export class DemoQuarterlyValorizationProvider implements QuarterlyValorizationProvider {
@@ -15,7 +17,8 @@ export class DemoQuarterlyValorizationProvider implements QuarterlyValorizationP
     calendarYear: number,
     quarter: 'Q1' | 'Q2' | 'Q3' | 'Q4'
   ): { id: string; rate: number } {
-    const rate = Math.pow(QUARTER_BASE_RATES[quarter], calendarYear - 1980);
+    // Return as fraction directly
+    const rate = QUARTER_BASE_FRACTIONS[quarter];
     return {
       id: `QTR.Y${calendarYear}.${quarter}`,
       rate,

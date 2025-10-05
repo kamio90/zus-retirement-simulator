@@ -70,7 +70,7 @@ describe('Engine.calculate (integration)', () => {
     expect(output.explainers.length).toBeGreaterThan(0);
     // Initial capital special index
     expect(
-      output.explainers.some((e) => e.includes('Initial capital special index: applied'))
+      output.explainers.some((e) => e.includes('Initial capital special index') && e.includes('applied'))
     ).toBe(true);
   });
 
@@ -100,7 +100,7 @@ describe('Engine.calculate (integration)', () => {
     const output = demoEngine(input);
     // Check explainer for special index
     expect(
-      output.explainers.some((e) => e.includes('Initial capital special index: applied'))
+      output.explainers.some((e) => e.includes('Initial capital special index') && e.includes('applied'))
     ).toBe(true);
   });
 

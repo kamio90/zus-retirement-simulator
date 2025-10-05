@@ -52,7 +52,7 @@ describe('Engine.calculate (property/metamorphic)', () => {
     expect(outB.monthlyPensionNominal).toBeGreaterThanOrEqual(outA.monthlyPensionNominal);
   });
 
-  it('quarterly mapping changes finalization index', () => {
+  it('quarterly mapping uses cumulative sequence', () => {
     const inputQ2: EngineInput = {
       birthYear: 1980,
       gender: 'M' as const,
@@ -63,7 +63,12 @@ describe('Engine.calculate (property/metamorphic)', () => {
     const inputQ3: EngineInput = { ...inputQ2, claimMonth: 8 };
     const outQ2 = demoEngine(inputQ2);
     const outQ3 = demoEngine(inputQ3);
-    expect(outQ2.finalization.indicesApplied[0]).not.toBe(outQ3.finalization.indicesApplied[0]);
+    
+    // Q2 gets [Q3 prev, Q4 prev], Q3 gets [Q3 prev, Q4 prev, Q1 curr]
+    // Both start with Q3 prev, but Q3 has more indices
+    expect(outQ2.finalization.indicesApplied.length).toBe(2);
+    expect(outQ3.finalization.indicesApplied.length).toBe(3);
+    expect(outQ2.finalization.indicesApplied[0]).toBe(outQ3.finalization.indicesApplied[0]);
   });
 
   it('gender/SDŻ effect: F with higher years yields lower monthly pension', () => {
@@ -82,16 +87,56 @@ describe('Engine.calculate (property/metamorphic)', () => {
     }
   });
 
-  it('real pension ≤ nominal under inflation', () => {
+  it('real pension correctly discounted/inflated based on CPI', () => {
     const input: EngineInput = {
       birthYear: 1990,
       gender: 'M' as const,
       startWorkYear: 2010,
       currentGrossMonthly: 6000,
       claimMonth: 6,
+      anchorYear: 2055, // Set anchor to retirement year for 1:1 ratio
     };
     const out = demoEngine(input);
-    expect(out.monthlyPensionRealToday).toBeLessThanOrEqual(out.monthlyPensionNominal);
+    // When anchor year = retirement year, CPI discount = 1, so real = nominal
+    expect(out.monthlyPensionRealToday).toBeCloseTo(out.monthlyPensionNominal, 1);
+    
+    // Test with anchor in past: real should be higher (pension grown with inflation)
+    const inputPast: EngineInput = { ...input, anchorYear: 2010 };
+    const outPast = demoEngine(inputPast);
+    expect(outPast.monthlyPensionRealToday).toBeGreaterThanOrEqual(outPast.monthlyPensionNominal);
+    
+    // Test with anchor in future: real should be lower (pension discounted)
+    const inputFuture: EngineInput = { ...input, anchorYear: 2080 };
+    const outFuture = demoEngine(inputFuture);
+    expect(outFuture.monthlyPensionRealToday).toBeLessThanOrEqual(outFuture.monthlyPensionNominal);
+  });
+
+  it('no NaN or Infinity in any output', () => {
+    const input: EngineInput = {
+      birthYear: 1980,
+      gender: 'M' as const,
+      startWorkYear: 2000,
+      currentGrossMonthly: 6000,
+      claimMonth: 6,
+      accumulatedInitialCapital: 10000,
+      subAccountBalance: 5000,
+      anchorYear: 2045,
+    };
+    const out = demoEngine(input);
+    
+    // Check all numeric outputs are finite
+    expect(isFinite(out.monthlyPensionNominal)).toBe(true);
+    expect(isFinite(out.monthlyPensionRealToday)).toBe(true);
+    expect(isFinite(out.replacementRate)).toBe(true);
+    expect(isFinite(out.life.years)).toBe(true);
+    expect(isFinite(out.finalization.compoundedResult)).toBe(true);
+    
+    // Check trajectory values
+    out.capitalTrajectory.forEach((row) => {
+      expect(isFinite(row.annualWage)).toBe(true);
+      expect(isFinite(row.annualContribution)).toBe(true);
+      expect(isFinite(row.cumulativeCapitalAfterAnnual)).toBe(true);
+    });
   });
 
   it('idempotence: repeated calls yield identical results', () => {

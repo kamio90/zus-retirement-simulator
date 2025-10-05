@@ -47,15 +47,24 @@ export function ResultsDisplay({ result, input }: ResultsDisplayProps): JSX.Elem
   }, [result.scenario.gender]);
 
   const formatCurrency = (value: number): string => {
+    if (!isFinite(value)) {
+      console.error('Invalid currency value:', value);
+      return 'Błąd obliczeń';
+    }
     return new Intl.NumberFormat('pl-PL', {
       style: 'currency',
       currency: 'PLN',
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
+      notation: 'standard', // Explicitly no scientific notation
     }).format(value);
   };
 
   const formatPercentage = (value: number): string => {
+    if (!isFinite(value)) {
+      console.error('Invalid percentage value:', value);
+      return 'Błąd obliczeń';
+    }
     return new Intl.NumberFormat('pl-PL', {
       style: 'percent',
       minimumFractionDigits: 1,
