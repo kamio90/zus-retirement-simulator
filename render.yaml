@@ -2,7 +2,7 @@ services:
   # 1) API — Node/Express (Web Service)
   - type: web
     name: zus-sim-api
-    env: node                 # ← use env, not runtime
+    env: node                 # node web service
     plan: starter
     region: frankfurt
     autoDeploy: true
@@ -12,7 +12,7 @@ services:
       pnpm i --frozen-lockfile
       pnpm -F api build
     startCommand: pnpm -F api start
-    healthCheckPath: /health  # ← supported
+    healthCheckPath: /health
     envVars:
       - key: NODE_VERSION
         value: 20.12.2
@@ -20,19 +20,15 @@ services:
         value: 9.12.0
       - fromGroup: zus-sim-shared
       - fromGroup: zus-sim-api
-    routes:
-      - type: rewrite
-        source: /.well-known/health
-        destination: /health
     disk:
       name: api-logs
       mountPath: /var/data
       sizeGB: 1
 
   # 2) WEB — Static Site (Vite build)
-  - type: web                 # ← static sites are also 'web'
+  - type: web                 # static sites are also 'web'
     name: zus-sim-web
-    env: static               # ← declare static via env: static
+    env: static               # declare static via env: static
     buildCommand: |
       corepack enable
       corepack prepare pnpm@9.12.0 --activate
@@ -43,6 +39,7 @@ services:
     envVars:
       - fromGroup: zus-sim-public
     routes:
+      # SPA rewrite: all routes → index.html
       - type: rewrite
         source: /*
         destination: /index.html
