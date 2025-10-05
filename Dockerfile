@@ -38,6 +38,15 @@ COPY --from=deps /app/packages/web-engine/package.json ./packages/web-engine/pac
 COPY --from=deps /app/apps/api/package.json ./apps/api/package.json
 COPY --from=deps /app/apps/web/package.json ./apps/web/package.json
 
+# Copy package-level node_modules with workspace symlinks
+COPY --from=deps /app/packages/types/node_modules ./packages/types/node_modules
+COPY --from=deps /app/packages/data/node_modules ./packages/data/node_modules
+COPY --from=deps /app/packages/core/node_modules ./packages/core/node_modules
+COPY --from=deps /app/packages/ui/node_modules ./packages/ui/node_modules
+COPY --from=deps /app/packages/web-engine/node_modules ./packages/web-engine/node_modules
+COPY --from=deps /app/apps/api/node_modules ./apps/api/node_modules
+COPY --from=deps /app/apps/web/node_modules ./apps/web/node_modules
+
 # Build packages in correct order
 RUN pnpm --filter ./packages/data build
 RUN pnpm --filter ./packages/types build
