@@ -169,12 +169,6 @@ export function Step4aResult(): JSX.Element {
   const YEARLY_BASE_CAP = 30 * ASSUMED_AVG_WAGE; // roczny limit podstawy
   const MONTHLY_BASE_CAP = YEARLY_BASE_CAP / 12; // ≈ 2.5 x avg miesięczna
 
-    const contributionBase = (t: string | undefined): number => {
-      if (t === 'uop') return monthlyIncome;
-      if (t === 'jdg' || t === 'jdg_ryczalt') return MIN_BASE_JDG;
-      return MIN_BASE_JDG;
-    };
-
   // Reference base used in the original static mock
   // Dynamic accumulation below derives from contribution base; no static reference base needed
   // Multiplier ties to contribution base vs reference base
