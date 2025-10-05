@@ -29,6 +29,15 @@ COPY packages ./packages
 COPY apps ./apps
 COPY tsconfig.base.json ./tsconfig.base.json
 
+# Restore package.json files from deps to maintain workspace linkage
+COPY --from=deps /app/packages/types/package.json ./packages/types/package.json
+COPY --from=deps /app/packages/data/package.json ./packages/data/package.json
+COPY --from=deps /app/packages/core/package.json ./packages/core/package.json
+COPY --from=deps /app/packages/ui/package.json ./packages/ui/package.json
+COPY --from=deps /app/packages/web-engine/package.json ./packages/web-engine/package.json
+COPY --from=deps /app/apps/api/package.json ./apps/api/package.json
+COPY --from=deps /app/apps/web/package.json ./apps/web/package.json
+
 # Build packages in correct order
 RUN pnpm --filter ./packages/data build
 RUN pnpm --filter ./packages/types build
