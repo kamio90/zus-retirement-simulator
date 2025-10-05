@@ -179,10 +179,10 @@ export function ExplainOverlay(): JSX.Element {
                 position.arrowPosition === 'left'
                   ? '-left-2 top-8'
                   : position.arrowPosition === 'right'
-                    ? '-right-2 top-8'
-                    : position.arrowPosition === 'top'
-                      ? 'top-0 left-8 -translate-y-1/2'
-                      : 'bottom-0 left-8 translate-y-1/2'
+                  ? '-right-2 top-8'
+                  : position.arrowPosition === 'top'
+                  ? 'top-0 left-8 -translate-y-1/2'
+                  : 'bottom-0 left-8 translate-y-1/2'
               }`}
               aria-hidden="true"
             />

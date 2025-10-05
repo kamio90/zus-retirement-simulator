@@ -78,8 +78,8 @@ export function WizardLayout({
                         currentStep > step.id
                           ? 'bg-zus-primary text-white'
                           : currentStep === step.id
-                            ? 'bg-zus-accent text-white ring-4 ring-zus-primary ring-opacity-30'
-                            : 'bg-gray-200 text-gray-500'
+                          ? 'bg-zus-accent text-white ring-4 ring-zus-primary ring-opacity-30'
+                          : 'bg-gray-200 text-gray-500'
                       }
                     `}
                     aria-current={currentStep === step.id ? 'step' : undefined}

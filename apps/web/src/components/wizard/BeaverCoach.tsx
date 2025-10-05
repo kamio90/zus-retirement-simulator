@@ -176,8 +176,8 @@ export function BeaverCoach({
                   tone === 'info'
                     ? 'border-r-blue-200'
                     : tone === 'tip'
-                      ? 'border-r-green-200'
-                      : 'border-r-yellow-200'
+                    ? 'border-r-green-200'
+                    : 'border-r-yellow-200'
                 }`}
               />
 
