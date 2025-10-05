@@ -29,7 +29,8 @@ export function pensionCalcs(
     claimDate.month,
     anchorYear
   );
-  const monthlyPensionRealToday = monthlyPensionNominal * cpiDiscount;
+  // Divide by CPI discount to get real value (higher CPI = lower real value)
+  const monthlyPensionRealToday = monthlyPensionNominal / cpiDiscount;
   const replacementRate = monthlyPensionRealToday / currentGrossMonthly;
   return {
     monthlyPensionNominal,

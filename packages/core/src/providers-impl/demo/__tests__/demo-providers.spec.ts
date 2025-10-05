@@ -5,13 +5,12 @@ import { makeDemoProviderBundle } from '../demo-bundle';
 describe('DemoProviderBundle', () => {
   const providers = makeDemoProviderBundle();
 
-  it('annual indices are monotonic and available for 1980..2100', () => {
-    let lastRate = 0;
+  it('annual indices are constant fractions in canonical demo', () => {
     for (let y = 1980; y <= 2100; y++) {
       const idx = providers.annual.getAnnualIndex(y);
       expect(idx.id).toBe(`ANNUAL.Y${y}`);
-      expect(idx.rate).toBeGreaterThan(lastRate);
-      lastRate = idx.rate;
+      // Canonical demo: constant 10% fraction
+      expect(idx.rate).toBe(0.10);
     }
   });
 
