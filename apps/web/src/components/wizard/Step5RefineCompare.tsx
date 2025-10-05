@@ -7,25 +7,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useWizardStore, ContractType, CareerPeriod } from '../../store/wizardStore';
 import { BeaverCoach } from './BeaverCoach';
 import { KnowledgeCard } from './KnowledgeCard';
-import { simulateV2 } from '../../services/v2-api';
-import type {
-  SimulateV2Request,
-  SimulateV2Response,
-  WizardJdgRequest,
-  ContractTypeV2,
-} from '@zus/types';
+import { composeCareer } from '../../services/api';
+import type { ComposeCareerRequest, ComposeCareerResult } from '@zus/types';
 
 export function Step5RefineCompare(): JSX.Element {
-  const {
-    careerPeriods,
-    addCareerPeriod,
-    removeCareerPeriod,
-    gender,
-    age,
-    contractType,
-    jdgIncome,
-    isRyczalt,
-  } = useWizardStore();
+  const { careerPeriods, addCareerPeriod, removeCareerPeriod, gender, age } = useWizardStore();
 
   const [newPeriod, setNewPeriod] = useState<Omit<CareerPeriod, 'id'>>({
     contractType: 'uop',
@@ -35,27 +21,30 @@ export function Step5RefineCompare(): JSX.Element {
 
   const [isComputing, setIsComputing] = useState(false);
   const [computeError, setComputeError] = useState<string | null>(null);
-  const [computeResult, setComputeResult] = useState<SimulateV2Response | null>(null);
-  const [correlationId, setCorrelationId] = useState<string | null>(null);
+  const [computeResult, setComputeResult] = useState<ComposeCareerResult | null>(null);
+  const [earlyRetirement, setEarlyRetirement] = useState(false);
+  const [delayMonths, setDelayMonths] = useState(0);
 
   const contractTypeLabels: Record<ContractType, string> = {
     uop: 'Umowa o pracę (UoP)',
     jdg: 'Działalność (JDG)',
     jdg_ryczalt: 'Działalność (JDG - ryczałt)',
+    no_contribution: 'Okres bez składki',
   };
 
-  // Filter available contract types - no ryczałt for UoP
+  // Filter available contract types
   const getAvailableContractTypes = (): ContractType[] => {
-    // If current selection is UoP, don't show JDG_RYCZALT
-    if (newPeriod.contractType === 'uop') {
-      return ['uop', 'jdg'];
-    }
-    return ['uop', 'jdg', 'jdg_ryczalt'];
+    return ['uop', 'jdg', 'jdg_ryczalt', 'no_contribution'];
   };
 
   const handleAddPeriod = (): void => {
-    if (newPeriod.yearsOfWork > 0 && newPeriod.monthlyIncome > 0) {
-      addCareerPeriod(newPeriod);
+    if (newPeriod.yearsOfWork > 0) {
+      // For no_contribution periods, income is always 0
+      const periodToAdd = {
+        ...newPeriod,
+        monthlyIncome: newPeriod.contractType === 'no_contribution' ? 0 : newPeriod.monthlyIncome,
+      };
+      addCareerPeriod(periodToAdd);
       setNewPeriod({
         contractType: 'uop',
         yearsOfWork: 5,
@@ -68,55 +57,53 @@ export function Step5RefineCompare(): JSX.Element {
   const avgIncome =
     careerPeriods.length > 0
       ? Math.round(
-          careerPeriods.reduce((sum, p) => sum + p.monthlyIncome, 0) / careerPeriods.length
+          careerPeriods
+            .filter((p) => p.contractType !== 'no_contribution')
+            .reduce((sum, p) => sum + p.monthlyIncome, 0) /
+            Math.max(
+              careerPeriods.filter((p) => p.contractType !== 'no_contribution').length,
+              1
+            )
         )
       : 0;
 
-  // Map local contract type to API ContractTypeV2
-  const mapToContractV2 = (type: ContractType): ContractTypeV2 => {
-    switch (type) {
-      case 'uop':
-        return 'UOP';
-      case 'jdg':
-        return 'JDG';
-      case 'jdg_ryczalt':
-        return 'JDG_RYCZALT';
-      default:
-        return 'UOP';
-    }
-  };
-
   // Handle final compute
   const handleComputePrecisePension = async (): Promise<void> => {
-    if (!gender || !age || !contractType || careerPeriods.length === 0) {
+    if (!gender || !age || careerPeriods.length === 0) {
       setComputeError('Brak wymaganych danych do obliczeń');
       return;
     }
 
     setIsComputing(true);
     setComputeError(null);
-    const corrId = `compute-${Date.now()}`;
-    setCorrelationId(corrId);
 
     try {
-      // Build baseline context from wizard state
-      const baselineContext: WizardJdgRequest = {
+      const birthYear = new Date().getFullYear() - age;
+      
+      // Calculate retirement age based on gender and early retirement option
+      const baseRetirementAge = gender === 'male' ? 65 : 60;
+      const retirementAge = earlyRetirement ? baseRetirementAge - 5 : baseRetirementAge;
+      
+      // Calculate claim month based on delay
+      const baseClaimMonth = 6; // June
+      const claimMonth = Math.min(12, baseClaimMonth + Math.floor(delayMonths));
+
+      // Map career periods to API format
+      const apiCareerPeriods = careerPeriods.map((period) => ({
+        contractType: period.contractType,
+        yearsOfWork: period.yearsOfWork,
+        monthlyIncome: period.monthlyIncome,
+      }));
+
+      const request: ComposeCareerRequest = {
+        birthYear,
         gender: gender === 'male' ? 'M' : 'F',
-        age,
-        contract: mapToContractV2(contractType),
-        monthlyIncome: jdgIncome,
-        isRyczalt,
-        claimMonth: 6, // Default to June
+        careerPeriods: apiCareerPeriods,
+        retirementAge,
+        claimMonth,
       };
 
-      // For now, we're not mapping career periods to variants
-      // This would require additional logic to convert CareerPeriod to RefinementItem
-      const request: SimulateV2Request = {
-        baselineContext,
-        // variants: [], // TODO: Map career periods to refinement items
-      };
-
-      const result = await simulateV2(request, corrId);
+      const result = await composeCareer(request);
       setComputeResult(result);
       setComputeError(null);
     } catch (error) {
@@ -126,11 +113,6 @@ export function Step5RefineCompare(): JSX.Element {
           ? error.message
           : 'Wystąpił błąd podczas obliczeń. Spróbuj ponownie.';
       setComputeError(errorMessage);
-
-      // Log correlation ID for debugging
-      if (corrId) {
-        console.error('Correlation ID:', corrId);
-      }
     } finally {
       setIsComputing(false);
     }
@@ -194,15 +176,22 @@ export function Step5RefineCompare(): JSX.Element {
               onChange={(e) =>
                 setNewPeriod({ ...newPeriod, monthlyIncome: Number(e.target.value) })
               }
-              className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zus-primary focus:border-transparent"
+              disabled={newPeriod.contractType === 'no_contribution'}
+              className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zus-primary focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
               aria-label="Miesięczny dochód w tym okresie"
             />
+            {newPeriod.contractType === 'no_contribution' && (
+              <p className="text-xs text-gray-500 mt-1">Brak składki w tym okresie</p>
+            )}
           </div>
         </div>
 
         <button
           onClick={handleAddPeriod}
-          disabled={newPeriod.yearsOfWork <= 0 || newPeriod.monthlyIncome <= 0}
+          disabled={
+            newPeriod.yearsOfWork <= 0 ||
+            (newPeriod.contractType !== 'no_contribution' && newPeriod.monthlyIncome <= 0)
+          }
           className="mt-4 w-full md:w-auto px-6 py-2 bg-zus-primary text-white font-semibold rounded-md hover:bg-zus-accent focus:outline-none focus:ring-2 focus:ring-zus-primary focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           ➕ Dodaj okres
@@ -244,7 +233,9 @@ export function Step5RefineCompare(): JSX.Element {
                     <div>
                       <p className="text-xs text-gray-500">Dochód miesięczny</p>
                       <p className="font-semibold text-sm">
-                        {period.monthlyIncome.toLocaleString('pl-PL')} PLN
+                        {period.contractType === 'no_contribution'
+                          ? 'Brak składki'
+                          : `${period.monthlyIncome.toLocaleString('pl-PL')} PLN`}
                       </p>
                     </div>
                   </div>
@@ -293,10 +284,8 @@ export function Step5RefineCompare(): JSX.Element {
                 <input
                   type="checkbox"
                   className="w-5 h-5 text-zus-primary focus:ring-zus-primary"
-                  onChange={(e) => {
-                    // Handle early retirement checkbox
-                    console.log('Early retirement:', e.target.checked);
-                  }}
+                  checked={earlyRetirement}
+                  onChange={(e) => setEarlyRetirement(e.target.checked)}
                 />
                 <span className="ml-3 text-sm font-medium text-gray-900">
                   Wcześniejsza emerytura (-5 lat)
@@ -312,10 +301,8 @@ export function Step5RefineCompare(): JSX.Element {
                 </label>
                 <select
                   className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zus-primary focus:border-transparent"
-                  onChange={(e) => {
-                    // Handle delay selection
-                    console.log('Delay months:', e.target.value);
-                  }}
+                  value={delayMonths}
+                  onChange={(e) => setDelayMonths(Number(e.target.value))}
                 >
                   <option value="0">Brak opóźnienia</option>
                   <option value="12">+12 miesięcy</option>
@@ -345,9 +332,6 @@ export function Step5RefineCompare(): JSX.Element {
             >
               <p className="text-red-900 font-semibold">❌ Błąd obliczeń</p>
               <p className="text-red-800 text-sm mt-1">{computeError}</p>
-              {correlationId && (
-                <p className="text-red-600 text-xs mt-2">ID korelacji: {correlationId}</p>
-              )}
               <p className="text-red-700 text-sm mt-2">
                 💡 Obliczenia wymagają połączenia z serwerem. Upewnij się, że serwer API jest
                 dostępny.
@@ -366,32 +350,26 @@ export function Step5RefineCompare(): JSX.Element {
                 <div>
                   <p className="text-sm text-green-700">Emerytura nominalna</p>
                   <p className="text-2xl font-bold text-green-900">
-                    {Math.round(computeResult.baselineResult.kpi.monthlyNominal).toLocaleString(
-                      'pl-PL'
-                    )}{' '}
-                    PLN
+                    {Math.round(computeResult.monthlyPensionNominal).toLocaleString('pl-PL')} PLN
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-green-700">Emerytura (dzisiaj)</p>
                   <p className="text-2xl font-bold text-green-900">
-                    {Math.round(computeResult.baselineResult.kpi.monthlyRealToday).toLocaleString(
-                      'pl-PL'
-                    )}{' '}
-                    PLN
+                    {Math.round(computeResult.monthlyPensionRealToday).toLocaleString('pl-PL')} PLN
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-green-700">Stopa zastąpienia</p>
                   <p className="text-2xl font-bold text-green-900">
-                    {Math.round(computeResult.baselineResult.kpi.replacementRate)}%
+                    {Math.round(computeResult.replacementRate * 100)}%
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-green-700">Przejście na emeryturę</p>
                   <p className="text-2xl font-bold text-green-900">
-                    {computeResult.baselineResult.kpi.retirementYear}{' '}
-                    {computeResult.baselineResult.kpi.claimQuarter}
+                    {computeResult.scenario.retirementYear} Q
+                    {computeResult.finalization.quarterUsed.replace('Q', '')}
                   </p>
                 </div>
               </div>

@@ -29,6 +29,9 @@ function getContributionBase(income: number, contractType: ContractType): number
     case 'jdg_ryczalt':
       // JDG ryczałt: minimum base (assuming ~4500 PLN in 2025)
       return Math.min(income * 0.3, 4500);
+    case 'no_contribution':
+      // No contribution period (unemployment, parental leave, etc.)
+      return 0;
     default:
       return income;
   }

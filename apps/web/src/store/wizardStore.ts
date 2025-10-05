@@ -6,7 +6,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export type Gender = 'female' | 'male';
-export type ContractType = 'uop' | 'jdg' | 'jdg_ryczalt';
+export type ContractType = 'uop' | 'jdg' | 'jdg_ryczalt' | 'no_contribution';
 
 export interface CareerPeriod {
   id: string;
