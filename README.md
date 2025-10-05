@@ -174,6 +174,37 @@ The deployment includes:
 
 For detailed instructions, see [docs/deploy-render.md](./docs/deploy-render.md).
 
+### Run with Docker
+
+The project includes a single Docker image that serves both the SPA and API on one port:
+
+```bash
+# Build the image
+docker build -t zus-sim:local .
+
+# Run the container
+docker run -p 8080:8080 zus-sim:local
+
+# Access the application
+# http://localhost:8080   (SPA)
+# http://localhost:8080/api/health  (Health check)
+```
+
+The container serves **SPA + API** on one port. Frontend calls the backend via **`/api`** (no CORS issues).
+
+**Features:**
+- Single-port deployment (frontend + backend)
+- SPA fallback routing (deep links work)
+- Production-optimized build
+- Compatible with any Docker host (Cloud Run, App Runner, Fly, Railway, Render)
+
+**Docker Compose:**
+```bash
+docker-compose up
+```
+
+To deploy on any Docker host, point to port `8080` and set `PORT=8080` environment variable if needed.
+
 ### Environment Variables
 
 Required environment variables are organized into groups:
