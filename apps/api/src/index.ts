@@ -20,13 +20,17 @@ import contentRouter from './routes/content';
 loadEnv();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || '*',
+  credentials: false
+}));
 app.use(morgan('dev', { stream: logger.stream }));
 app.use(json());
 app.use(validateRequest);
 app.use(v1DeprecationMiddleware);
 
 app.use('/healthcheck', healthcheckRouter);
+app.use('/health', healthcheckRouter); // Render health check endpoint
 app.use('/simulate', simulateRouter);
 app.use('/reports', reportsRouter);
 app.use('/benchmarks', benchmarksRouter);
@@ -38,7 +42,7 @@ app.use('/content', contentRouter);
 
 app.use(errorHandler);
 
-const PORT = process.env.API_PORT || 4000;
+const PORT = process.env.PORT || process.env.API_PORT || 4000;
 app.listen(PORT, () => {
   logger.info(`API server running on port ${PORT}`);
 });

@@ -18,8 +18,7 @@ export interface ExplainerResponse {
   explainer: ExplainerContent;
 }
 
-const API_BASE_URL =
-  (import.meta as { env?: { VITE_API_URL?: string } }).env?.VITE_API_URL || 'http://localhost:4000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
 
 export function useExplainer(): {
   fetchExplainer: (targetId: string, lang?: string) => Promise<ExplainerContent | null>;

@@ -18,7 +18,9 @@ import type {
   ApiError,
 } from '@zus/types';
 
-const V2_API_BASE = '/v2';
+const V2_API_BASE = import.meta.env.VITE_API_BASE_URL 
+  ? `${import.meta.env.VITE_API_BASE_URL}/v2` 
+  : '/v2';
 
 export class V2ApiClientError extends Error {
   constructor(
