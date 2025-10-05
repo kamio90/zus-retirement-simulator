@@ -8,9 +8,9 @@ import { z } from 'zod';
 // Contract Types & Career Periods
 // ============================================================================
 
-export type ContractType = 'uop' | 'jdg' | 'jdg_ryczalt';
+export type ContractType = 'uop' | 'jdg' | 'jdg_ryczalt' | 'no_contribution';
 
-export const ContractTypeSchema = z.enum(['uop', 'jdg', 'jdg_ryczalt']);
+export const ContractTypeSchema = z.enum(['uop', 'jdg', 'jdg_ryczalt', 'no_contribution']);
 
 export interface CareerPeriod {
   contractType: ContractType;
