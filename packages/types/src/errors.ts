@@ -6,12 +6,27 @@ import { z } from 'zod';
 
 export type ErrorCode = 'VALIDATION_ERROR' | 'DOMAIN_CONSTRAINT' | 'NOT_FOUND' | 'INTERNAL_ERROR';
 
+export type HintCode =
+  | 'MISSING_QUARTER_INDEX'
+  | 'INVALID_LIFE_EXPECTANCY'
+  | 'INVALID_RETIREMENT_AGE'
+  | 'INVALID_CONTRIBUTION_BASE'
+  | 'OVERLAPPING_PERIODS'
+  | 'CLAIM_QUARTER_OUT_OF_RANGE'
+  | 'SDZ_NOT_AVAILABLE';
+
 export interface ApiError {
   code: ErrorCode;
   message: string;
   details?: Record<string, unknown>;
   correlationId: string;
   hint?: string;
+  hintCode?: HintCode;
+  suggestions?: Array<{
+    action: string;
+    label: string;
+    params?: Record<string, unknown>;
+  }>;
 }
 
 export const ApiErrorSchema = z.object({
@@ -20,6 +35,26 @@ export const ApiErrorSchema = z.object({
   details: z.record(z.unknown()).optional(),
   correlationId: z.string(),
   hint: z.string().optional(),
+  hintCode: z
+    .enum([
+      'MISSING_QUARTER_INDEX',
+      'INVALID_LIFE_EXPECTANCY',
+      'INVALID_RETIREMENT_AGE',
+      'INVALID_CONTRIBUTION_BASE',
+      'OVERLAPPING_PERIODS',
+      'CLAIM_QUARTER_OUT_OF_RANGE',
+      'SDZ_NOT_AVAILABLE',
+    ])
+    .optional(),
+  suggestions: z
+    .array(
+      z.object({
+        action: z.string(),
+        label: z.string(),
+        params: z.record(z.unknown()).optional(),
+      })
+    )
+    .optional(),
 });
 
 /**

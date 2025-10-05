@@ -5,6 +5,8 @@
 export { Wizard } from './Wizard';
 export { WizardLayout } from './WizardLayout';
 export { BeaverCoach } from './BeaverCoach';
+export { BeaverDoctor } from './BeaverDoctor';
+export { DeltaChip } from './DeltaChip';
 export { InfoCard } from './InfoCard';
 export { KnowledgeCard } from './KnowledgeCard';
 export { Step1GenderAge } from './Step1GenderAge';

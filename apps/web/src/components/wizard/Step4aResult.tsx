@@ -14,14 +14,18 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Area,
+  AreaChart,
 } from 'recharts';
 import { useWizardStore } from '../../store/wizardStore';
 import { useResultStore } from '../../stores/resultStore';
 import { useExplainOverlayStore } from '../../stores/explainOverlayStore';
+import { useCompareStore } from '../../stores/compareStore';
 import { useExplainer } from '../../hooks/useExplainer';
 import { BeaverCoach } from './BeaverCoach';
 import { KnowledgeCard } from './KnowledgeCard';
 import { ExplainOverlay } from './ExplainOverlay';
+import { DeltaChip } from './DeltaChip';
 import { compareWhatIf } from '../../services/v2-api';
 import type { ScenarioResult, WizardJdgRequest, RefinementItem } from '@zus/types';
 
@@ -45,6 +49,7 @@ export function Step4aResult(): JSX.Element {
   } = useResultStore();
   const { openExplainer, getCachedExplainer, cacheExplainer } = useExplainOverlayStore();
   const { fetchExplainer } = useExplainer();
+  const { showBaseline, toggleBaseline } = useCompareStore();
 
   // Initialize baseline result from wizard store
   useEffect(() => {
@@ -336,6 +341,9 @@ export function Step4aResult(): JSX.Element {
           };
           const targetId = targetIdMap[kpi.label] || '';
 
+          // Determine format for DeltaChip
+          const deltaFormat = kpi.label.includes('Stopa') ? 'percent' : 'currency';
+
           return (
             <motion.div key={index} variants={itemVariants}>
               <div
@@ -357,13 +365,13 @@ export function Step4aResult(): JSX.Element {
                 </div>
                 <h3 className="text-sm font-medium text-gray-600 mb-2">{kpi.label}</h3>
                 <p className="text-2xl font-bold text-zus-primary mb-1">{kpi.value}</p>
-                {delta && (
-                  <div
-                    className={`text-xs font-semibold mt-2 ${delta.value > 0 ? 'text-green-600' : delta.value < 0 ? 'text-red-600' : 'text-gray-500'}`}
-                  >
-                    {delta.value > 0 ? '↑' : delta.value < 0 ? '↓' : '='}{' '}
-                    {Math.abs(delta.percent).toFixed(1)}%
-                  </div>
+                {delta && appliedWhatIf && (
+                  <DeltaChip
+                    baselineValue={kpi.baselineValue}
+                    currentValue={kpi.currentValue}
+                    format={deltaFormat}
+                    className="mt-2"
+                  />
                 )}
                 <p className="text-xs text-gray-500">{kpi.description}</p>
               </div>
@@ -375,55 +383,123 @@ export function Step4aResult(): JSX.Element {
       <div className="bg-white rounded-lg shadow-md p-6 mb-8" data-kpi-tile>
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-xl font-bold text-zus-text">Trajektoria kapitału emerytalnego</h3>
-          <button
-            onClick={(e) => handleExplainClick('chart_capital_trajectory', e)}
-            className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-zus-primary hover:bg-gray-100 rounded-full transition-colors"
-            aria-label="Wyjaśnij: Trajektoria kapitału emerytalnego"
-          >
-            ℹ️
-          </button>
+          <div className="flex items-center gap-4">
+            {appliedWhatIf && (
+              <label className="flex items-center gap-2 text-sm cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={showBaseline}
+                  onChange={toggleBaseline}
+                  className="w-5 h-5 text-zus-primary focus:ring-zus-primary border-gray-300 rounded"
+                  aria-label="Porównaj z bazową linią"
+                />
+                <span className="text-gray-700">Porównaj z bazą</span>
+              </label>
+            )}
+            <button
+              onClick={(e) => handleExplainClick('chart_capital_trajectory', e)}
+              className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-zus-primary hover:bg-gray-100 rounded-full transition-colors"
+              aria-label="Wyjaśnij: Trajektoria kapitału emerytalnego"
+            >
+              ℹ️
+            </button>
+          </div>
         </div>
         <div className={isLoadingWhatIf ? 'animate-pulse' : ''}>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={apiResult?.capitalTrajectory || mockResult.capitalTrajectory}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#d8e5dd" />
-              <XAxis dataKey="year" stroke="#0b1f17" tick={{ fill: '#0b1f17' }} />
-              <YAxis
-                stroke="#0b1f17"
-                tick={{ fill: '#0b1f17' }}
-                tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
-              />
-              <Tooltip
-                formatter={(value: number) => [`${value.toLocaleString('pl-PL')} PLN`, 'Kapitał']}
-                contentStyle={{
-                  backgroundColor: '#fff',
-                  border: '2px solid #007a33',
-                  borderRadius: '8px',
-                }}
-              />
-              <Line
-                type="monotone"
-                dataKey="capital"
-                stroke={appliedWhatIf ? '#0066cc' : '#007a33'}
-                strokeWidth={3}
-                dot={{ fill: appliedWhatIf ? '#0066cc' : '#007a33', r: 5 }}
-                activeDot={{
-                  r: 8,
-                  onClick: (e: React.MouseEvent<SVGCircleElement>) => {
-                    const element = (e.target as HTMLElement).closest(
-                      '[data-kpi-tile]'
-                    ) as HTMLElement;
-                    if (element) {
-                      const fakeEvent = {
-                        currentTarget: element,
-                      } as React.MouseEvent<HTMLButtonElement>;
-                      handleExplainClick('chart_point', fakeEvent);
-                    }
-                  },
-                  style: { cursor: 'pointer' },
-                }}
-              />
-            </LineChart>
+            {showBaseline && appliedWhatIf && baselineResult ? (
+              <AreaChart
+                data={apiResult?.capitalTrajectory?.map((item, idx) => ({
+                  ...item,
+                  baselineCapital: baselineResult.capitalTrajectory[idx]?.capital || 0,
+                })) || []}
+              >
+                <defs>
+                  <linearGradient id="deltaShading" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#82ca9d" stopOpacity={0.1} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#d8e5dd" />
+                <XAxis dataKey="year" stroke="#0b1f17" tick={{ fill: '#0b1f17' }} />
+                <YAxis
+                  stroke="#0b1f17"
+                  tick={{ fill: '#0b1f17' }}
+                  tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
+                />
+                <Tooltip
+                  formatter={(value: number, name: string) => {
+                    const label =
+                      name === 'capital'
+                        ? 'Obecny kapitał'
+                        : name === 'baselineCapital'
+                          ? 'Kapitał bazowy'
+                          : 'Kapitał';
+                    return [`${value.toLocaleString('pl-PL')} PLN`, label];
+                  }}
+                  contentStyle={{
+                    backgroundColor: '#fff',
+                    border: '2px solid #007a33',
+                    borderRadius: '8px',
+                  }}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="baselineCapital"
+                  stroke="#9ca3af"
+                  strokeWidth={2}
+                  fill="url(#deltaShading)"
+                  strokeDasharray="5 5"
+                />
+                <Line
+                  type="monotone"
+                  dataKey="capital"
+                  stroke="#0066cc"
+                  strokeWidth={3}
+                  dot={{ fill: '#0066cc', r: 5 }}
+                />
+              </AreaChart>
+            ) : (
+              <LineChart data={apiResult?.capitalTrajectory || mockResult.capitalTrajectory}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#d8e5dd" />
+                <XAxis dataKey="year" stroke="#0b1f17" tick={{ fill: '#0b1f17' }} />
+                <YAxis
+                  stroke="#0b1f17"
+                  tick={{ fill: '#0b1f17' }}
+                  tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
+                />
+                <Tooltip
+                  formatter={(value: number) => [`${value.toLocaleString('pl-PL')} PLN`, 'Kapitał']}
+                  contentStyle={{
+                    backgroundColor: '#fff',
+                    border: '2px solid #007a33',
+                    borderRadius: '8px',
+                  }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="capital"
+                  stroke={appliedWhatIf ? '#0066cc' : '#007a33'}
+                  strokeWidth={3}
+                  dot={{ fill: appliedWhatIf ? '#0066cc' : '#007a33', r: 5 }}
+                  activeDot={{
+                    r: 8,
+                    onClick: (e: React.MouseEvent<SVGCircleElement>) => {
+                      const element = (e.target as HTMLElement).closest(
+                        '[data-kpi-tile]'
+                      ) as HTMLElement;
+                      if (element) {
+                        const fakeEvent = {
+                          currentTarget: element,
+                        } as React.MouseEvent<HTMLButtonElement>;
+                        handleExplainClick('chart_point', fakeEvent);
+                      }
+                    },
+                    style: { cursor: 'pointer' },
+                  }}
+                />
+              </LineChart>
+            )}
           </ResponsiveContainer>
         </div>
         <p className="text-sm text-gray-500 mt-4 text-center">
@@ -431,6 +507,11 @@ export function Step4aResult(): JSX.Element {
           {appliedWhatIf && (
             <span className="block mt-1 text-blue-600 font-semibold">
               Scenariusz: {appliedWhatIf}
+            </span>
+          )}
+          {showBaseline && appliedWhatIf && (
+            <span className="block mt-1 text-gray-600 text-xs">
+              Szara linia przerywana = scenariusz bazowy | Niebieska linia = obecny scenariusz
             </span>
           )}
         </p>
