@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { useWizardStore } from '../../store/wizardStore';
 import { BeaverCoach } from './BeaverCoach';
 import { KnowledgeCard } from './KnowledgeCard';
+import { FieldHelp } from './FieldHelp';
+import fieldHelpContent from '../../data/field-help.json';
 
 export function Step3aJdgDetails(): JSX.Element {
   const { jdgIncome, isRyczalt, contractType, setJdgIncome, setIsRyczalt } = useWizardStore();
@@ -45,9 +47,16 @@ export function Step3aJdgDetails(): JSX.Element {
 
       <div className="bg-white rounded-lg shadow-md p-6 mb-6">
         <div className="mb-6">
-          <label htmlFor="jdg-income" className="block text-lg font-semibold text-zus-text mb-2">
-            Miesięczny dochód (PLN)
-          </label>
+          <div className="flex items-center gap-2 mb-2">
+            <label htmlFor="jdg-income" className="block text-lg font-semibold text-zus-text">
+              Miesięczny dochód (PLN)
+            </label>
+            <FieldHelp
+              fieldId="monthly_income"
+              explanation={fieldHelpContent['pl-PL'].monthly_income.explanation}
+              example={fieldHelpContent['pl-PL'].monthly_income.example}
+            />
+          </div>
           <div className="relative">
             <input
               id="jdg-income"
@@ -97,12 +106,11 @@ export function Step3aJdgDetails(): JSX.Element {
                   className="flex items-center gap-2 cursor-pointer"
                 >
                   <span className="font-medium text-zus-text">Opodatkowanie ryczałtem</span>
-                  <span
-                    className="cursor-help text-gray-400 hover:text-gray-600"
-                    title="Ryczałt pozwala płacić składki od niższej podstawy"
-                  >
-                    ℹ️
-                  </span>
+                  <FieldHelp
+                    fieldId="ryczalt"
+                    explanation={fieldHelpContent['pl-PL'].ryczalt.explanation}
+                    example={fieldHelpContent['pl-PL'].ryczalt.example}
+                  />
                 </label>
               </div>
             </div>
