@@ -54,11 +54,8 @@ export function Step4aResult(): JSX.Element {
   }, [quickCalcResult, baselineResult, setBaselineResult]);
 
   // Cast to v2 ScenarioResult
-  // Temporary: force using mock data instead of API
-  const USE_MOCK_RESULT = true;
-  const apiResult = USE_MOCK_RESULT
-    ? null
-    : (currentResult || (quickCalcResult as ScenarioResult | null));
+  // Use API result (from current what-if scenario or baseline quick calc)
+  const apiResult = currentResult || (quickCalcResult as ScenarioResult | null);
 
   // Calculate delta from baseline
   const calculateDelta = (
@@ -161,41 +158,42 @@ export function Step4aResult(): JSX.Element {
     // - JDG/JDG_RYCZALT: base not lower than 60% of projected average wage
     //   Here we assume avg wage ~ 8000 PLN (placeholder for mock only), so minBase ~ 4800 PLN
     //   Multiplier ≈ contribution base (contract) / contribution base (UoP)
-  // 2025 mock assumption: projected average monthly wage ≈ 7 824 PLN
-  // JDG minimum base for pension/disability = 60% * projected average ≈ 4 694.40 PLN
-  // NOTE: Replace with @data macro.json when available
-  const ASSUMED_AVG_WAGE = 7824;
-  const MIN_BASE_JDG = 0.6 * ASSUMED_AVG_WAGE; // 4 694.4 PLN
-  const YEARLY_BASE_CAP = 30 * ASSUMED_AVG_WAGE; // roczny limit podstawy
-  const MONTHLY_BASE_CAP = YEARLY_BASE_CAP / 12; // ≈ 2.5 x avg miesięczna
+    // 2025 mock assumption: projected average monthly wage ≈ 7 824 PLN
+    // JDG minimum base for pension/disability = 60% * projected average ≈ 4 694.40 PLN
+    // NOTE: Replace with @data macro.json when available
+    const ASSUMED_AVG_WAGE = 7824;
+    const MIN_BASE_JDG = 0.6 * ASSUMED_AVG_WAGE; // 4 694.4 PLN
+    const YEARLY_BASE_CAP = 30 * ASSUMED_AVG_WAGE; // roczny limit podstawy
+    const MONTHLY_BASE_CAP = YEARLY_BASE_CAP / 12; // ≈ 2.5 x avg miesięczna
 
-  // Reference base used in the original static mock
-  // Dynamic accumulation below derives from contribution base; no static reference base needed
-  // Multiplier ties to contribution base vs reference base
-  // - UoP scales with income
-  // - JDG/JDG_RYCZALT pinned to legal minimum base
-  // (removed) legacy scaling with REF_BASE
+    // Reference base used in the original static mock
+    // Dynamic accumulation below derives from contribution base; no static reference base needed
+    // Multiplier ties to contribution base vs reference base
+    // - UoP scales with income
+    // - JDG/JDG_RYCZALT pinned to legal minimum base
+    // (removed) legacy scaling with REF_BASE
 
     // Dynamic capital trajectory: yearly accumulation until retirement
     const now = new Date();
     const currentYear = now.getFullYear();
-  const retirementAge = sex === 'female' ? 60 : 65;
+    const retirementAge = sex === 'female' ? 60 : 65;
     const ageValue = typeof currentAge === 'number' && currentAge > 0 ? currentAge : 30;
     const yearsToRetire = Math.max(1, retirementAge - ageValue);
     const retirementYear = currentYear + yearsToRetire;
 
     // Mock rates for contributions and valorization
-  const PENSION_RATE = 0.1952; // 19.52% (emerytalna+rentowa)
-  const WAGE_GROWTH = 0.02; // 2% rocznie (przybliżenie wzrostu płac)
-  const VALORIZATION = 0.02; // 2% rocznie (przybliżenie waloryzacji)
+    const PENSION_RATE = 0.1952; // 19.52% (emerytalna+rentowa)
+    const WAGE_GROWTH = 0.02; // 2% rocznie (przybliżenie wzrostu płac)
+    const VALORIZATION = 0.02; // 2% rocznie (przybliżenie waloryzacji)
 
     let capital = 0;
     const capitalTrajectory: { year: number; capital: number }[] = [];
     for (let y = currentYear, i = 0; y <= retirementYear; y++, i++) {
       // Miesięczna podstawa w danym roku (z limitem 30x)
-      const monthlyBaseRaw = (type === 'uop')
-        ? (monthlyIncome * Math.pow(1 + WAGE_GROWTH, i))
-        : (MIN_BASE_JDG * Math.pow(1 + WAGE_GROWTH, i)); // uproszczenie: min podstawa rośnie razem ze średnim
+      const monthlyBaseRaw =
+        type === 'uop'
+          ? monthlyIncome * Math.pow(1 + WAGE_GROWTH, i)
+          : MIN_BASE_JDG * Math.pow(1 + WAGE_GROWTH, i); // uproszczenie: min podstawa rośnie razem ze średnim
       const monthlyBaseCapped = Math.min(monthlyBaseRaw, MONTHLY_BASE_CAP);
       const annualContribution = monthlyBaseCapped * 12 * PENSION_RATE;
       capital = Math.round(capital * (1 + VALORIZATION) + annualContribution);
@@ -203,11 +201,8 @@ export function Step4aResult(): JSX.Element {
     }
 
     // Derive mock pension from accumulated capital
-  const lifeExpYears = sex === 'female' ? 23 : 20; // przybliżenie
-    const nominalPension = Math.max(
-      1200,
-      Math.round(capital / Math.max(12, lifeExpYears * 12))
-    );
+    const lifeExpYears = sex === 'female' ? 23 : 20; // przybliżenie
+    const nominalPension = Math.max(1200, Math.round(capital / Math.max(12, lifeExpYears * 12)));
     const realPension = Math.round(nominalPension * 0.8);
     const replacementRate = Math.min(
       99,
@@ -406,7 +401,9 @@ export function Step4aResult(): JSX.Element {
             <motion.div key={index} variants={itemVariants}>
               <div
                 data-kpi-tile
-                className={`bg-white rounded-lg shadow-md p-6 text-center h-full hover:shadow-lg transition-shadow relative ${isLoadingWhatIf ? 'animate-pulse' : ''}`}
+                className={`bg-white rounded-lg shadow-md p-6 text-center h-full hover:shadow-lg transition-shadow relative ${
+                  isLoadingWhatIf ? 'animate-pulse' : ''
+                }`}
               >
                 {/* Explain button */}
                 {targetId && (
@@ -425,7 +422,13 @@ export function Step4aResult(): JSX.Element {
                 <p className="text-2xl font-bold text-zus-primary mb-1">{kpi.value}</p>
                 {delta && (
                   <div
-                    className={`text-xs font-semibold mt-2 ${delta.value > 0 ? 'text-green-600' : delta.value < 0 ? 'text-red-600' : 'text-gray-500'}`}
+                    className={`text-xs font-semibold mt-2 ${
+                      delta.value > 0
+                        ? 'text-green-600'
+                        : delta.value < 0
+                        ? 'text-red-600'
+                        : 'text-gray-500'
+                    }`}
                   >
                     {delta.value > 0 ? '↑' : delta.value < 0 ? '↓' : '='}{' '}
                     {Math.abs(delta.percent).toFixed(1)}%
@@ -520,7 +523,9 @@ export function Step4aResult(): JSX.Element {
               onClick={() =>
                 handleWhatIf({ kind: 'early_retirement', years: 5 }, 'early_retirement_5y')
               }
-              className={`bg-yellow-50 border-2 border-yellow-400 rounded-lg shadow-md p-6 text-center h-full cursor-pointer hover:shadow-xl hover:ring-2 hover:ring-yellow-500 transition-all ${appliedWhatIf === 'early_retirement_5y' ? 'ring-2 ring-yellow-500' : ''}`}
+              className={`bg-yellow-50 border-2 border-yellow-400 rounded-lg shadow-md p-6 text-center h-full cursor-pointer hover:shadow-xl hover:ring-2 hover:ring-yellow-500 transition-all ${
+                appliedWhatIf === 'early_retirement_5y' ? 'ring-2 ring-yellow-500' : ''
+              }`}
               role="button"
               tabIndex={0}
               onKeyPress={(e) => {
@@ -552,7 +557,9 @@ export function Step4aResult(): JSX.Element {
           <motion.div variants={itemVariants}>
             <div
               onClick={() => handleWhatIf({ kind: 'delay_months', months: 12 }, 'delay_12m')}
-              className={`bg-green-50 border-2 border-green-300 rounded-lg shadow-md p-6 text-center h-full cursor-pointer hover:shadow-xl hover:ring-2 hover:ring-green-500 transition-all ${appliedWhatIf === 'delay_12m' ? 'ring-2 ring-green-500' : ''}`}
+              className={`bg-green-50 border-2 border-green-300 rounded-lg shadow-md p-6 text-center h-full cursor-pointer hover:shadow-xl hover:ring-2 hover:ring-green-500 transition-all ${
+                appliedWhatIf === 'delay_12m' ? 'ring-2 ring-green-500' : ''
+              }`}
               role="button"
               tabIndex={0}
               onKeyPress={(e) => {
@@ -581,7 +588,9 @@ export function Step4aResult(): JSX.Element {
           <motion.div variants={itemVariants}>
             <div
               onClick={() => handleWhatIf({ kind: 'delay_months', months: 24 }, 'delay_24m')}
-              className={`bg-green-50 border-2 border-green-300 rounded-lg shadow-md p-6 text-center h-full cursor-pointer hover:shadow-xl hover:ring-2 hover:ring-green-500 transition-all ${appliedWhatIf === 'delay_24m' ? 'ring-2 ring-green-500' : ''}`}
+              className={`bg-green-50 border-2 border-green-300 rounded-lg shadow-md p-6 text-center h-full cursor-pointer hover:shadow-xl hover:ring-2 hover:ring-green-500 transition-all ${
+                appliedWhatIf === 'delay_24m' ? 'ring-2 ring-green-500' : ''
+              }`}
               role="button"
               tabIndex={0}
               onKeyPress={(e) => {
