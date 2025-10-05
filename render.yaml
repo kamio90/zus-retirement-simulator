@@ -2,11 +2,10 @@ services:
   # 1) API — Node/Express (Web Service)
   - type: web
     name: zus-sim-api
-    env: node
+    runtime: node                   # was: env: node
     plan: starter
-    runtime: node
     region: frankfurt
-    autoDeploy: true
+    autoDeployTrigger: commit       # replaces deprecated autoDeploy
     buildCommand: |
       corepack enable
       corepack prepare pnpm@9.12.0 --activate
@@ -23,7 +22,6 @@ services:
       - fromGroup: zus-sim-shared
       - fromGroup: zus-sim-api
     routes:
-      # Optional alias for health (keeps bots happy)
       - type: rewrite
         source: /.well-known/health
         destination: /health
@@ -33,19 +31,20 @@ services:
       sizeGB: 1
 
   # 2) WEB — Static Site (Vite build)
-  - type: static_site            # <-- IMPORTANT: was "static"
+  - type: web                     # <— static site is also a 'web' service
     name: zus-sim-web
+    runtime: static               # <— REQUIRED for static sites
     buildCommand: |
       corepack enable
       corepack prepare pnpm@9.12.0 --activate
       pnpm i --frozen-lockfile
       pnpm -F web build
-    publishPath: apps/web/dist   # <-- IMPORTANT: was "staticPublishPath"
-    pullRequestPreviewsEnabled: true
+    staticPublishPath: apps/web/dist   # <— required field for static sites
+    previews:
+      generation: automatic            # replaces deprecated pullRequestPreviewsEnabled
     envVars:
       - fromGroup: zus-sim-public
     routes:
-      # SPA rewrite: all app routes → /index.html
       - type: rewrite
         source: /*
         destination: /index.html
