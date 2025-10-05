@@ -26,6 +26,8 @@ import { BeaverCoach } from './BeaverCoach';
 import { KnowledgeCard } from './KnowledgeCard';
 import { ExplainOverlay } from './ExplainOverlay';
 import { DeltaChip } from './DeltaChip';
+import { QuarterPlanner } from './QuarterPlanner';
+import { WaterfallExplainer } from './WaterfallExplainer';
 import { compareWhatIf } from '../../services/v2-api';
 import type { ScenarioResult, WizardJdgRequest, RefinementItem } from '@zus/types';
 
@@ -644,6 +646,38 @@ export function Step4aResult(): JSX.Element {
           </div>
         )}
       </div>
+
+      {/* Quarter Planner - Q3 Feature */}
+      {apiResult && (
+        <div className="mb-8">
+          <QuarterPlanner
+            currentYear={apiResult.kpi.retirementYear}
+            baseAmount={apiResult.kpi.monthlyNominal}
+            onQuarterSelect={(year, quarter) => {
+              console.log(`Selected quarter: ${year} Q${quarter}`);
+              // In real implementation, trigger what-if with quarter override
+            }}
+            selectedQuarter={{
+              year: apiResult.kpi.retirementYear,
+              quarter: parseInt(apiResult.kpi.claimQuarter.replace('Q', '')) as 1 | 2 | 3 | 4,
+            }}
+          />
+        </div>
+      )}
+
+      {/* Waterfall Explainer - Q2 Feature */}
+      {apiResult && (
+        <div className="mb-8">
+          <WaterfallExplainer
+            contributions={apiResult.capitalTrajectory.reduce((sum, row) => sum + row.capital, 0)}
+            annualValorization={2.5}
+            quarterlyValorization={0.5}
+            initialCapital1999={0}
+            subaccount={0}
+            lifeExpectancyMonths={252}
+          />
+        </div>
+      )}
 
       <div className="mb-8">
         <h3 className="text-xl font-bold text-zus-text mb-4">Chcesz dokładniejszy wynik?</h3>
