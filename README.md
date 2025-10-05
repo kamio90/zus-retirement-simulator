@@ -34,8 +34,8 @@ This is a **TypeScript monorepo** managed with **pnpm workspaces**:
 
 ### Prerequisites
 
-- **Node.js** >= 18.x
-- **pnpm** >= 8.x
+- **Node.js** >= 20.x
+- **pnpm** >= 9.x
 
 ```bash
 npm install -g pnpm
