@@ -36,6 +36,8 @@ export interface FinalizationVO {
  * Assumptions used in the calculation for transparency
  */
 export interface AssumptionsVO {
+  engineVersion?: string;
+  rateFormat?: string;
   annualIndexSetId: string;
   quarterlyIndexSetId: string;
   lifeTableId: string;

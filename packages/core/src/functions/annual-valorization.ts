@@ -33,8 +33,19 @@ export function applyAnnualValorization(
       throw new Error(`ANNUAL_INDEX_OUT_OF_RANGE: ${idx.rate} at ${idx.id}`);
     }
     
+    // Guard: contribution must be finite
+    if (!isFinite(annualContribution) || annualContribution < 0) {
+      throw new Error(`INVALID_CONTRIBUTION: ${annualContribution} at year ${year}`);
+    }
+    
     // Apply as (1 + fraction)
     capital = (capital + annualContribution) * (1 + idx.rate);
+    
+    // Guard: capital must be finite and non-negative
+    if (!isFinite(capital) || capital < 0) {
+      throw new Error(`NUMERIC_OVERFLOW_OR_NAN: capital=${capital} at year ${year}`);
+    }
+    
     return {
       year,
       contributionAdded: annualContribution,

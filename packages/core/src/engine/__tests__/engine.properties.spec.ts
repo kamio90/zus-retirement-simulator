@@ -111,6 +111,34 @@ describe('Engine.calculate (property/metamorphic)', () => {
     expect(outFuture.monthlyPensionRealToday).toBeLessThanOrEqual(outFuture.monthlyPensionNominal);
   });
 
+  it('no NaN or Infinity in any output', () => {
+    const input: EngineInput = {
+      birthYear: 1980,
+      gender: 'M' as const,
+      startWorkYear: 2000,
+      currentGrossMonthly: 6000,
+      claimMonth: 6,
+      accumulatedInitialCapital: 10000,
+      subAccountBalance: 5000,
+      anchorYear: 2045,
+    };
+    const out = demoEngine(input);
+    
+    // Check all numeric outputs are finite
+    expect(isFinite(out.monthlyPensionNominal)).toBe(true);
+    expect(isFinite(out.monthlyPensionRealToday)).toBe(true);
+    expect(isFinite(out.replacementRate)).toBe(true);
+    expect(isFinite(out.life.years)).toBe(true);
+    expect(isFinite(out.finalization.compoundedResult)).toBe(true);
+    
+    // Check trajectory values
+    out.capitalTrajectory.forEach((row) => {
+      expect(isFinite(row.annualWage)).toBe(true);
+      expect(isFinite(row.annualContribution)).toBe(true);
+      expect(isFinite(row.cumulativeCapitalAfterAnnual)).toBe(true);
+    });
+  });
+
   it('idempotence: repeated calls yield identical results', () => {
     const input: EngineInput = {
       birthYear: 1990,

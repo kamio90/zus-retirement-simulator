@@ -56,14 +56,24 @@ export function applyQuarterlyValorization(
   
   indices.forEach((idx) => assertQuarterlyIndices(idx, year));
   
-  // Apply indices as (1 + fraction) compounding
+  // Guard: initial capital must be finite
   let capital = lastAnnualState.cumulativeCapitalAfterAnnual;
+  if (!isFinite(capital) || capital < 0) {
+    throw new Error(`INVALID_CAPITAL_FOR_QUARTERLY: ${capital}`);
+  }
+  
+  // Apply indices as (1 + fraction) compounding
   indices.forEach((idx) => {
     // Guard: index should be a fraction, typically -0.3 to 0.5
     if (idx.rate < -0.3 || idx.rate > 0.5) {
       throw new Error(`QUARTERLY_INDEX_OUT_OF_RANGE: ${idx.rate} at ${idx.id}`);
     }
     capital *= (1 + idx.rate);
+    
+    // Guard: capital must remain finite
+    if (!isFinite(capital)) {
+      throw new Error(`NUMERIC_OVERFLOW_OR_NAN: capital=${capital} after ${idx.id}`);
+    }
   });
   
   return {

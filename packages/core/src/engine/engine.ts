@@ -93,6 +93,8 @@ export const Engine = {
     );
     // Step j: Build output
     const assumptions = {
+      engineVersion: 'canon-1.0',
+      rateFormat: 'fraction',
       annualIndexSetId: 'DEMO_ANNUAL',
       quarterlyIndexSetId: 'DEMO_QUARTERLY',
       lifeTableId: life.lifeTableId,
@@ -102,12 +104,18 @@ export const Engine = {
       providerKind: 'DeterministicDemo',
     };
     const explainers = [
+      `Engine version: canon-1.0`,
+      `Rate format: fractions (e.g., 0.10 for 10%)`,
       `Quarter mapping: claimMonth ${entitlement.claimMonth} → ${entitlement.entitlementQuarter}`,
+      `Quarterly sequence: ${entitlement.entitlementQuarter === 'Q1' ? '[Q3 prev]' :
+        entitlement.entitlementQuarter === 'Q2' ? '[Q3 prev, Q4 prev]' :
+        entitlement.entitlementQuarter === 'Q3' ? '[Q3 prev, Q4 prev, Q1 curr]' :
+        '[Q3 prev, Q4 prev, Q1 curr, Q2 curr]'}`,
       `SDŻ table window: ${life.lifeTableId}`,
       `Annual valorization precedes quarterly in final year`,
       `Initial capital special index: ${
         initialCapital.steps.find((s) => s.indexId.startsWith('INIT.1999'))
-          ? 'applied'
+          ? '1.1560 (115.60%) applied'
           : 'not applied'
       }`,
     ];
