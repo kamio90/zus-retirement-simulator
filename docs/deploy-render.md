@@ -65,12 +65,36 @@ This guide explains how to deploy the ZUS Retirement Simulator monorepo to Rende
 - **Persistent Disk**: 1GB mounted at `/var/data` for logs
 - **Auto-deploy**: Enabled on `main` branch pushes
 
-### Web Service (`zus-sim-web`)
+### Web Service (`zus-retirement-simulator-ui`)
 - **Type**: Static Site
-- **Build**: Vite production build
+- **Build**: Vite production build via pnpm
+- **Build Command**: `./render-build.sh` (uses pnpm 9.12.0)
 - **SPA Rewrite**: All routes → `/index.html`
 - **PR Previews**: Enabled
 - **Auto-deploy**: Enabled on `main` branch pushes
+
+## ⚠️ Important: Manual Configuration Required
+
+If you have an existing service that was created manually (not via Blueprint), you must manually update the build settings:
+
+1. Go to [Render Dashboard](https://dashboard.render.com)
+2. Select your service (`zus-retirement-simulator-ui`)
+3. Navigate to **Settings**
+4. Update **Build Command** to:
+   ```bash
+   ./render-build.sh
+   ```
+   Or use the inline command:
+   ```bash
+   corepack enable && corepack prepare pnpm@9.12.0 --activate && pnpm install --frozen-lockfile && pnpm -F web build
+   ```
+5. Add **Environment Variables** (if not present):
+   - `NODE_VERSION` = `20.12.2`
+   - `PNPM_VERSION` = `9.12.0`
+6. Click **Save Changes**
+7. Trigger a **Manual Deploy**
+
+**Why is this needed?** Services created manually in Render Dashboard do not automatically use `render.yaml` settings. The build command must be manually configured to use pnpm instead of npm for monorepo workspace dependency resolution.
 
 ## Post-Deployment
 
