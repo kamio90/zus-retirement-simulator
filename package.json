@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "ZUS Retirement Simulator Monorepo",
+  "packageManager": "pnpm@8.5.1",
   "workspaces": [
     "apps/*",
     "packages/*",
