@@ -6,8 +6,8 @@ Thank you for your interest in contributing to the ZUS Retirement Simulator! Thi
 
 ### Prerequisites
 
-- **Node.js** >= 18.x (see `.nvmrc` or `.node-version`)
-- **pnpm** >= 8.x
+- **Node.js** >= 20.x (see `.nvmrc` or `.node-version`)
+- **pnpm** >= 9.x
 
 ```bash
 # Install pnpm globally
@@ -15,7 +15,7 @@ npm install -g pnpm
 
 # Or use corepack (recommended)
 corepack enable
-corepack prepare pnpm@8 --activate
+corepack prepare pnpm@9.12.0 --activate
 ```
 
 ### Initial Setup

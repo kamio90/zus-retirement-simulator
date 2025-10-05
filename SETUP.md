@@ -2,8 +2,8 @@
 
 ## Prerequisites
 
-- **Node.js** >= 18.x
-- **pnpm** >= 8.x (install with `npm install -g pnpm`)
+- **Node.js** >= 20.x
+- **pnpm** >= 9.x (install with `npm install -g pnpm` or use `corepack enable`)
 
 ## Installation
 
