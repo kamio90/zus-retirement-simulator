@@ -5,6 +5,8 @@
 import { motion } from 'framer-motion';
 import { useWizardStore, Gender } from '../../store/wizardStore';
 import { BeaverCoach } from './BeaverCoach';
+import { FieldHelp } from './FieldHelp';
+import fieldHelpContent from '../../data/field-help.json';
 
 export function Step1GenderAge(): JSX.Element {
   const { gender, age, setGender, setAge } = useWizardStore();
@@ -23,7 +25,14 @@ export function Step1GenderAge(): JSX.Element {
 
       {/* Gender Selection */}
       <div className="mb-8">
-        <label className="block text-lg font-semibold text-zus-text mb-4">Płeć</label>
+        <div className="flex items-center gap-2 mb-4">
+          <label className="block text-lg font-semibold text-zus-text">Płeć</label>
+          <FieldHelp
+            fieldId="gender"
+            explanation={fieldHelpContent['pl-PL'].gender.explanation}
+            example={fieldHelpContent['pl-PL'].gender.example}
+          />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {genderOptions.map((option) => (
             <motion.div
@@ -75,9 +84,16 @@ export function Step1GenderAge(): JSX.Element {
 
       {/* Age Slider */}
       <div className="mb-8">
-        <label htmlFor="age-slider" className="block text-lg font-semibold text-zus-text mb-4">
-          Wiek: <span className="text-zus-primary">{age} lat</span>
-        </label>
+        <div className="flex items-center gap-2 mb-4">
+          <label htmlFor="age-slider" className="block text-lg font-semibold text-zus-text">
+            Wiek: <span className="text-zus-primary">{age} lat</span>
+          </label>
+          <FieldHelp
+            fieldId="age"
+            explanation={fieldHelpContent['pl-PL'].age.explanation}
+            example={fieldHelpContent['pl-PL'].age.example}
+          />
+        </div>
 
         <div className="relative px-2">
           <input

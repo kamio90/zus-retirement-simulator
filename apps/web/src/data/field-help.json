@@ -1,0 +1,70 @@
+{
+  "pl-PL": {
+    "gender": {
+      "explanation": "Płeć wpływa na wiek emerytalny (kobiety 60 lat, mężczyźni 65 lat) oraz na wartość średniego dalszego trwania życia (SDŻ) używaną do obliczenia miesięcznej emerytury.",
+      "example": "Dla kobiety SDŻ wynosi ok. 26 lat, dla mężczyzny ok. 21 lat w wieku emerytalnym."
+    },
+    "age": {
+      "explanation": "Wiek określa, ile lat pozostało do emerytury i jak długo kapitał będzie się waloryzował. Im młodsza osoba, tym więcej czasu na gromadzenie kapitału.",
+      "example": "Osoba 30-letnia ma 30-35 lat do emerytury, osoba 55-letnia tylko 5-10 lat."
+    },
+    "contract_type": {
+      "explanation": "Typ umowy wpływa na wysokość podstawy składki i sposób jej obliczania. Składka emerytalna wynosi 19,52% podstawy.",
+      "example": "UoP → podstawa = pełne wynagrodzenie. JDG → podstawa może być niższa, ryczałt jeszcze niższa."
+    },
+    "monthly_income": {
+      "explanation": "Miesięczny dochód brutto jest podstawą do obliczenia składki emerytalnej (19,52%). Im wyższy dochód, tym wyższy kapitał i emerytura.",
+      "example": "Przy 5000 PLN składka wynosi 976 PLN miesięcznie, co daje ~11 700 PLN rocznie kapitału."
+    },
+    "jdg_base": {
+      "explanation": "W JDG można wybrać podstawę składkową (minimalną, zalecaną lub wyższą). Niższa podstawa = niższa składka teraz, ale niższa emerytura w przyszłości.",
+      "example": "Minimalna podstawa ZUS w 2025 to ~4700 PLN. Zalecana to ok. 60% przychodu."
+    },
+    "ryczalt": {
+      "explanation": "Ryczałt w JDG obniża podstawę składkową do minimalnej wartości, co zmniejsza składki ZUS, ale drastycznie obniża przyszłą emeryturę.",
+      "example": "Ryczałt przy dochodzie 8000 PLN → podstawa tylko 4700 PLN (składka ~920 PLN zamiast ~1560 PLN)."
+    },
+    "career_periods": {
+      "explanation": "Różne okresy kariery (UoP, JDG, przerwy) wpływają na całkowity kapitał emerytalny. Każdy okres jest osobno waloryzowany.",
+      "example": "10 lat UoP + 15 lat JDG → suma kapitałów z obu okresów waloryzowana oddzielnie."
+    },
+    "gaps": {
+      "explanation": "Przerwy w składkach (macierzyńska, bezrobocie, choroba) zmniejszają kapitał emerytalny, choć niektóre okresy są częściowo składkowe.",
+      "example": "1 rok macierzyńskiej = brak składek, ale ZUS może uwzględnić okres przy obliczaniu stażu."
+    }
+  },
+  "en-GB": {
+    "gender": {
+      "explanation": "Gender affects retirement age (women 60, men 65) and life expectancy (SDŻ) used to calculate monthly pension amount.",
+      "example": "For women SDŻ is ~26 years, for men ~21 years at retirement age."
+    },
+    "age": {
+      "explanation": "Age determines years until retirement and capital growth period. Younger people have more time to accumulate capital.",
+      "example": "A 30-year-old has 30-35 years to retirement, a 55-year-old only 5-10 years."
+    },
+    "contract_type": {
+      "explanation": "Contract type affects contribution base calculation. Pension contribution is 19.52% of the base.",
+      "example": "Employment → base = full salary. Self-employed → base can be lower, flat-rate even lower."
+    },
+    "monthly_income": {
+      "explanation": "Gross monthly income is the base for pension contribution (19.52%). Higher income = higher capital and pension.",
+      "example": "With 5000 PLN, contribution is 976 PLN/month, which gives ~11,700 PLN/year of capital."
+    },
+    "jdg_base": {
+      "explanation": "Self-employed can choose contribution base (minimum, recommended, or higher). Lower base = lower contribution now, but lower pension later.",
+      "example": "Minimum ZUS base in 2025 is ~4700 PLN. Recommended is ~60% of income."
+    },
+    "ryczalt": {
+      "explanation": "Flat-rate (ryczałt) in self-employment reduces contribution base to minimum, lowering ZUS contributions but drastically reducing future pension.",
+      "example": "Flat-rate with 8000 PLN income → base only 4700 PLN (contribution ~920 PLN instead of ~1560 PLN)."
+    },
+    "career_periods": {
+      "explanation": "Different career periods (employment, self-employed, gaps) affect total pension capital. Each period is valorized separately.",
+      "example": "10 years employment + 15 years self-employed → sum of capitals from both periods valorized separately."
+    },
+    "gaps": {
+      "explanation": "Contribution gaps (maternity, unemployment, sickness) reduce pension capital, though some periods are partially contributory.",
+      "example": "1 year maternity leave = no contributions, but ZUS may count the period for service length."
+    }
+  }
+}

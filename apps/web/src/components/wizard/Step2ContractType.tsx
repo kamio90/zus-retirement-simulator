@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 import { useWizardStore, ContractType } from '../../store/wizardStore';
 import { BeaverCoach } from './BeaverCoach';
 import { KnowledgeCard } from './KnowledgeCard';
+import { FieldHelp } from './FieldHelp';
+import fieldHelpContent from '../../data/field-help.json';
 
 export function Step2ContractType(): JSX.Element {
   const { contractType, setContractType } = useWizardStore();
@@ -32,7 +34,14 @@ export function Step2ContractType(): JSX.Element {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold text-zus-text mb-2">Wybierz typ umowy</h2>
+      <div className="flex items-center gap-2 mb-2">
+        <h2 className="text-3xl font-bold text-zus-text">Wybierz typ umowy</h2>
+        <FieldHelp
+          fieldId="contract_type"
+          explanation={fieldHelpContent['pl-PL'].contract_type.explanation}
+          example={fieldHelpContent['pl-PL'].contract_type.example}
+        />
+      </div>
       <p className="text-gray-600 mb-8">
         Rodzaj umowy wpływa na sposób naliczania składek emerytalnych
       </p>

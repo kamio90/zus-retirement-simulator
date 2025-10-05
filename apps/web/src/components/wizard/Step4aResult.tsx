@@ -4,7 +4,7 @@
  * Now with instant what-if updates without navigation
  * Added Explain This overlay for contextual micro-lessons
  */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   LineChart,
@@ -14,14 +14,22 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Area,
+  AreaChart,
 } from 'recharts';
 import { useWizardStore } from '../../store/wizardStore';
 import { useResultStore } from '../../stores/resultStore';
 import { useExplainOverlayStore } from '../../stores/explainOverlayStore';
+import { useCompareStore } from '../../stores/compareStore';
 import { useExplainer } from '../../hooks/useExplainer';
 import { BeaverCoach } from './BeaverCoach';
 import { KnowledgeCard } from './KnowledgeCard';
 import { ExplainOverlay } from './ExplainOverlay';
+import { DeltaChip } from './DeltaChip';
+import { QuarterPlanner } from './QuarterPlanner';
+import { WaterfallExplainer } from './WaterfallExplainer';
+import { TimelineNarrator } from './TimelineNarrator';
+import { ReplacementRateCurve } from './ReplacementRateCurve';
 import { compareWhatIf } from '../../services/v2-api';
 import type { ScenarioResult, WizardJdgRequest, RefinementItem } from '@zus/types';
 
@@ -45,6 +53,10 @@ export function Step4aResult(): JSX.Element {
   } = useResultStore();
   const { openExplainer, getCachedExplainer, cacheExplainer } = useExplainOverlayStore();
   const { fetchExplainer } = useExplainer();
+  const { showBaseline, toggleBaseline } = useCompareStore();
+
+  // State for Timeline Narrator
+  const [showTimeline, setShowTimeline] = useState(false);
 
   // Initialize baseline result from wizard store
   useEffect(() => {
@@ -408,6 +420,9 @@ export function Step4aResult(): JSX.Element {
           };
           const targetId = targetIdMap[kpi.label] || '';
 
+          // Determine format for DeltaChip
+          const deltaFormat = kpi.label.includes('Stopa') ? 'percent' : 'currency';
+
           return (
             <motion.div key={index} variants={itemVariants}>
               <div
@@ -429,13 +444,13 @@ export function Step4aResult(): JSX.Element {
                 </div>
                 <h3 className="text-sm font-medium text-gray-600 mb-2">{kpi.label}</h3>
                 <p className="text-2xl font-bold text-zus-primary mb-1">{kpi.value}</p>
-                {delta && (
-                  <div
-                    className={`text-xs font-semibold mt-2 ${delta.value > 0 ? 'text-green-600' : delta.value < 0 ? 'text-red-600' : 'text-gray-500'}`}
-                  >
-                    {delta.value > 0 ? '↑' : delta.value < 0 ? '↓' : '='}{' '}
-                    {Math.abs(delta.percent).toFixed(1)}%
-                  </div>
+                {delta && appliedWhatIf && (
+                  <DeltaChip
+                    baselineValue={kpi.baselineValue}
+                    currentValue={kpi.currentValue}
+                    format={deltaFormat}
+                    className="mt-2"
+                  />
                 )}
                 <p className="text-xs text-gray-500">{kpi.description}</p>
               </div>
@@ -447,65 +462,148 @@ export function Step4aResult(): JSX.Element {
       <div className="bg-white rounded-lg shadow-md p-6 mb-8" data-kpi-tile>
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-xl font-bold text-zus-text">Trajektoria kapitału emerytalnego</h3>
-          <button
-            onClick={(e) => handleExplainClick('chart_capital_trajectory', e)}
-            className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-zus-primary hover:bg-gray-100 rounded-full transition-colors"
-            aria-label="Wyjaśnij: Trajektoria kapitału emerytalnego"
-          >
-            ℹ️
-          </button>
+          <div className="flex items-center gap-4">
+            {appliedWhatIf && (
+              <label className="flex items-center gap-2 text-sm cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={showBaseline}
+                  onChange={toggleBaseline}
+                  className="w-5 h-5 text-zus-primary focus:ring-zus-primary border-gray-300 rounded"
+                  aria-label="Porównaj z bazową linią"
+                />
+                <span className="text-gray-700">Porównaj z bazą</span>
+              </label>
+            )}
+            <button
+              onClick={(e) => handleExplainClick('chart_capital_trajectory', e)}
+              className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-zus-primary hover:bg-gray-100 rounded-full transition-colors"
+              aria-label="Wyjaśnij: Trajektoria kapitału emerytalnego"
+            >
+              ℹ️
+            </button>
+          </div>
         </div>
         <div className={isLoadingWhatIf ? 'animate-pulse' : ''}>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={apiResult?.capitalTrajectory || mockResult.capitalTrajectory}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#d8e5dd" />
-              <XAxis dataKey="year" stroke="#0b1f17" tick={{ fill: '#0b1f17' }} />
-              <YAxis
-                stroke="#0b1f17"
-                tick={{ fill: '#0b1f17' }}
-                tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
-              />
-              <Tooltip
-                formatter={(value: number) => [`${value.toLocaleString('pl-PL')} PLN`, 'Kapitał']}
-                contentStyle={{
-                  backgroundColor: '#fff',
-                  border: '2px solid #007a33',
-                  borderRadius: '8px',
-                }}
-              />
-              <Line
-                type="monotone"
-                dataKey="capital"
-                stroke={appliedWhatIf ? '#0066cc' : '#007a33'}
-                strokeWidth={3}
-                dot={{ fill: appliedWhatIf ? '#0066cc' : '#007a33', r: 5 }}
-                activeDot={{
-                  r: 8,
-                  onClick: (e: React.MouseEvent<SVGCircleElement>) => {
-                    const element = (e.target as HTMLElement).closest(
-                      '[data-kpi-tile]'
-                    ) as HTMLElement;
-                    if (element) {
-                      const fakeEvent = {
-                        currentTarget: element,
-                      } as React.MouseEvent<HTMLButtonElement>;
-                      handleExplainClick('chart_point', fakeEvent);
-                    }
-                  },
-                  style: { cursor: 'pointer' },
-                }}
-              />
-            </LineChart>
+            {showBaseline && appliedWhatIf && baselineResult ? (
+              <AreaChart
+                data={apiResult?.capitalTrajectory?.map((item, idx) => ({
+                  ...item,
+                  baselineCapital: baselineResult.capitalTrajectory[idx]?.capital || 0,
+                })) || []}
+              >
+                <defs>
+                  <linearGradient id="deltaShading" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#82ca9d" stopOpacity={0.1} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#d8e5dd" />
+                <XAxis dataKey="year" stroke="#0b1f17" tick={{ fill: '#0b1f17' }} />
+                <YAxis
+                  stroke="#0b1f17"
+                  tick={{ fill: '#0b1f17' }}
+                  tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
+                />
+                <Tooltip
+                  formatter={(value: number, name: string) => {
+                    const label =
+                      name === 'capital'
+                        ? 'Obecny kapitał'
+                        : name === 'baselineCapital'
+                          ? 'Kapitał bazowy'
+                          : 'Kapitał';
+                    return [`${value.toLocaleString('pl-PL')} PLN`, label];
+                  }}
+                  contentStyle={{
+                    backgroundColor: '#fff',
+                    border: '2px solid #007a33',
+                    borderRadius: '8px',
+                  }}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="baselineCapital"
+                  stroke="#9ca3af"
+                  strokeWidth={2}
+                  fill="url(#deltaShading)"
+                  strokeDasharray="5 5"
+                />
+                <Line
+                  type="monotone"
+                  dataKey="capital"
+                  stroke="#0066cc"
+                  strokeWidth={3}
+                  dot={{ fill: '#0066cc', r: 5 }}
+                />
+              </AreaChart>
+            ) : (
+              <LineChart data={apiResult?.capitalTrajectory || mockResult.capitalTrajectory}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#d8e5dd" />
+                <XAxis dataKey="year" stroke="#0b1f17" tick={{ fill: '#0b1f17' }} />
+                <YAxis
+                  stroke="#0b1f17"
+                  tick={{ fill: '#0b1f17' }}
+                  tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
+                />
+                <Tooltip
+                  formatter={(value: number) => [`${value.toLocaleString('pl-PL')} PLN`, 'Kapitał']}
+                  contentStyle={{
+                    backgroundColor: '#fff',
+                    border: '2px solid #007a33',
+                    borderRadius: '8px',
+                  }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="capital"
+                  stroke={appliedWhatIf ? '#0066cc' : '#007a33'}
+                  strokeWidth={3}
+                  dot={{ fill: appliedWhatIf ? '#0066cc' : '#007a33', r: 5 }}
+                  activeDot={{
+                    r: 8,
+                    onClick: (e: React.MouseEvent<SVGCircleElement>) => {
+                      const element = (e.target as HTMLElement).closest(
+                        '[data-kpi-tile]'
+                      ) as HTMLElement;
+                      if (element) {
+                        const fakeEvent = {
+                          currentTarget: element,
+                        } as React.MouseEvent<HTMLButtonElement>;
+                        handleExplainClick('chart_point', fakeEvent);
+                      }
+                    },
+                    style: { cursor: 'pointer' },
+                  }}
+                />
+              </LineChart>
+            )}
           </ResponsiveContainer>
         </div>
-        <p className="text-sm text-gray-500 mt-4 text-center">
-          Wykres pokazuje przewidywane gromadzenie kapitału emerytalnego w czasie
-          {appliedWhatIf && (
-            <span className="block mt-1 text-blue-600 font-semibold">
-              Scenariusz: {appliedWhatIf}
-            </span>
+        <div className="flex items-center justify-center gap-4 mt-4">
+          <p className="text-sm text-gray-500 text-center">
+            Wykres pokazuje przewidywane gromadzenie kapitału emerytalnego w czasie
+            {appliedWhatIf && (
+              <span className="block mt-1 text-blue-600 font-semibold">
+                Scenariusz: {appliedWhatIf}
+              </span>
+            )}
+            {showBaseline && appliedWhatIf && (
+              <span className="block mt-1 text-gray-600 text-xs">
+                Szara linia przerywana = scenariusz bazowy | Niebieska linia = obecny scenariusz
+              </span>
+            )}
+          </p>
+          {apiResult && (
+            <button
+              onClick={() => setShowTimeline(true)}
+              className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium"
+            >
+              📖 Zobacz moją historię
+            </button>
           )}
-        </p>
+        </div>
       </div>
 
       {/* Worth Knowing InfoCard - Load from API */}
@@ -636,6 +734,53 @@ export function Step4aResult(): JSX.Element {
         )}
       </div>
 
+      {/* Quarter Planner - Q3 Feature */}
+      {apiResult && (
+        <div className="mb-8">
+          <QuarterPlanner
+            currentYear={apiResult.kpi.retirementYear}
+            baseAmount={apiResult.kpi.monthlyNominal}
+            onQuarterSelect={(year, quarter) => {
+              console.log(`Selected quarter: ${year} Q${quarter}`);
+              // In real implementation, trigger what-if with quarter override
+            }}
+            selectedQuarter={{
+              year: apiResult.kpi.retirementYear,
+              quarter: parseInt(apiResult.kpi.claimQuarter.replace('Q', '')) as 1 | 2 | 3 | 4,
+            }}
+          />
+        </div>
+      )}
+
+      {/* Waterfall Explainer - Q2 Feature */}
+      {apiResult && (
+        <div className="mb-8">
+          <WaterfallExplainer
+            contributions={apiResult.capitalTrajectory.reduce((sum, row) => sum + row.capital, 0)}
+            annualValorization={2.5}
+            quarterlyValorization={0.5}
+            initialCapital1999={0}
+            subaccount={0}
+            lifeExpectancyMonths={252}
+          />
+        </div>
+      )}
+
+      {/* Replacement Rate Curve - Q4 Feature */}
+      {apiResult && (
+        <div className="mb-8">
+          <ReplacementRateCurve
+            statutoryAge={gender === 'female' ? 60 : 65}
+            currentAge={apiResult.kpi.retirementYear - (2025 - age)}
+            baseRR={apiResult.kpi.replacementRate}
+            onAgeSelect={(newAge) => {
+              console.log(`Selected retirement age: ${newAge}`);
+              // In real implementation, trigger what-if with age override
+            }}
+          />
+        </div>
+      )}
+
       <div className="mb-8">
         <h3 className="text-xl font-bold text-zus-text mb-4">Chcesz dokładniejszy wynik?</h3>
         <motion.div
@@ -698,6 +843,21 @@ export function Step4aResult(): JSX.Element {
 
       {/* Explain This Overlay */}
       <ExplainOverlay />
+
+      {/* Timeline Narrator Modal */}
+      {showTimeline && apiResult && (
+        <TimelineNarrator
+          trajectory={apiResult.capitalTrajectory.map((row, idx) => ({
+            year: row.year,
+            contributions: idx === 0 ? row.capital : row.capital - apiResult.capitalTrajectory[idx - 1].capital,
+            annualIndex: 2.5,
+            capitalAfterAnnual: row.capital,
+            microfact: idx % 3 === 0 ? ['Składka emerytalna to 19,52% Twojej podstawy wynagrodzenia', 'Waloryzacja roczna chroni Twój kapitał przed inflacją', 'ZUS dzieli kapitał przez średnie dalsze trwanie życia (SDŻ)'][Math.floor(idx / 3) % 3] : undefined,
+          }))}
+          finalYearQuarters={['Q3 2024: 1.025', 'Q4 2024: 1.018', 'Q1 2025: 1.032', `Q2 2025: 1.041`]}
+          onClose={() => setShowTimeline(false)}
+        />
+      )}
     </div>
   );
 }

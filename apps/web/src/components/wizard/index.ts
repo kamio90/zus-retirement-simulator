@@ -5,6 +5,13 @@
 export { Wizard } from './Wizard';
 export { WizardLayout } from './WizardLayout';
 export { BeaverCoach } from './BeaverCoach';
+export { BeaverDoctor } from './BeaverDoctor';
+export { DeltaChip } from './DeltaChip';
+export { FieldHelp } from './FieldHelp';
+export { QuarterPlanner } from './QuarterPlanner';
+export { WaterfallExplainer } from './WaterfallExplainer';
+export { TimelineNarrator } from './TimelineNarrator';
+export { ReplacementRateCurve } from './ReplacementRateCurve';
 export { InfoCard } from './InfoCard';
 export { KnowledgeCard } from './KnowledgeCard';
 export { Step1GenderAge } from './Step1GenderAge';
