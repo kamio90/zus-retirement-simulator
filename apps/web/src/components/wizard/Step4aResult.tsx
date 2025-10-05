@@ -4,7 +4,7 @@
  * Now with instant what-if updates without navigation
  * Added Explain This overlay for contextual micro-lessons
  */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   LineChart,
@@ -28,6 +28,8 @@ import { ExplainOverlay } from './ExplainOverlay';
 import { DeltaChip } from './DeltaChip';
 import { QuarterPlanner } from './QuarterPlanner';
 import { WaterfallExplainer } from './WaterfallExplainer';
+import { TimelineNarrator } from './TimelineNarrator';
+import { ReplacementRateCurve } from './ReplacementRateCurve';
 import { compareWhatIf } from '../../services/v2-api';
 import type { ScenarioResult, WizardJdgRequest, RefinementItem } from '@zus/types';
 
@@ -52,6 +54,9 @@ export function Step4aResult(): JSX.Element {
   const { openExplainer, getCachedExplainer, cacheExplainer } = useExplainOverlayStore();
   const { fetchExplainer } = useExplainer();
   const { showBaseline, toggleBaseline } = useCompareStore();
+
+  // State for Timeline Narrator
+  const [showTimeline, setShowTimeline] = useState(false);
 
   // Initialize baseline result from wizard store
   useEffect(() => {
@@ -504,19 +509,29 @@ export function Step4aResult(): JSX.Element {
             )}
           </ResponsiveContainer>
         </div>
-        <p className="text-sm text-gray-500 mt-4 text-center">
-          Wykres pokazuje przewidywane gromadzenie kapitału emerytalnego w czasie
-          {appliedWhatIf && (
-            <span className="block mt-1 text-blue-600 font-semibold">
-              Scenariusz: {appliedWhatIf}
-            </span>
+        <div className="flex items-center justify-center gap-4 mt-4">
+          <p className="text-sm text-gray-500 text-center">
+            Wykres pokazuje przewidywane gromadzenie kapitału emerytalnego w czasie
+            {appliedWhatIf && (
+              <span className="block mt-1 text-blue-600 font-semibold">
+                Scenariusz: {appliedWhatIf}
+              </span>
+            )}
+            {showBaseline && appliedWhatIf && (
+              <span className="block mt-1 text-gray-600 text-xs">
+                Szara linia przerywana = scenariusz bazowy | Niebieska linia = obecny scenariusz
+              </span>
+            )}
+          </p>
+          {apiResult && (
+            <button
+              onClick={() => setShowTimeline(true)}
+              className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium"
+            >
+              📖 Zobacz moją historię
+            </button>
           )}
-          {showBaseline && appliedWhatIf && (
-            <span className="block mt-1 text-gray-600 text-xs">
-              Szara linia przerywana = scenariusz bazowy | Niebieska linia = obecny scenariusz
-            </span>
-          )}
-        </p>
+        </div>
       </div>
 
       {/* Worth Knowing InfoCard - Load from API */}
@@ -679,6 +694,21 @@ export function Step4aResult(): JSX.Element {
         </div>
       )}
 
+      {/* Replacement Rate Curve - Q4 Feature */}
+      {apiResult && (
+        <div className="mb-8">
+          <ReplacementRateCurve
+            statutoryAge={gender === 'female' ? 60 : 65}
+            currentAge={apiResult.kpi.retirementYear - (2025 - age)}
+            baseRR={apiResult.kpi.replacementRate}
+            onAgeSelect={(newAge) => {
+              console.log(`Selected retirement age: ${newAge}`);
+              // In real implementation, trigger what-if with age override
+            }}
+          />
+        </div>
+      )}
+
       <div className="mb-8">
         <h3 className="text-xl font-bold text-zus-text mb-4">Chcesz dokładniejszy wynik?</h3>
         <motion.div
@@ -741,6 +771,21 @@ export function Step4aResult(): JSX.Element {
 
       {/* Explain This Overlay */}
       <ExplainOverlay />
+
+      {/* Timeline Narrator Modal */}
+      {showTimeline && apiResult && (
+        <TimelineNarrator
+          trajectory={apiResult.capitalTrajectory.map((row, idx) => ({
+            year: row.year,
+            contributions: idx === 0 ? row.capital : row.capital - apiResult.capitalTrajectory[idx - 1].capital,
+            annualIndex: 2.5,
+            capitalAfterAnnual: row.capital,
+            microfact: idx % 3 === 0 ? ['Składka emerytalna to 19,52% Twojej podstawy wynagrodzenia', 'Waloryzacja roczna chroni Twój kapitał przed inflacją', 'ZUS dzieli kapitał przez średnie dalsze trwanie życia (SDŻ)'][Math.floor(idx / 3) % 3] : undefined,
+          }))}
+          finalYearQuarters={['Q3 2024: 1.025', 'Q4 2024: 1.018', 'Q1 2025: 1.032', `Q2 2025: 1.041`]}
+          onClose={() => setShowTimeline(false)}
+        />
+      )}
     </div>
   );
 }
